@@ -1,8 +1,10 @@
 .header {
 	display: flex;
 	align-items: center;
-	justify-content: flex-end;
-	padding: 12px 16px;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+	padding: 12px;
 	width: 100%;
 	max-width: 80rem;
 	margin: 0 auto;
@@ -13,4 +15,27 @@
 	height: 100%;
 	width: 100%;
 	max-width: 80rem;
+	backdrop-filter: 10px;
+}
+
+.nav {
+	display: flex;
+	gap: 16px;
+	font-size: 1rem;
+	font-weight: 600;
+	background: #fff;
+	color: #000;
+	border-radius: 12px;
+	padding: 4px;
+}
+
+.nav a {
+	padding: 2px 8px;
+	border: 2px solid transparent;
+}
+
+.nav a[data-active='true'] {
+	background: #d9fffe;
+	border-color: #89cfdd;
+	border-radius: 12px;
 }

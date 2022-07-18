@@ -20,7 +20,6 @@
 *.pem
 README.md
 next-env.d.ts
-next.config.js
 
 #package
 package.json
