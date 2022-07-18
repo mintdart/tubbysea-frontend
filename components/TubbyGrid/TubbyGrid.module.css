@@ -1,0 +1,19 @@
+.wrapper {
+	display: grid;
+	grid-auto-columns: minmax(300px, 320px);
+	place-content: center;
+	gap: 32px;
+	margin: 36px 0;
+}
+
+@media (min-width: 37.5rem) {
+	.wrapper {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (min-width: 64rem) {
+	.wrapper {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}

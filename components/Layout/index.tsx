@@ -1,9 +1,10 @@
 import * as React from 'react'
 import Head from 'next/head'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
-import styles from './Layout.module.css'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useAccount } from 'wagmi'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
+import styles from './Layout.module.css'
 
 interface ILayoutProps {
 	children?: React.ReactNode
@@ -12,11 +13,13 @@ interface ILayoutProps {
 export default function Layout({ children, ...props }: ILayoutProps) {
 	const router = useRouter()
 
+	const { isConnected } = useAccount()
+
 	return (
 		<>
 			<Head>
-				<title>lend your tubby cats!</title>
-				<meta name="description" content="lend your tubby cats!" />
+				<title>pawn your tubby cats!</title>
+				<meta name="description" content="pawn your tubby cats!" />
 			</Head>
 			<header className={styles.header}>
 				<nav className={styles.nav}>
@@ -30,7 +33,7 @@ export default function Layout({ children, ...props }: ILayoutProps) {
 				<ConnectButton />
 			</header>
 			<main className={styles.main} {...props}>
-				{children}
+				{isConnected && children}
 			</main>
 		</>
 	)

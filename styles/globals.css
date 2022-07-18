@@ -54,7 +54,7 @@ h6 {
 
 #__next {
 	isolation: isolate;
-	height: 100%;
+	min-height: 100%;
 	color: #fff;
 	background: #222;
 	background-image: url('/bgSmall.png');

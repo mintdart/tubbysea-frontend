@@ -1,0 +1,67 @@
+.card {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: 320px;
+	background-color: #333;
+	backdrop-filter: blur(10px);
+	border-radius: 12px;
+	filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 15%));
+}
+
+.imageWrapper {
+	position: relative;
+	border-radius: 12px 12px 0 0;
+	aspect-ratio: 1 / 1;
+}
+
+.imageWrapper img {
+	border-radius: 12px 12px 0 0;
+}
+
+.infoWrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 8px;
+	border-radius: 0 0 12px 12px;
+}
+
+.cardId {
+	font-size: 0.875rem;
+	font-weight: 500;
+}
+
+.actionsWrapper {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	font-size: 0.875rem;
+	font-weight: 500;
+}
+
+.price {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+}
+
+.actionButton {
+	padding: 4px 8px;
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: #fff;
+	background: none;
+	border: 1px solid #f788bf;
+	border-radius: 12px;
+	width: fit-content;
+}
+
+.actionButton:hover,
+.actionButton:focus-visible {
+	cursor: pointer;
+	background: hsl(329deg 94% 86%);
+	color: #000;
+	outline: none;
+}
