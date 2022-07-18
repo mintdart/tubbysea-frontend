@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { useAccount } from 'wagmi'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import styles from './Layout.module.css'
+import Image from 'next/image'
 
 interface ILayoutProps {
 	children?: React.ReactNode
@@ -23,6 +24,9 @@ export default function Layout({ children, ...props }: ILayoutProps) {
 			</Head>
 			<header className={styles.header}>
 				<nav className={styles.nav}>
+					<div className={styles.logoWrapper}>
+						<Image src="/tubby.png" alt="tubby cat" height="24px" layout="fill" />
+					</div>
 					<Link href="/">
 						<a data-active={router.pathname === '/'}>Borrow</a>
 					</Link>

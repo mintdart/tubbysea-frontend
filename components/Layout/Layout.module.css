@@ -21,7 +21,8 @@
 
 .nav {
 	display: flex;
-	gap: 16px;
+	align-items: center;
+	gap: 12px;
 	font-size: 1rem;
 	font-weight: 600;
 	background: #fff;
@@ -39,4 +40,12 @@
 	background: #d9fffe;
 	border-color: #89cfdd;
 	border-radius: 12px;
+}
+
+.logoWrapper {
+	min-width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	position: relative;
 }
