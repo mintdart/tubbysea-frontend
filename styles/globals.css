@@ -1,9 +1,24 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+* {
+	margin: 0;
+}
+
 html,
 body {
 	padding: 0;
-	margin: 0;
+	height: 100%;
 	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
 		Helvetica Neue, sans-serif;
+}
+
+body {
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -11,6 +26,52 @@ a {
 	text-decoration: none;
 }
 
-* {
-	box-sizing: border-box;
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	overflow-wrap: break-word;
+}
+
+#__next {
+	isolation: isolate;
+	height: 100%;
+	color: #fff;
+	background: #222;
+	background-image: url('/bgSmall.png');
+	background-position: 50%;
+	background-position-y: -80px;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+#__next > * {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
+}
+
+@media (min-width: 37.5rem) {
+	#__next {
+		background-image: url('/bgLarge.png');
+	}
 }

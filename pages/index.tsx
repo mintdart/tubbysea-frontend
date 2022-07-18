@@ -1,12 +1,8 @@
 import type { NextPage } from 'next'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import Layout from '~/components/Layout'
 
 const Home: NextPage = () => {
-	return (
-		<div>
-			<ConnectButton />
-		</div>
-	)
+	return <Layout></Layout>
 }
 
 export default Home
