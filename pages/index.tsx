@@ -15,8 +15,8 @@ const Home: NextPage = () => {
 	// 	args: [
 	// 		getAddress('0xcf85C40f864736eC9513840C476e35375926E96c'),
 	// 		getAddress('0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b'),
-	// 		new BigNumber(0).times(1e18).toFixed(0),
-	// 		new BigNumber(1636333).times(1e18).toFixed(0)
+	// 		new BigNumber(1).times(1e18).toFixed(0),
+	// 		new BigNumber(100).times(1e18).toFixed(0)
 	// 	]
 	// })
 

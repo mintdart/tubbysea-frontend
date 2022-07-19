@@ -8,7 +8,7 @@ export const NFTS_LIST_ABI = [
 		],
 		name: 'getOwnedNfts',
 		outputs: [
-			{ internalType: 'uint256[10000]', name: 'nfts', type: 'uint256[10000]' },
+			{ internalType: 'uint256[100]', name: 'nfts', type: 'uint256[100]' },
 			{ internalType: 'uint256', name: 'length', type: 'uint256' }
 		],
 		stateMutability: 'view',

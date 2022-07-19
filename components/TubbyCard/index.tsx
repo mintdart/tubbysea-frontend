@@ -1,6 +1,8 @@
 import * as React from 'react'
 import Image from 'next/image'
 import styles from './TubbyCard.module.css'
+import Borrow from './Borrow'
+import Repay from './Repay'
 
 interface ITubbyCardProps {
 	imgUrl: string
@@ -14,20 +16,7 @@ export default function TubbyCard({ imgUrl, id, type }: ITubbyCardProps) {
 			<span className={styles.imageWrapper}>
 				<Image src={imgUrl} alt={`tubby#${id}`} layout="fill" />
 			</span>
-			<span className={styles.infoWrapper}>
-				<p className={styles.cardId}>{`#${id}`}</p>
-				<span className={styles.actionsWrapper}>
-					<p className={styles.priceWrapper}>
-						<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
-						<span>0.1091</span>
-					</p>
-					{type === 'borrow' ? (
-						<button className={styles.actionButton}>Borrow ETH</button>
-					) : (
-						<button className={styles.actionButton}>Repay</button>
-					)}
-				</span>
-			</span>
+			{type === 'borrow' ? <Borrow id={id} /> : <Repay id={id} />}
 		</article>
 	)
 }
