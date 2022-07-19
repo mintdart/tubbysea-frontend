@@ -24,7 +24,7 @@ const Home: NextPage = () => {
 	return (
 		<Layout>
 			{isError ? (
-				<p>Sorry, couldn't get nfts for your address</p>
+				<p className="fallback-text">Sorry, couldn't get nfts for your address</p>
 			) : isLoading ? (
 				<TubbyGrid>
 					{new Array(8).fill('tubby').map((_, index) => (

@@ -37,7 +37,7 @@ export default function Layout({ children, ...props }: ILayoutProps) {
 				<ConnectButton />
 			</header>
 			<main className={styles.main} {...props}>
-				{isConnected && children}
+				{isConnected ? children : <p className="fallback-text">Connect Wallet to view your nfts and loans</p>}
 			</main>
 		</>
 	)

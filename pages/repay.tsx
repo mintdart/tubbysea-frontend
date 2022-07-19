@@ -1,16 +1,33 @@
 import type { NextPage } from 'next'
 import Layout from '~/components/Layout'
-import TubbyCard from '~/components/TubbyCard'
+import TubbyCard, { TubbyPlaceholder } from '~/components/TubbyCard'
 import TubbyGrid from '~/components/TubbyGrid'
 
 const Repay: NextPage = () => {
+	const isError = false
+	const isLoading = false
+
+	const tubbies: number[] = []
+
 	return (
 		<Layout>
-			<TubbyGrid>
-				{new Array(10).fill('tubby').map((_, index) => (
-					<TubbyCard key={index} id="9204" imgUrl="/minty.jpeg" type="repay" />
-				))}
-			</TubbyGrid>
+			{isError ? (
+				<p className="fallback-text">Sorry, couldn't get nfts for your address</p>
+			) : isLoading ? (
+				<TubbyGrid>
+					{new Array(8).fill('tubby').map((_, index) => (
+						<TubbyPlaceholder key={index} type="borrow" />
+					))}
+				</TubbyGrid>
+			) : tubbies.length === 0 ? (
+				<p className="fallback-text">You do not have any active loans</p>
+			) : (
+				<TubbyGrid>
+					{tubbies.map((id) => (
+						<TubbyCard key={id} id={id} type="borrow" />
+					))}
+				</TubbyGrid>
+			)}
 		</Layout>
 	)
 }

@@ -82,6 +82,18 @@ h6 {
 	border-width: 0;
 }
 
+.fallback-text {
+	max-width: min(640px, 80vw);
+	padding: 24px 8px;
+	position: relative;
+	top: 20vh;
+	margin: auto;
+	background: #000;
+	text-align: center;
+	border-radius: 12px;
+	filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 30%));
+}
+
 @media (min-width: 37.5rem) {
 	#__next {
 		background-image: url('/bgLarge.png');
