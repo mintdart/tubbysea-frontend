@@ -5,7 +5,7 @@ import styles from './TubbyCard.module.css'
 export default function Borrow({ id }: { id: string }) {
 	return (
 		<span className={styles.infoWrapper}>
-			<p className={styles.cardId}>{`#${id}`}</p>
+			<p className={styles.dullText}>{`#${id}`}</p>
 			<span className={styles.quoteSection}>
 				<p>Quote</p>
 				<span className={styles.flexRow}>

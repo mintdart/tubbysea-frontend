@@ -6,8 +6,8 @@ export default function Repay({ id }: { id: string }) {
 	return (
 		<span className={styles.infoWrapper}>
 			<span className={styles.flexRow}>
-				<p className={styles.cardId}>{`#${id}`}</p>
-				<div className={styles.flexRowSm}>
+				<p className={styles.dullText}>{`#${id}`}</p>
+				<div className={`${styles.flexRowSm} ${styles.dullText}`}>
 					<svg
 						stroke="currentColor"
 						fill="none"
@@ -22,7 +22,7 @@ export default function Repay({ id }: { id: string }) {
 						<circle cx="12" cy="12" r="10"></circle>
 						<polyline points="12 6 12 12 16 14"></polyline>
 					</svg>
-					<p className={styles.timer}>25 days left</p>
+					<p>25 days left</p>
 				</div>
 			</span>
 			<span className={styles.quoteSection}>
