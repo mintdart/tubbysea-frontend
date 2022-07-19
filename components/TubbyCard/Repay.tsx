@@ -2,12 +2,15 @@ import * as React from 'react'
 import Image from 'next/image'
 import styles from './TubbyCard.module.css'
 
-export default function Repay({ id }: { id: string }) {
+export default function Repay({ id }: { id?: number }) {
+	const price = id && 0.1091
+
 	return (
 		<span className={styles.infoWrapper}>
 			<span className={styles.flexRow}>
-				<p className={styles.dullText}>{`#${id}`}</p>
-				<div className={`${styles.flexRowSm} ${styles.dullText}`}>
+				<p className={styles.dullText}>{id && `#${id}`}</p>
+				<p className={`${styles.flexRowSm} ${styles.dullText}`}>
+					<span className="visually-hidden">Time left to repay loan</span>
 					<svg
 						stroke="currentColor"
 						fill="none"
@@ -22,15 +25,17 @@ export default function Repay({ id }: { id: string }) {
 						<circle cx="12" cy="12" r="10"></circle>
 						<polyline points="12 6 12 12 16 14"></polyline>
 					</svg>
-					<p>25 days left</p>
-				</div>
+					<span>25 days left</span>
+				</p>
 			</span>
 			<span className={styles.quoteSection}>
 				<p>To Pay</p>
 				<span className={styles.flexRow}>
 					<p className={styles.flexRowSm}>
 						<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
-						<span>0.1091</span>
+						<span data-animate={price ? true : false} className={styles.price}>
+							{id}
+						</span>
 					</p>
 					<button className={styles.actionButton}>Repay ETH</button>
 				</span>

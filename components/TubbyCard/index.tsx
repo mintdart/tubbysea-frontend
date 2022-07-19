@@ -5,18 +5,21 @@ import Borrow from './Borrow'
 import Repay from './Repay'
 
 interface ITubbyCardProps {
-	imgUrl: string
-	id: string
+	id: number
 	type: 'borrow' | 'repay'
 }
 
-export default function TubbyCard({ imgUrl, id, type }: ITubbyCardProps) {
+const imgUrl = '/minty.jpeg'
+
+export default function TubbyCard({ id, type }: ITubbyCardProps) {
 	return (
 		<article className={styles.card}>
 			<span className={styles.imageWrapper}>
-				<Image src={imgUrl} alt={`tubby#${id}`} layout="fill" />
+				{imgUrl && <Image src={imgUrl} alt={`token id ${id}`} layout="fill" />}
 			</span>
 			{type === 'borrow' ? <Borrow id={id} /> : <Repay id={id} />}
 		</article>
 	)
 }
+
+export { TubbyPlaceholder } from './TubbyPlaceholder'

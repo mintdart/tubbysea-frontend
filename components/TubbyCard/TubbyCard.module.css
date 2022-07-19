@@ -35,8 +35,6 @@
 	justify-content: space-between;
 	flex-wrap: wrap;
 	gap: 8px;
-	font-size: 0.875rem;
-	font-weight: 500;
 }
 
 .flexRowSm {
@@ -48,11 +46,16 @@
 .actionButton {
 	padding: 4px 8px;
 	color: #fff;
-	background: none;
+	background: #333;
 	border: 1px solid #f788bf;
 	border-radius: 12px;
 	width: fit-content;
 	white-space: nowrap;
+	filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 30%));
+}
+
+.actionButton:active {
+	transform: translateY(1px);
 }
 
 .actionButton:hover,
@@ -75,4 +78,28 @@
 
 .dullText {
 	color: #c6c6c6;
+}
+
+.animate-shimmer {
+	animation: shimmer 2s cubic-bezier(0.31, 0.29, 0.62, 0.59) infinite;
+	background: linear-gradient(to right, #3a3a3a 5%, #4a4a4a 20%, #3a3a3a 40%);
+	background-size: 1000px 100%;
+}
+
+.price[data-animate='false'] {
+	background-color: #444;
+	width: 8ch;
+	height: 16px;
+	animation: shimmer 2s cubic-bezier(0.31, 0.29, 0.62, 0.59) infinite;
+	background: linear-gradient(to right, #3a3a3a 5%, #4a4a4a 20%, #3a3a3a 40%);
+	background-size: 1000px 100%;
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: -1000px 0;
+	}
+	100% {
+		background-position: 1000px 0;
+	}
 }

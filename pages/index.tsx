@@ -1,32 +1,43 @@
 import type { NextPage } from 'next'
-import { useContractRead } from 'wagmi'
+import { useAccount, useContractRead } from 'wagmi'
 import BigNumber from 'bignumber.js'
 import Layout from '~/components/Layout'
-import TubbyCard from '~/components/TubbyCard'
+import TubbyCard, { TubbyPlaceholder } from '~/components/TubbyCard'
 import TubbyGrid from '~/components/TubbyGrid'
-import { NFTS_LIST_ABI, NFTS_LIST_CONTRACT } from '~/contracts'
-import { getAddress } from 'ethers/lib/utils'
+import { NFTS_LIST_ABI, NFTS_LIST_CONTRACT, NFT_TESTNET_CONTRACT } from '~/contracts'
 
 const Home: NextPage = () => {
-	// const { data, isError, isLoading } = useContractRead({
-	// 	addressOrName: getAddress(NFTS_LIST_CONTRACT),
-	// 	contractInterface: NFTS_LIST_ABI,
-	// 	functionName: 'getOwnedNfts',
-	// 	args: [
-	// 		getAddress('0xcf85C40f864736eC9513840C476e35375926E96c'),
-	// 		getAddress('0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b'),
-	// 		new BigNumber(1).times(1e18).toFixed(0),
-	// 		new BigNumber(100).times(1e18).toFixed(0)
-	// 	]
-	// })
+	const { address } = useAccount()
+	const { data, isError, isLoading } = useContractRead({
+		addressOrName: NFTS_LIST_CONTRACT,
+		contractInterface: NFTS_LIST_ABI,
+		functionName: 'getOwnedNfts',
+		args: [address, NFT_TESTNET_CONTRACT, 1625000, 1626000]
+	})
+
+	const tubbies: number[] = data
+		? data[0]
+				.map((item: BigNumber) => Number(item.toString()))
+				.filter((item: number) => item !== 0 && !Number.isNaN(item))
+		: []
 
 	return (
 		<Layout>
-			<TubbyGrid>
-				{new Array(10).fill('tubby').map((_, index) => (
-					<TubbyCard key={index} id="9204" imgUrl="/minty.jpeg" type="borrow" />
-				))}
-			</TubbyGrid>
+			{isError ? (
+				<p>Sorry, couldn't get nfts for your address</p>
+			) : isLoading ? (
+				<TubbyGrid>
+					{new Array(8).fill('tubby').map((_, index) => (
+						<TubbyPlaceholder key={index} type="borrow" />
+					))}
+				</TubbyGrid>
+			) : (
+				<TubbyGrid>
+					{tubbies.map((id) => (
+						<TubbyCard key={id} id={id} type="borrow" />
+					))}
+				</TubbyGrid>
+			)}
 		</Layout>
 	)
 }
