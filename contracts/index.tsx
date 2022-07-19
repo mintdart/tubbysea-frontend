@@ -1,0 +1,6 @@
+export const LENDING_POOL_CONTRACT = '0xb7769D356cAe9A5a7fcbAFDB83d6592Df73D0b47'
+export const NFTS_LIST_CONTRACT = '0xf48F0785A6BB7e56605711093750FbAeB9697E4d'
+export const TUBBY_CONTRACT = '0xCa7cA7BcC765F77339bE2d648BA53ce9c8a262bD'
+
+export { LENDING_POOL_ABI } from './lendingPool.abi'
+export { NFTS_LIST_ABI } from './nftsList.abi'

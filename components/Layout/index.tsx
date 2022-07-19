@@ -25,7 +25,7 @@ export default function Layout({ children, ...props }: ILayoutProps) {
 			<header className={styles.header}>
 				<nav className={styles.nav}>
 					<div className={styles.logoWrapper}>
-						<Image src="/tubby.png" alt="tubby cat" height="24px" layout="fill" />
+						<Image src="/tubby.png" alt="tubby cat" layout="fill" />
 					</div>
 					<Link href="/">
 						<a data-active={router.pathname === '/'}>Borrow</a>
