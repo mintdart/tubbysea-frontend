@@ -19,18 +19,23 @@ const { connectors } = getDefaultWallets({
 })
 
 const wagmiClient = createClient({
+	autoConnect: true,
 	connectors,
 	provider
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
 	const [queryClient] = React.useState(() => new QueryClient())
+
+	const [isMounted, setIsMounted] = React.useState(false)
+	React.useEffect(() => setIsMounted(true), [])
+
 	return (
 		<QueryClientProvider client={queryClient}>
 			<Hydrate state={pageProps.dehydratedState}>
 				<WagmiConfig client={wagmiClient}>
 					<RainbowKitProvider chains={chains} initialChain={chain.kovan}>
-						<Component {...pageProps} />
+						{isMounted && <Component {...pageProps} />}
 					</RainbowKitProvider>
 				</WagmiConfig>
 			</Hydrate>

@@ -54,7 +54,8 @@
 	filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 30%));
 }
 
-.actionButton:active {
+.actionButton:active,
+.savedButton:active {
 	transform: translateY(1px);
 }
 
@@ -112,4 +113,41 @@
 	100% {
 		background-position: 1000px 0;
 	}
+}
+
+.savedButton {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	padding: 4px 8px;
+	color: #fff;
+	background: #333;
+	border: 1px solid #89cfdd;
+	border-radius: 12px;
+	width: fit-content;
+	white-space: nowrap;
+	filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 30%));
+}
+
+.checkMark {
+	height: 16px;
+	width: 16px;
+	animation: checkMarkTransition 2s ease-out;
+}
+
+@keyframes checkMarkTransition {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.savedButton:hover,
+.savedButton:focus-visible {
+	cursor: pointer;
+	background: #d9fffe;
+	color: #000;
+	outline: none;
 }

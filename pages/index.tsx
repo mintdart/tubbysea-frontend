@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import { useAccount, useContractRead } from 'wagmi'
+import { Dialog, DialogDismiss, DialogHeading, useDialogState } from 'ariakit/dialog'
 import BigNumber from 'bignumber.js'
 import Layout from '~/components/Layout'
 import TubbyCard, { TubbyPlaceholder } from '~/components/TubbyCard'
@@ -21,6 +22,8 @@ const Home: NextPage = () => {
 				.filter((item: number) => item !== 0 && !Number.isNaN(item))
 		: []
 
+	const dialog = useDialogState()
+
 	return (
 		<Layout>
 			{isError ? (
@@ -34,10 +37,21 @@ const Home: NextPage = () => {
 			) : (
 				<TubbyGrid>
 					{tubbies.map((id) => (
-						<TubbyCard key={id} id={id} type="borrow" />
+						<TubbyCard key={id} id={id} type="borrow" dialog={dialog} />
 					))}
 				</TubbyGrid>
 			)}
+			<Dialog state={dialog} className="dialog">
+				<header className="header">
+					<DialogHeading className="heading">Checkout</DialogHeading>
+					<DialogDismiss className="button dismiss" />
+				</header>
+				<ul>
+					<li>
+						<strong>Calories:</strong> 95
+					</li>
+				</ul>
+			</Dialog>
 		</Layout>
 	)
 }

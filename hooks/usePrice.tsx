@@ -12,7 +12,7 @@ interface IQuoteResponse {
 	}
 }
 
-export interface IQuoteError {
+interface IQuoteError {
 	message?: string
 }
 
