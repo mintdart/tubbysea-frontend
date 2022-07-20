@@ -1,10 +1,12 @@
 import '../styles/globals.css'
-import type { AppProps } from 'next/app'
 import '@rainbow-me/rainbowkit/styles.css'
-import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import type { AppProps } from 'next/app'
+import * as React from 'react'
+import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
+import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 
 const { chains, provider } = configureChains(
 	[chain.mainnet, chain.kovan],
@@ -22,12 +24,17 @@ const wagmiClient = createClient({
 })
 
 function MyApp({ Component, pageProps }: AppProps) {
+	const [queryClient] = React.useState(() => new QueryClient())
 	return (
-		<WagmiConfig client={wagmiClient}>
-			<RainbowKitProvider chains={chains} initialChain={chain.kovan}>
-				<Component {...pageProps} />
-			</RainbowKitProvider>
-		</WagmiConfig>
+		<QueryClientProvider client={queryClient}>
+			<Hydrate state={pageProps.dehydratedState}>
+				<WagmiConfig client={wagmiClient}>
+					<RainbowKitProvider chains={chains} initialChain={chain.kovan}>
+						<Component {...pageProps} />
+					</RainbowKitProvider>
+				</WagmiConfig>
+			</Hydrate>
+		</QueryClientProvider>
 	)
 }
 

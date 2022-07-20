@@ -66,6 +66,16 @@
 	outline: none;
 }
 
+.actionButton:disabled {
+	cursor: not-allowed;
+	color: rgba(255, 255, 255, 70%);
+}
+
+.actionButton:disabled:hover {
+	background: initial;
+	color: rgba(255, 255, 255, 70%);
+}
+
 .quoteSection {
 	display: flex;
 	flex-direction: column;
@@ -86,7 +96,7 @@
 	background-size: 1000px 100%;
 }
 
-.price[data-animate='false'] {
+.price[data-animate='true'] {
 	background-color: #444;
 	width: 8ch;
 	height: 16px;

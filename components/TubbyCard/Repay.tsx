@@ -33,7 +33,7 @@ export default function Repay({ id }: { id?: number }) {
 				<span className={styles.flexRow}>
 					<p className={styles.flexRowSm}>
 						<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
-						<span data-animate={price ? true : false} className={styles.price}>
+						<span data-animate={!price ? true : false} className={styles.price}>
 							{id}
 						</span>
 					</p>
