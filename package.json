@@ -10,7 +10,7 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
-		"@rainbow-me/rainbowkit": "^0.4.2",
+		"@rainbow-me/rainbowkit": "^0.4.3",
 		"bignumber.js": "^9.0.2",
 		"ethers": "^5.6.9",
 		"next": "12.2.2",

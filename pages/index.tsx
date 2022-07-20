@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js'
 import Layout from '~/components/Layout'
 import TubbyCard, { TubbyPlaceholder } from '~/components/TubbyCard'
 import TubbyGrid from '~/components/TubbyGrid'
-import { NFTS_LIST_ABI, NFTS_LIST_CONTRACT, NFT_TESTNET_CONTRACT } from '~/contracts'
+import { NFTS_LIST_ABI, NFTS_LIST_CONTRACT, NFT_TESTNET_CONTRACT } from '~/lib/contracts'
 
 const Home: NextPage = () => {
 	const { address } = useAccount()

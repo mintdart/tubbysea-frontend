@@ -7,7 +7,7 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, provider } = configureChains(
-	[chain.kovan],
+	[chain.mainnet, chain.kovan],
 	[alchemyProvider({ alchemyId: 'PwvZx2hO2XpToWXSw9sgJJt1eBgjkRUr' }), publicProvider()]
 )
 
@@ -24,7 +24,7 @@ const wagmiClient = createClient({
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<WagmiConfig client={wagmiClient}>
-			<RainbowKitProvider chains={chains}>
+			<RainbowKitProvider chains={chains} initialChain={chain.kovan}>
 				<Component {...pageProps} />
 			</RainbowKitProvider>
 		</WagmiConfig>

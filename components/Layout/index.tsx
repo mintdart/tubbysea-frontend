@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useAccount } from 'wagmi'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit'
 import styles from './Layout.module.css'
 import Image from 'next/image'
 
@@ -15,6 +15,7 @@ export default function Layout({ children, ...props }: ILayoutProps) {
 	const router = useRouter()
 
 	const { isConnected } = useAccount()
+	const { openConnectModal } = useConnectModal()
 
 	return (
 		<>
@@ -37,7 +38,14 @@ export default function Layout({ children, ...props }: ILayoutProps) {
 				<ConnectButton />
 			</header>
 			<main className={styles.main} {...props}>
-				{isConnected ? children : <p className="fallback-text">Connect Wallet to view your nfts and loans</p>}
+				{isConnected ? (
+					children
+				) : (
+					<p className="fallback-text">
+						<button onClick={openConnectModal}>Connect Wallet</button>
+						<span> to view your nfts and loans</span>
+					</p>
+				)}
 			</main>
 		</>
 	)

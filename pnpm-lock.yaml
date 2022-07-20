@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@rainbow-me/rainbowkit': ^0.4.2
+  '@rainbow-me/rainbowkit': ^0.4.3
   '@types/node': 18.0.5
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
@@ -18,7 +18,7 @@ specifiers:
   wagmi: ^0.5.9
 
 dependencies:
-  '@rainbow-me/rainbowkit': 0.4.2_hgqkbx6sx6bsm7x75h5wznyoae
+  '@rainbow-me/rainbowkit': 0.4.3_hgqkbx6sx6bsm7x75h5wznyoae
   bignumber.js: 9.0.2
   ethers: 5.6.9
   next: 12.2.2_biqbaboplfbrettd7655fr4n2y
@@ -807,8 +807,8 @@ packages:
     resolution: {integrity: sha512-HaW78NszGzRZd9SeoI3JD11JqY+lubnaOx7Pewj5pfjqWXOEATpeKIFb9Z4t2WBUK2iryiXX3lzWwmYWgUL0Ug==}
     dev: false
 
-  /@rainbow-me/rainbowkit/0.4.2_hgqkbx6sx6bsm7x75h5wznyoae:
-    resolution: {integrity: sha512-LHRrCd4zidOPrdbDGAEoTEMRw9NV8RNaqW3DiLZNrVc8xdENTFagX3IikuUk6iUgcFuRk85K+hRvUTIrUdAO4Q==}
+  /@rainbow-me/rainbowkit/0.4.3_hgqkbx6sx6bsm7x75h5wznyoae:
+    resolution: {integrity: sha512-H1SEGb5MOMjcdgxHoPKc/iDooOOeXRjYWUyIIt5xX6t450rwEv9yg8dHH1gs5lMKM9KgDB39WYz7UPDMR1OmOw==}
     engines: {node: '>=12.4'}
     peerDependencies:
       ethers: '>=5.5.1'
