@@ -69,3 +69,24 @@ export default function Borrow({ id, dialog, isToggledBefore }: IBorrow) {
 		</span>
 	)
 }
+
+export const BorrowPlaceholder = () => {
+	return (
+		<span className={styles.infoWrapper}>
+			<p className={styles.dullText}>{}</p>
+			<span className={styles.quoteSection}>
+				<p>Quote</p>
+				<span className={styles.flexRow}>
+					<p className={styles.flexRowSm}>
+						<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
+						<span data-animate={true} className={styles.price}></span>
+					</p>
+
+					<button className={styles.actionButton} disabled={true}>
+						Borrow ETH
+					</button>
+				</span>
+			</span>
+		</span>
+	)
+}
