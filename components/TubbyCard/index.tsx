@@ -9,17 +9,18 @@ interface ITubbyCardProps {
 	id: number
 	type: 'borrow' | 'repay'
 	dialog: DisclosureState
+	isToggledBefore: React.MutableRefObject<boolean>
 }
 
 const imgUrl = '/minty.jpeg'
 
-export default function TubbyCard({ id, type, dialog }: ITubbyCardProps) {
+export default function TubbyCard({ id, type, dialog, isToggledBefore }: ITubbyCardProps) {
 	return (
 		<article className={styles.card}>
 			<span className={styles.imageWrapper}>
 				{imgUrl && <Image src={imgUrl} alt={`token id ${id}`} layout="fill" />}
 			</span>
-			{type === 'borrow' ? <Borrow id={id} dialog={dialog} /> : <Repay id={id} />}
+			{type === 'borrow' ? <Borrow id={id} dialog={dialog} isToggledBefore={isToggledBefore} /> : <Repay id={id} />}
 		</article>
 	)
 }

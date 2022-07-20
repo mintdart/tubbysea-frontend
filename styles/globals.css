@@ -52,6 +52,11 @@ h6 {
 	overflow-wrap: break-word;
 }
 
+ul {
+	list-style: none;
+	padding: 0;
+}
+
 #__next {
 	isolation: isolate;
 	min-height: 100%;
@@ -101,6 +106,10 @@ h6 {
 	padding: 0;
 	color: inherit;
 	cursor: pointer;
+}
+
+[data-backdrop] {
+	background-color: rgb(0 0 0 / 10%);
 }
 
 @media (min-width: 37.5rem) {

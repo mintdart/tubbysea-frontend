@@ -1,0 +1,51 @@
+.dialog {
+	max-width: min(calc(100% - 32px), 640px);
+	max-height: calc(100% - 32px);
+	transform: translate(-50%, -50%);
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	z-index: 50;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 1rem;
+	padding: 1rem;
+	overflow: auto;
+	border-radius: 0.5rem;
+	border: 1px solid hsl(204, 3%, 32%);
+	background-color: hsl(204, 3%, 20%);
+	color: hsl(0, 0%, 100%);
+	filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 40%));
+}
+
+.dialogHeader {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.dialogHeading {
+	margin: 0px;
+	font-size: 1.5rem;
+	line-height: 2rem;
+	font-weight: 500;
+}
+
+.dialogButtonDismiss {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 2.5rem;
+	width: 2.5rem;
+	padding: 0px;
+	background-color: hsla(204, 5%, 8%, 0%);
+	color: hsl(0, 0%, 100%);
+	border: none;
+	border-radius: 12px;
+	cursor: pointer;
+}
+
+.dialogButtonDismiss:hover {
+	background-color: hsla(204, 5%, 24%, 50%);
+}

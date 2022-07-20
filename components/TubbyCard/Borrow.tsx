@@ -2,27 +2,35 @@ import * as React from 'react'
 import Image from 'next/image'
 import { DisclosureState } from 'ariakit'
 import { useQuote } from '~/hooks/usePrice'
-import { useSaveItemToBorrow } from '~/hooks/useSaveItemToBorrow'
+import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
 import styles from './TubbyCard.module.css'
 import { NFT_TESTNET_CONTRACT } from '~/lib/contracts'
 
 interface IBorrow {
-	id?: number
+	id: number
 	dialog: DisclosureState
+	isToggledBefore: React.MutableRefObject<boolean>
 }
 
-export default function Borrow({ id, dialog }: IBorrow) {
-	const [click, setClick] = React.useState(false)
-	const { data, isLoading } = useQuote()
+// TODO handle queries error
 
-	const { mutate } = useSaveItemToBorrow()
+export default function Borrow({ id, dialog, isToggledBefore }: IBorrow) {
+	const { data: quote, isLoading: isFetchingQuote } = useQuote()
+	const { data: cartItems } = useGetCartItems(NFT_TESTNET_CONTRACT)
+	const { mutateAsync } = useSaveItemToCart()
 
 	const storeItem = () => {
 		if (!id) return
 
-		setClick(!click)
+		mutateAsync({ contract: NFT_TESTNET_CONTRACT, tokenId: id }).then(() => {
+			const contractItems = JSON.parse(localStorage.getItem('tubbylend') || '')?.[NFT_TESTNET_CONTRACT]
 
-		mutate({ contract: NFT_TESTNET_CONTRACT, tokenId: id })
+			// toggle when we add an item to cart and only show dialog once
+			if (!isToggledBefore.current && contractItems?.length > 0 && contractItems.includes(id)) {
+				dialog.toggle()
+				isToggledBefore.current = true
+			}
+		})
 	}
 
 	return (
@@ -33,11 +41,11 @@ export default function Borrow({ id, dialog }: IBorrow) {
 				<span className={styles.flexRow}>
 					<p className={styles.flexRowSm}>
 						<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
-						<span data-animate={isLoading ? true : false} className={styles.price}>
-							{data?.price ?? (!isLoading && '-')}
+						<span data-animate={isFetchingQuote ? true : false} className={styles.price}>
+							{quote?.price ?? (!isFetchingQuote && '-')}
 						</span>
 					</p>
-					{click ? (
+					{cartItems?.includes(id) ? (
 						<button className={styles.savedButton} onClick={storeItem}>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +60,7 @@ export default function Borrow({ id, dialog }: IBorrow) {
 							<span>Added to cart</span>
 						</button>
 					) : (
-						<button className={styles.actionButton} onClick={storeItem} disabled={!id || !data || !data.signature}>
+						<button className={styles.actionButton} onClick={storeItem} disabled={!id || !quote || !quote.signature}>
 							Borrow ETH
 						</button>
 					)}

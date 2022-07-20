@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import * as React from 'react'
 import { useAccount, useContractRead } from 'wagmi'
 import { Dialog, DialogDismiss, DialogHeading, useDialogState } from 'ariakit/dialog'
 import BigNumber from 'bignumber.js'
@@ -6,6 +7,7 @@ import Layout from '~/components/Layout'
 import TubbyCard, { TubbyPlaceholder } from '~/components/TubbyCard'
 import TubbyGrid from '~/components/TubbyGrid'
 import { NFTS_LIST_ABI, NFTS_LIST_CONTRACT, NFT_TESTNET_CONTRACT } from '~/lib/contracts'
+import styles from '~/styles/index.module.css'
 
 const Home: NextPage = () => {
 	const { address } = useAccount()
@@ -23,6 +25,7 @@ const Home: NextPage = () => {
 		: []
 
 	const dialog = useDialogState()
+	const isToggledBefore = React.useRef(false)
 
 	return (
 		<Layout>
@@ -37,19 +40,17 @@ const Home: NextPage = () => {
 			) : (
 				<TubbyGrid>
 					{tubbies.map((id) => (
-						<TubbyCard key={id} id={id} type="borrow" dialog={dialog} />
+						<TubbyCard key={id} id={id} type="borrow" dialog={dialog} isToggledBefore={isToggledBefore} />
 					))}
 				</TubbyGrid>
 			)}
-			<Dialog state={dialog} className="dialog">
-				<header className="header">
-					<DialogHeading className="heading">Checkout</DialogHeading>
-					<DialogDismiss className="button dismiss" />
+			<Dialog state={dialog} className={styles.dialog}>
+				<header className={styles.dialogHeader}>
+					<DialogHeading className={styles.dialogHeading}>Checkout</DialogHeading>
+					<DialogDismiss className={styles.dialogButtonDismiss} />
 				</header>
 				<ul>
-					<li>
-						<strong>Calories:</strong> 95
-					</li>
+					<li></li>
 				</ul>
 			</Dialog>
 		</Layout>
