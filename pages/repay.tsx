@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Layout from '~/components/Layout'
-import TubbyCard, { TubbyPlaceholder } from '~/components/TubbyCard'
+import { RepayTubby, RepayTubbyPlaceholder } from '~/components/TubbyCard'
 import TubbyGrid from '~/components/TubbyGrid'
 
 const Repay: NextPage = () => {
@@ -16,7 +16,7 @@ const Repay: NextPage = () => {
 			) : isLoading ? (
 				<TubbyGrid>
 					{new Array(8).fill('tubby').map((_, index) => (
-						<TubbyPlaceholder key={index} type="borrow" />
+						<RepayTubbyPlaceholder key={index} />
 					))}
 				</TubbyGrid>
 			) : tubbies.length === 0 ? (
@@ -24,7 +24,7 @@ const Repay: NextPage = () => {
 			) : (
 				<TubbyGrid>
 					{tubbies.map((id) => (
-						<TubbyCard key={id} id={id} type="borrow" />
+						<RepayTubby key={id} id={id} />
 					))}
 				</TubbyGrid>
 			)}

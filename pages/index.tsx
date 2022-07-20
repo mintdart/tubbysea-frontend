@@ -4,7 +4,7 @@ import { useAccount, useContractRead } from 'wagmi'
 import { Dialog, DialogDismiss, DialogHeading, useDialogState } from 'ariakit/dialog'
 import BigNumber from 'bignumber.js'
 import Layout from '~/components/Layout'
-import TubbyCard, { TubbyPlaceholder } from '~/components/TubbyCard'
+import { BorrowTubbyPlaceholder, BorrowTubby } from '~/components/TubbyCard'
 import TubbyGrid from '~/components/TubbyGrid'
 import { NFTS_LIST_ABI, NFTS_LIST_CONTRACT, NFT_TESTNET_CONTRACT } from '~/lib/contracts'
 import styles from '~/styles/index.module.css'
@@ -34,13 +34,13 @@ const Home: NextPage = () => {
 			) : isLoading ? (
 				<TubbyGrid>
 					{new Array(8).fill('tubby').map((_, index) => (
-						<TubbyPlaceholder key={index} type="borrow" />
+						<BorrowTubbyPlaceholder key={index} />
 					))}
 				</TubbyGrid>
 			) : (
 				<TubbyGrid>
 					{tubbies.map((id) => (
-						<TubbyCard key={id} id={id} type="borrow" dialog={dialog} isToggledBefore={isToggledBefore} />
+						<BorrowTubby key={id} id={id} dialog={dialog} isToggledBefore={isToggledBefore} />
 					))}
 				</TubbyGrid>
 			)}
