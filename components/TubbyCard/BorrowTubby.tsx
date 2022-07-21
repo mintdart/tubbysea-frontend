@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Image from 'next/image'
-import { useQuote } from '~/hooks/usePrice'
+import { useGetQuote } from '~/hooks/useGetQuote'
 import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
 import styles from './TubbyCard.module.css'
 
@@ -13,7 +13,7 @@ const imgUrl = '/minty.jpeg'
 // TODO: handle queries error
 
 export function BorrowTubby({ id }: IBorrowTubby) {
-	const { data: quote, isLoading: isFetchingQuote } = useQuote()
+	const { data: quote, isLoading: isFetchingQuote } = useGetQuote()
 	const { data: cartItems } = useGetCartItems()
 	const { mutate } = useSaveItemToCart()
 

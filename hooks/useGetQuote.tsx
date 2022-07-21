@@ -26,10 +26,10 @@ async function fetchQuote(): Promise<IQuoteResponse> {
 	}
 }
 
-const useQuote = () => {
+const useGetQuote = () => {
 	return useQuery<IQuoteResponse, IQuoteError>(['quote'], () => fetchQuote(), {
 		refetchInterval: 60 * 100
 	})
 }
 
-export { useQuote, fetchQuote }
+export { useGetQuote, fetchQuote }

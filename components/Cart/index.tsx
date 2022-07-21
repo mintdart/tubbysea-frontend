@@ -3,15 +3,17 @@ import Image from 'next/image'
 import { DisclosureState } from 'ariakit'
 import { Dialog, DialogDismiss, DialogHeading } from 'ariakit/dialog'
 import { useGetCartItems } from '~/hooks/useCart'
+import { useGetQuote } from '~/hooks/useGetQuote'
 import styles from './Cart.module.css'
-import { useQuote } from '~/hooks/usePrice'
+import { useGetInterest } from '~/hooks/useGetInterest'
 
 const imgUrl = '/minty.jpeg'
 
 // TODO: handle loading and error states
 export default function Cart({ dialog }: { dialog: DisclosureState }) {
 	const { data: cartItems } = useGetCartItems()
-	const { data: quote } = useQuote()
+	const { data: quote } = useGetQuote()
+	const { data: currentAnnualInterest } = useGetInterest()
 
 	return (
 		<Dialog state={dialog} portal={typeof window !== 'undefined'} className={styles.dialog}>
@@ -33,7 +35,7 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 									<span className={styles.collectionName}>Tubby Cats</span>
 								</span>
 
-								<span className={styles.quotePrice}>
+								<span className={styles.priceWrapper}>
 									<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
 									<span>{quote?.price}</span>
 								</span>
@@ -44,27 +46,32 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 					<ul className={styles.list}>
 						<li className={styles.listItem}>
 							<span>You Receive</span>
-							<span className={styles.quotePrice}>
+							<span className={styles.priceWrapper}>
 								<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
-								<span>{cartItems?.length * quote?.price}</span>
+								<span>{cartItems?.length * quote?.price} ETH</span>
 							</span>
 						</li>
 						<li className={styles.listItem}>
 							<span>Interest</span>
-							<span className={styles.quotePrice}>
-								<span>{cartItems?.length * quote?.price}</span>
+							<span className={styles.priceWrapper}>
+								<span>
+									{currentAnnualInterest &&
+										typeof currentAnnualInterest === 'number' &&
+										`${(currentAnnualInterest / 1e18).toFixed(2)}% p.a.`}
+								</span>
 							</span>
 						</li>
 						<li className={styles.listItem}>
 							<span>Deadline</span>
-							<span className={styles.quotePrice}>
+							<span className={styles.priceWrapper}>
 								<span>{quote.deadline && new Date(quote.deadline * 1000)?.toLocaleString()}</span>
 							</span>
 						</li>
 					</ul>
+					<button>Approve</button>
 				</>
 			) : (
-				<></>
+				<p className={styles.emptyMsg}>Your cart is empty. Fill it with NFTs to borrow ETH.</p>
 			)}
 		</Dialog>
 	)

@@ -21,7 +21,7 @@
 
 .dialog hr {
 	border-color: hsla(204, 5%, 24%, 50%);
-	margin-bottom: -4px;
+	margin-bottom: -5px;
 }
 
 .dialogHeader {
@@ -90,8 +90,20 @@
 	font-weight: 300;
 }
 
-.quotePrice {
+.priceWrapper {
 	display: flex;
 	gap: 6px;
 	margin-left: auto;
+}
+
+.checkoutButton {
+	border: none;
+	border-radius: 12px;
+}
+
+.emptyMsg {
+	position: relative;
+	top: -10px;
+	text-align: center;
+	padding: 44px;
 }
