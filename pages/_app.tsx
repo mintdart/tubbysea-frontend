@@ -14,7 +14,7 @@ const { chains, provider } = configureChains(
 )
 
 const { connectors } = getDefaultWallets({
-	appName: 'Tubby Cats Lending',
+	appName: 'tubby cats lending',
 	chains
 })
 

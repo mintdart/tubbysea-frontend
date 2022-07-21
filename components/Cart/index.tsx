@@ -32,7 +32,7 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 								<Image src={imgUrl} width="40px" height="40px" objectFit="cover" alt={`token id ${item}`} />
 								<span className={styles.itemDetails}>
 									<span>{`#${item}`}</span>
-									<span className={styles.collectionName}>Tubby Cats</span>
+									<span className={styles.collectionName}>tubby cats</span>
 								</span>
 
 								<span className={styles.priceWrapper}>
