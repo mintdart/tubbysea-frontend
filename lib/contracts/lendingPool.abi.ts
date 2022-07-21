@@ -95,6 +95,13 @@ export const LENDING_POOL_ABI = [
 		stateMutability: 'nonpayable',
 		type: 'function'
 	},
+	{
+		inputs: [{ internalType: 'uint256', name: 'priceOfNextItem', type: 'uint256' }],
+		name: 'currentAnnualInterest',
+		outputs: [{ internalType: 'uint256', name: 'interest', type: 'uint256' }],
+		stateMutability: 'view',
+		type: 'function'
+	},
 	{ inputs: [], name: 'deposit', outputs: [], stateMutability: 'payable', type: 'function' },
 	{
 		inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
@@ -230,6 +237,13 @@ export const LENDING_POOL_ABI = [
 		type: 'function'
 	},
 	{
+		inputs: [{ internalType: 'string', name: 'newBaseURI', type: 'string' }],
+		name: 'setBaseURI',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function'
+	},
+	{
 		inputs: [{ internalType: 'bool', name: 'newValue', type: 'bool' }],
 		name: 'setNewBorrowsAllowed',
 		outputs: [],
@@ -275,6 +289,13 @@ export const LENDING_POOL_ABI = [
 		inputs: [],
 		name: 'totalBorrowed',
 		outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+		stateMutability: 'view',
+		type: 'function'
+	},
+	{
+		inputs: [],
+		name: 'totalSupply',
+		outputs: [{ internalType: 'uint256', name: 'supply', type: 'uint256' }],
 		stateMutability: 'view',
 		type: 'function'
 	},
