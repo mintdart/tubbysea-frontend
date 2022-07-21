@@ -1,38 +1,26 @@
 import * as React from 'react'
 import Image from 'next/image'
-import { DisclosureState } from 'ariakit'
 import { useQuote } from '~/hooks/usePrice'
 import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
 import styles from './TubbyCard.module.css'
-import { NFT_TESTNET_CONTRACT } from '~/lib/contracts'
 
 interface IBorrowTubby {
 	id: number
-	dialog: DisclosureState
-	isToggledBefore: React.MutableRefObject<boolean>
 }
 
 const imgUrl = '/minty.jpeg'
 
-// TODO handle queries error
+// TODO: handle queries error
 
-export function BorrowTubby({ id, dialog, isToggledBefore }: IBorrowTubby) {
+export function BorrowTubby({ id }: IBorrowTubby) {
 	const { data: quote, isLoading: isFetchingQuote } = useQuote()
-	const { data: cartItems } = useGetCartItems(NFT_TESTNET_CONTRACT)
-	const { mutateAsync } = useSaveItemToCart()
+	const { data: cartItems } = useGetCartItems()
+	const { mutate } = useSaveItemToCart()
 
 	const storeItem = () => {
 		if (!id) return
 
-		mutateAsync({ contract: NFT_TESTNET_CONTRACT, tokenId: id }).then(() => {
-			const contractItems = JSON.parse(localStorage.getItem('tubbylend') || '')?.[NFT_TESTNET_CONTRACT]
-
-			// toggle when we add an item to cart and only show dialog once
-			if (!isToggledBefore.current && contractItems?.length > 0 && contractItems.includes(id)) {
-				dialog.toggle()
-				isToggledBefore.current = true
-			}
-		})
+		mutate({ tokenId: id })
 	}
 
 	return (

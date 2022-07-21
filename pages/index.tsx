@@ -1,59 +1,50 @@
 import type { NextPage } from 'next'
 import * as React from 'react'
-import { useAccount, useContractRead } from 'wagmi'
-import { Dialog, DialogDismiss, DialogHeading, useDialogState } from 'ariakit/dialog'
-import BigNumber from 'bignumber.js'
+import { useDialogState } from 'ariakit/dialog'
 import Layout from '~/components/Layout'
 import { BorrowTubbyPlaceholder, BorrowTubby } from '~/components/TubbyCard'
 import TubbyGrid from '~/components/TubbyGrid'
-import { NFTS_LIST_ABI, NFTS_LIST_CONTRACT, NFT_TESTNET_CONTRACT } from '~/lib/contracts'
-import styles from '~/styles/index.module.css'
+import { useRouter } from 'next/router'
+import Cart from '~/components/Cart'
+import { useGetNfts } from '~/hooks/useGetNfts'
 
 const Home: NextPage = () => {
-	const { address } = useAccount()
-	const { data, isError, isLoading } = useContractRead({
-		addressOrName: NFTS_LIST_CONTRACT,
-		contractInterface: NFTS_LIST_ABI,
-		functionName: 'getOwnedNfts',
-		args: [address, NFT_TESTNET_CONTRACT, 1625000, 1626000]
+	const router = useRouter()
+	const { cart } = router.query
+
+	// get number of nft's owned by user of a given contract
+	const { data: tubbies, isError, isLoading } = useGetNfts()
+
+	const dialog = useDialogState({
+		open: typeof cart === 'string' && cart === 'true',
+		setOpen: (open) => {
+			if (!open) {
+				router.push('/')
+			}
+		}
 	})
 
-	const tubbies: number[] = data
-		? data[0]
-				.map((item: BigNumber) => Number(item.toString()))
-				.filter((item: number) => item !== 0 && !Number.isNaN(item))
-		: []
-
-	const dialog = useDialogState()
-	const isToggledBefore = React.useRef(false)
-
 	return (
-		<Layout>
-			{isError ? (
-				<p className="fallback-text">Sorry, couldn't get nfts for your address</p>
-			) : isLoading ? (
-				<TubbyGrid>
-					{new Array(8).fill('tubby').map((_, index) => (
-						<BorrowTubbyPlaceholder key={index} />
-					))}
-				</TubbyGrid>
-			) : (
-				<TubbyGrid>
-					{tubbies.map((id) => (
-						<BorrowTubby key={id} id={id} dialog={dialog} isToggledBefore={isToggledBefore} />
-					))}
-				</TubbyGrid>
-			)}
-			<Dialog state={dialog} className={styles.dialog}>
-				<header className={styles.dialogHeader}>
-					<DialogHeading className={styles.dialogHeading}>Checkout</DialogHeading>
-					<DialogDismiss className={styles.dialogButtonDismiss} />
-				</header>
-				<ul>
-					<li></li>
-				</ul>
-			</Dialog>
-		</Layout>
+		<>
+			<Layout>
+				{isError ? (
+					<p className="fallback-text">Sorry, couldn't get nfts for your address</p>
+				) : isLoading ? (
+					<TubbyGrid>
+						{new Array(8).fill('tubby').map((_, index) => (
+							<BorrowTubbyPlaceholder key={index} />
+						))}
+					</TubbyGrid>
+				) : (
+					<TubbyGrid>
+						{tubbies?.map((id) => (
+							<BorrowTubby key={id} id={id} />
+						))}
+					</TubbyGrid>
+				)}
+			</Layout>
+			<Cart dialog={dialog} />
+		</>
 	)
 }
 

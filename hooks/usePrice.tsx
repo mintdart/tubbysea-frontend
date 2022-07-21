@@ -4,7 +4,7 @@ import { QUOTE_SERVER_API } from '~/lib/constants'
 interface IQuoteResponse {
 	deadline: number
 	nftContract: string
-	price: string
+	price: number | null
 	signature: {
 		r: string
 		s: string
@@ -27,7 +27,9 @@ async function fetchQuote(): Promise<IQuoteResponse> {
 }
 
 const useQuote = () => {
-	return useQuery<IQuoteResponse, IQuoteError>(['quote'], () => fetchQuote())
+	return useQuery<IQuoteResponse, IQuoteError>(['quote'], () => fetchQuote(), {
+		refetchInterval: 60 * 100
+	})
 }
 
 export { useQuote, fetchQuote }

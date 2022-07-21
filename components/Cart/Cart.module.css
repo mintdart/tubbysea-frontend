@@ -1,5 +1,5 @@
 .dialog {
-	max-width: min(calc(100% - 32px), 640px);
+	max-width: min(calc(100% - 32px), 560px);
 	max-height: calc(100% - 32px);
 	transform: translate(-50%, -50%);
 	position: fixed;
@@ -19,6 +19,11 @@
 	filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 40%));
 }
 
+.dialog hr {
+	border-color: hsla(204, 5%, 24%, 50%);
+	margin-bottom: -4px;
+}
+
 .dialogHeader {
 	display: flex;
 	align-items: center;
@@ -33,6 +38,8 @@
 }
 
 .dialogButtonDismiss {
+	position: relative;
+	right: -12px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -48,4 +55,43 @@
 
 .dialogButtonDismiss:hover {
 	background-color: hsla(204, 5%, 24%, 50%);
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.listItem {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 0.875rem;
+	font-weight: 500;
+	border-radius: 12px;
+}
+
+.listItem img {
+	border-radius: 4px;
+}
+
+.itemDetails {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.collectionName {
+	font-size: 0.8rem;
+	font-weight: 300;
+}
+
+.quotePrice {
+	display: flex;
+	gap: 6px;
+	margin-left: auto;
 }

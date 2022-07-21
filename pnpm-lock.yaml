@@ -1,8 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@rainbow-me/rainbowkit': ^0.4.3
-  '@tanstack/react-query': ^4.0.5
+  '@rainbow-me/rainbowkit': ^0.4.4
+  '@tanstack/react-query': ^4.0.9
   '@types/node': 18.0.5
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
@@ -20,8 +20,8 @@ specifiers:
   wagmi: ^0.5.11
 
 dependencies:
-  '@rainbow-me/rainbowkit': 0.4.3_xnkwufd7uavklr5a3lt6fr4zwu
-  '@tanstack/react-query': 4.0.5_biqbaboplfbrettd7655fr4n2y
+  '@rainbow-me/rainbowkit': 0.4.4_xnkwufd7uavklr5a3lt6fr4zwu
+  '@tanstack/react-query': 4.0.9_biqbaboplfbrettd7655fr4n2y
   ariakit: 2.0.0-next.35_biqbaboplfbrettd7655fr4n2y
   bignumber.js: 9.0.2
   ethers: 5.6.9
@@ -821,8 +821,8 @@ packages:
     resolution: {integrity: sha512-HaW78NszGzRZd9SeoI3JD11JqY+lubnaOx7Pewj5pfjqWXOEATpeKIFb9Z4t2WBUK2iryiXX3lzWwmYWgUL0Ug==}
     dev: false
 
-  /@rainbow-me/rainbowkit/0.4.3_xnkwufd7uavklr5a3lt6fr4zwu:
-    resolution: {integrity: sha512-H1SEGb5MOMjcdgxHoPKc/iDooOOeXRjYWUyIIt5xX6t450rwEv9yg8dHH1gs5lMKM9KgDB39WYz7UPDMR1OmOw==}
+  /@rainbow-me/rainbowkit/0.4.4_xnkwufd7uavklr5a3lt6fr4zwu:
+    resolution: {integrity: sha512-TlTCzGF5ELRGBVS6qlwGRTWnlZ1wyj1jtXUiCDyAspjYWp6VHCom0vRaAUNaFMFvFaqANR+1zrmyqpOMFWwYng==}
     engines: {node: '>=12.4'}
     peerDependencies:
       ethers: '>=5.5.1'
@@ -858,8 +858,8 @@ packages:
     resolution: {integrity: sha512-QOJ2gLbwlf8p0487pMey6vv8EF5X2ib1zINayaD7mb9/LibUtXmZ12uJgTqcnjgNY/4tWZn5qJnEk2ePG5AVGA==}
     dev: false
 
-  /@tanstack/react-query/4.0.5_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-tIggVlhoFevVpY/LkZroPmrERFHN8tw4aZLtgwSArzHmMJ03WQcaNvbbHy6GERidXtaMdUz+IeQryrE7cO7WPQ==}
+  /@tanstack/react-query/4.0.9_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-xRb4jsRU4pDlNtHqYYHNAtLiQzwscQRQeHezF/CY0yQkEloqCot0baerndjizh88CavA2iDOMvC0DUfAytNJGg==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
