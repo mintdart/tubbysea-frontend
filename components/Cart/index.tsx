@@ -68,7 +68,7 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 							</span>
 						</li>
 					</ul>
-					<button>Approve</button>
+					<button className={styles.checkoutButton}>Approve</button>
 				</>
 			) : (
 				<p className={styles.emptyMsg}>Your cart is empty. Fill it with NFTs to borrow ETH.</p>

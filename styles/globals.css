@@ -109,7 +109,7 @@ ul {
 }
 
 [data-backdrop] {
-	background-color: rgb(0 0 0 / 10%);
+	background-color: rgba(0, 0, 0, 0.3);
 }
 
 @media (min-width: 37.5rem) {
