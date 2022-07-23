@@ -4,13 +4,13 @@ import type { AppProps } from 'next/app'
 import * as React from 'react'
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 
 const { chains, provider } = configureChains(
 	[chain.mainnet, chain.kovan],
-	[alchemyProvider({ alchemyId: 'PwvZx2hO2XpToWXSw9sgJJt1eBgjkRUr' }), publicProvider()]
+	[infuraProvider({ infuraId: 'c580a3487b1241a09f9e27b02c004f5b' })]
 )
 
 const { connectors } = getDefaultWallets({
