@@ -23,6 +23,7 @@
 	min-height: 40vh;
 	max-height: calc(100% - 32px);
 	transform: translateY(0%);
+	transform: translateZ(0);
 	opacity: 1;
 	position: fixed;
 	left: 0;
@@ -36,11 +37,11 @@
 	gap: 1rem;
 	padding: 1rem;
 	overflow: auto;
-	border-radius: 0.5rem;
+	border-radius: 12px;
 	border: 1px solid hsl(204, 3%, 32%);
-	background-color: hsl(204, 3%, 20%);
-	color: hsl(0, 0%, 100%);
-	filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 40%));
+	background-color: #24262a;
+	color: #fff;
+	filter: drop-shadow(rgba(0, 0, 0, 0.5));
 	animation: slideUp 350ms cubic-bezier(0.15, 1.15, 0.6, 1);
 }
 
@@ -67,23 +68,25 @@
 }
 
 .dialogButtonDismiss {
-	position: relative;
-	right: -12px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 2.5rem;
-	width: 2.5rem;
-	padding: 0px;
-	background-color: hsla(204, 5%, 8%, 0%);
-	color: hsl(0, 0%, 100%);
-	border: none;
-	border-radius: 12px;
+	height: 28px;
+	width: 28px;
+	background-color: rgba(255, 255, 255, 0.08);
+	color: rgba(224, 232, 255, 0.6);
+	border: 1px solid rgba(255, 255, 255, 0.04);
+	border-radius: 9999px;
 	cursor: pointer;
+	transition: 0.125s ease;
 }
 
 .dialogButtonDismiss:hover {
-	background-color: hsla(204, 5%, 24%, 50%);
+	transform: scale(1.1);
+}
+
+.dialogButtonDismiss:active {
+	transform: scale(0.9);
 }
 
 .list {
@@ -131,7 +134,7 @@
 	border: none;
 	border-radius: 4px;
 	margin-top: 20px;
-	background: #efefef;
+	background: #fff;
 	cursor: pointer;
 }
 
