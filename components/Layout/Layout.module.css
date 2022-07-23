@@ -52,17 +52,27 @@
 }
 
 .cartButton {
+	position: relative;
 	padding: 6px 8px;
 	border: 2px solid transparent;
 	cursor: pointer;
 	border-radius: 12px;
-	background: none;
-	color: inherit;
-	position: relative;
+	background: #fff;
+	color: #000;
+	transition: 0.125s ease;
 }
 
 .cartButton:hover {
-	background-color: hsla(204, 5%, 24%, 50%);
+	transform: scale(1.1);
+}
+
+.cartButton:active {
+	transform: scale(0.95);
+}
+
+.cartButton svg,
+.noOfItems {
+	transform: scale(1) !important;
 }
 
 .cartButton svg {
@@ -74,8 +84,8 @@
 
 .noOfItems {
 	position: absolute;
-	top: -2px;
-	right: 0;
+	top: -6px;
+	right: -6px;
 	font-size: 11px;
 	background: #fff;
 	color: #000;

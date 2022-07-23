@@ -100,6 +100,7 @@
 	font-size: 0.875rem;
 	font-weight: 500;
 	border-radius: 12px;
+	isolation: isolate;
 }
 
 .listItem img {
@@ -139,6 +140,28 @@
 	top: -10px;
 	text-align: center;
 	padding: 44px;
+}
+
+.removeButton {
+	background: #fff;
+	border: none;
+	border-radius: 12px;
+	padding: 4px;
+	position: absolute;
+	top: -8px;
+	left: -6px;
+	z-index: 1;
+	cursor: pointer;
+	transition: 0.125s ease;
+}
+
+.removeButton svg {
+	width: 10px;
+	height: 10px;
+}
+
+.removeButton:active {
+	transform: scale(0.95);
 }
 
 @media (min-width: 37.5rem) {

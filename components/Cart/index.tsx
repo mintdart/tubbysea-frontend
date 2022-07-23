@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { DisclosureState } from 'ariakit'
 import { Dialog, DialogDismiss, DialogHeading } from 'ariakit/dialog'
-import { useGetCartItems } from '~/hooks/useCart'
+import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
 import { useGetQuote } from '~/hooks/useGetQuote'
 import styles from './Cart.module.css'
 import { useGetInterest } from '~/hooks/useGetInterest'
@@ -14,6 +14,7 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 	const { data: cartItems } = useGetCartItems()
 	const { data: quote } = useGetQuote()
 	const { data: currentAnnualInterest } = useGetInterest()
+	const { mutate } = useSaveItemToCart()
 
 	return (
 		<Dialog state={dialog} portal={typeof window !== 'undefined'} className={styles.dialog}>
@@ -29,6 +30,18 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 					<ul className={styles.list}>
 						{cartItems?.map((item) => (
 							<li key={item} className={styles.listItem}>
+								<button className={styles.removeButton} onClick={() => mutate({ tokenId: item })}>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+										strokeWidth={2}
+									>
+										<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+									</svg>
+									<span className="visually-hidden">Remove Item from cart</span>
+								</button>
 								<Image src={imgUrl} width="40px" height="40px" objectFit="cover" alt={`token id ${item}`} />
 								<span className={styles.itemDetails}>
 									<span>{`#${item}`}</span>
