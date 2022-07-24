@@ -5,7 +5,8 @@ import * as React from 'react'
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
 import { infuraProvider } from 'wagmi/providers/infura'
-import { getDefaultWallets, RainbowKitProvider, lightTheme } from '@rainbow-me/rainbowkit'
+import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { walletTheme } from '~/lib/theme'
 
 const { chains, provider } = configureChains(
 	[chain.mainnet, chain.kovan],
@@ -33,13 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 		<QueryClientProvider client={queryClient}>
 			<Hydrate state={pageProps.dehydratedState}>
 				<WagmiConfig client={wagmiClient}>
-					<RainbowKitProvider
-						theme={lightTheme({
-							fontStack: 'system'
-						})}
-						chains={chains}
-						initialChain={chain.kovan}
-					>
+					<RainbowKitProvider theme={walletTheme} chains={chains} initialChain={chain.kovan}>
 						{isMounted && <Component {...pageProps} />}
 					</RainbowKitProvider>
 				</WagmiConfig>

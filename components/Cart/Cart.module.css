@@ -38,10 +38,10 @@
 	padding: 1rem;
 	overflow: auto;
 	border-radius: 12px;
-	border: 1px solid hsl(204, 3%, 32%);
+	border: 1px solid rgba(255, 255, 255, 0.08);
 	background-color: #24262a;
 	color: #fff;
-	filter: drop-shadow(rgba(0, 0, 0, 0.5));
+	box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.32);
 	animation: slideUp 350ms cubic-bezier(0.15, 1.15, 0.6, 1);
 }
 
@@ -74,7 +74,7 @@
 	height: 28px;
 	width: 28px;
 	background-color: rgba(255, 255, 255, 0.08);
-	color: rgba(224, 232, 255, 0.6);
+	color: #c9c9ca;
 	border: 1px solid rgba(255, 255, 255, 0.04);
 	border-radius: 9999px;
 	cursor: pointer;
