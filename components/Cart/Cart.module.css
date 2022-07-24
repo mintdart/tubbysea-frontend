@@ -167,6 +167,13 @@
 	transform: scale(0.95);
 }
 
+.errorMsg {
+	font-size: 0.85rem;
+	text-align: center;
+	margin-top: 20px;
+	color: #ff9393;
+}
+
 @media (min-width: 37.5rem) {
 	.dialog {
 		max-width: min(calc(100% - 32px), 560px);

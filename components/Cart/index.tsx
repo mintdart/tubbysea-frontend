@@ -4,8 +4,10 @@ import { DisclosureState } from 'ariakit'
 import { Dialog, DialogHeading } from 'ariakit/dialog'
 import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
 import { useGetQuote } from '~/hooks/useGetQuote'
-import styles from './Cart.module.css'
 import { useGetInterest } from '~/hooks/useGetInterest'
+import { useSetContractApproval } from '~/hooks/useSetContractApproval'
+import styles from './Cart.module.css'
+import BeatLoader from '../BeatLoader'
 
 const imgUrl = '/minty.jpeg'
 
@@ -14,7 +16,14 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 	const { data: cartItems } = useGetCartItems()
 	const { data: quote } = useGetQuote()
 	const { data: currentAnnualInterest } = useGetInterest()
-	const { mutate } = useSaveItemToCart()
+	const { mutate: saveItemToCart } = useSaveItemToCart()
+	const {
+		write: approveContract,
+		isLoading: approvingContract,
+		isSuccess: approvedSuccessfully,
+		error,
+		waitForTransaction: { isSuccess: txSuccess, isLoading, error: txErrorOnChain }
+	} = useSetContractApproval()
 
 	return (
 		<Dialog state={dialog} portal={typeof window !== 'undefined'} className={styles.dialog}>
@@ -44,7 +53,7 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 					<ul className={styles.list}>
 						{cartItems?.map((item) => (
 							<li key={item} className={styles.listItem}>
-								<button className={styles.removeButton} onClick={() => mutate({ tokenId: item })}>
+								<button className={styles.removeButton} onClick={() => saveItemToCart({ tokenId: item })}>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
@@ -95,7 +104,10 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 							</span>
 						</li>
 					</ul>
-					<button className={styles.checkoutButton}>Approve</button>
+					{(error || txErrorOnChain) && <p className={styles.errorMsg}>{error?.message ?? txErrorOnChain?.message}</p>}
+					<button className={styles.checkoutButton} onClick={() => approveContract()}>
+						{approvingContract || isLoading ? <BeatLoader /> : 'Approve'}
+					</button>
 				</>
 			) : (
 				<p className={styles.emptyMsg}>Your cart is empty. Fill it with NFTs to borrow ETH.</p>
