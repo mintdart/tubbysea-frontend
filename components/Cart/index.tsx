@@ -11,6 +11,12 @@ import BeatLoader from '../BeatLoader'
 
 const imgUrl = '/minty.jpeg'
 
+const formatErrorMsg = (error: any) => {
+	if (error?.code === 'UNPREDICTABLE_GAS_LIMIT') {
+		return 'Cannot estimate gas, Transaction may fail or may require manual gas limit.'
+	} else return error.reason
+}
+
 // TODO: handle loading and error states
 export default function Cart({ dialog }: { dialog: DisclosureState }) {
 	const { data: cartItems } = useGetCartItems()
@@ -105,7 +111,9 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 						</li>
 					</ul>
 
-					{(error || txErrorOnChain) && <p className={styles.errorMsg}>{error?.message ?? txErrorOnChain?.message}</p>}
+					{(error || txErrorOnChain) && (
+						<p className={styles.errorMsg}>{formatErrorMsg(error) || txErrorOnChain?.message}</p>
+					)}
 
 					<button className={styles.checkoutButton} onClick={() => approveContract()}>
 						{approvingContract || isLoading ? <BeatLoader /> : 'Approve'}
