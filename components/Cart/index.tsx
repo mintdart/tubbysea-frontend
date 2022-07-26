@@ -77,7 +77,7 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 		? formatErrorMsg(errorApproving)
 		: txApproveErrorOnChain
 		? txApproveErrorOnChain?.message
-		: approvalTxOnChain
+		: approvalTxOnChain?.status === 0
 		? 'Transaction failed, please try again'
 		: errorConfirmingBorrow
 		? errorConfirmingBorrow?.message
