@@ -84,7 +84,7 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 							<span>You Receive</span>
 							<span className={styles.priceWrapper}>
 								<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
-								<span>{cartItems?.length * quote?.price} ETH</span>
+								<span>{(cartItems?.length * quote?.price)?.toFixed(2)} ETH</span>
 							</span>
 						</li>
 						<li className={styles.listItem}>
