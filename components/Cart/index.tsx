@@ -7,9 +7,9 @@ import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
 import { useGetQuote } from '~/hooks/useGetQuote'
 import { useGetInterest } from '~/hooks/useGetInterest'
 import { useGetContractApproval, useSetContractApproval } from '~/hooks/useContractApproval'
-import styles from './Cart.module.css'
-import { CartItemsPlaceholder } from './Placeholder'
 import { useBorrow } from '~/hooks/useBorrow'
+import { CartItemsPlaceholder } from './Placeholder'
+import styles from './Cart.module.css'
 
 const imgUrl = '/minty.jpeg'
 
