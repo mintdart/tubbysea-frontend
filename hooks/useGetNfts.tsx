@@ -10,7 +10,7 @@ export function useGetNfts() {
 		addressOrName: NFTS_LIST_CONTRACT,
 		contractInterface: NFTS_LIST_ABI,
 		functionName: 'getOwnedNfts',
-		args: [address, NFT_TESTNET_CONTRACT, 1625000, 1626000],
+		args: [address, NFT_TESTNET_CONTRACT, 920600, 920800],
 		select: (data: any) => transformData(data)
 	})
 }

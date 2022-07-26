@@ -9,7 +9,7 @@ import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { walletTheme } from '~/lib/theme'
 
 const { chains, provider } = configureChains(
-	[chain.mainnet, chain.kovan],
+	[chain.mainnet, chain.goerli],
 	[infuraProvider({ infuraId: 'c580a3487b1241a09f9e27b02c004f5b' })]
 )
 
@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 		<QueryClientProvider client={queryClient}>
 			<Hydrate state={pageProps.dehydratedState}>
 				<WagmiConfig client={wagmiClient}>
-					<RainbowKitProvider theme={walletTheme} chains={chains} initialChain={chain.kovan}>
+					<RainbowKitProvider theme={walletTheme} chains={chains} initialChain={chain.goerli}>
 						{isMounted && <Component {...pageProps} />}
 					</RainbowKitProvider>
 				</WagmiConfig>
