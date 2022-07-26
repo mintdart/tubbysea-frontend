@@ -6,7 +6,7 @@ export function useSetContractApproval() {
 		addressOrName: LENDING_POOL_ADDRESS,
 		contractInterface: LENDING_POOL_ABI,
 		functionName: 'setApprovalForAll',
-		args: [LENDING_POOL_ADDRESS, false]
+		args: [LENDING_POOL_ADDRESS, true]
 		// overrides: { gasLimit: new BigNumber(0.0005).times(1e9).toString() }
 	})
 
