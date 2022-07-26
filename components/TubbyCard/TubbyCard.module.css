@@ -91,12 +91,6 @@
 	color: #c6c6c6;
 }
 
-.animate-shimmer {
-	animation: shimmer 2s cubic-bezier(0.31, 0.29, 0.62, 0.59) infinite;
-	background: linear-gradient(to right, #3a3a3a 5%, #4a4a4a 20%, #3a3a3a 40%);
-	background-size: 1000px 100%;
-}
-
 .price[data-animate='true'] {
 	background-color: #444;
 	width: 8ch;
@@ -104,15 +98,6 @@
 	animation: shimmer 2s cubic-bezier(0.31, 0.29, 0.62, 0.59) infinite;
 	background: linear-gradient(to right, #3a3a3a 5%, #4a4a4a 20%, #3a3a3a 40%);
 	background-size: 1000px 100%;
-}
-
-@keyframes shimmer {
-	0% {
-		background-position: -1000px 0;
-	}
-	100% {
-		background-position: 1000px 0;
-	}
 }
 
 .savedButton {

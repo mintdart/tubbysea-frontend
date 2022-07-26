@@ -1,5 +1,5 @@
 import { useAccount, useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
-import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS } from '~/lib/contracts'
+import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS, NFT_TESTNET_ADDRESS } from '~/lib/contracts'
 
 export function useSetContractApproval() {
 	const { address } = useAccount()
@@ -26,6 +26,6 @@ export function useGetContractApproval() {
 		addressOrName: LENDING_POOL_ADDRESS,
 		contractInterface: LENDING_POOL_ABI,
 		functionName: 'isApprovedForAll',
-		args: [address, LENDING_POOL_ADDRESS]
+		args: [address, NFT_TESTNET_ADDRESS]
 	})
 }

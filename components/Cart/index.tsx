@@ -2,12 +2,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { DisclosureState } from 'ariakit'
 import { Dialog, DialogHeading } from 'ariakit/dialog'
+import BeatLoader from '~/components/BeatLoader'
 import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
 import { useGetQuote } from '~/hooks/useGetQuote'
 import { useGetInterest } from '~/hooks/useGetInterest'
-import { useSetContractApproval } from '~/hooks/useContractApproval'
+import { useGetContractApproval, useSetContractApproval } from '~/hooks/useContractApproval'
 import styles from './Cart.module.css'
-import BeatLoader from '../BeatLoader'
+import { CartItemsPlaceholder } from './Placeholder'
 
 const imgUrl = '/minty.jpeg'
 
@@ -17,13 +18,20 @@ const formatErrorMsg = (error: any) => {
 	} else return error.reason
 }
 
-// TODO: handle loading and error states
 export default function Cart({ dialog }: { dialog: DisclosureState }) {
-	const { data: cartItems } = useGetCartItems()
-	const { data: quote } = useGetQuote()
-	const { data: currentAnnualInterest } = useGetInterest()
+	// query to get cart items from local storage
+	const { data: cartItems, isLoading: fetchingCartItems, isError: errorLoadingCartItems } = useGetCartItems()
+
+	// query to get quotation from server
+	const { data: quote, isLoading: fetchingQuote, isError: errorFetchingQuote } = useGetQuote()
+
+	// query to get interest rates
+	const { data: currentAnnualInterest, isLoading: fetchingInterest, isError: errorFetchingInterest } = useGetInterest()
+
+	// query to save/remove item to cart/localstorage
 	const { mutate: saveItemToCart } = useSaveItemToCart()
 
+	// query to set approval for all tokens
 	const {
 		write: approveContract,
 		isLoading: approvingContract,
@@ -31,6 +39,35 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 		error: errorApproving,
 		waitForTransaction: { isSuccess: txApproveSuccess, isLoading: checkingIfApproved, error: txApproveErrorOnChain }
 	} = useSetContractApproval()
+
+	// query to check approval of all tokens
+	const { data, isLoading: fetchingIfApproved, error: failedToFetchIfApproved } = useGetContractApproval()
+
+	// construct error messages
+	const errorMsgOfQueries = errorLoadingCartItems
+		? "Couldn't fetch items in your cart"
+		: errorFetchingQuote
+		? "Couldn't fetch price quotation"
+		: errorFetchingInterest
+		? "Couldn't fetch interest rate"
+		: null
+
+	const errorMsgOfEthersQueries = failedToFetchIfApproved
+		? failedToFetchIfApproved?.message
+		: errorApproving
+		? formatErrorMsg(errorApproving)
+		: txApproveErrorOnChain
+		? txApproveErrorOnChain?.message
+		: null
+
+	// check all loading states to show beat loader
+	const isLoading =
+		fetchingCartItems ||
+		fetchingQuote ||
+		fetchingInterest ||
+		approvingContract ||
+		checkingIfApproved ||
+		fetchingIfApproved
 
 	return (
 		<Dialog state={dialog} portal={typeof window !== 'undefined'} className={styles.dialog}>
@@ -55,73 +92,106 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 				</Link>
 			</header>
 
-			{cartItems && quote && cartItems?.length > 0 && quote?.price ? (
+			{errorMsgOfQueries ? (
+				<p className={styles.errorMsg}>{errorMsgOfQueries}</p>
+			) : cartItems && cartItems.length <= 0 ? (
+				<p className={styles.emptyMsg}>Your cart is empty. Fill it with NFTs to borrow ETH.</p>
+			) : (
 				<>
-					<ul className={styles.list}>
-						{cartItems?.map((item) => (
-							<li key={item} className={styles.listItem}>
-								<button className={styles.removeButton} onClick={() => saveItemToCart({ tokenId: item })}>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										strokeWidth={2}
-									>
-										<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-									</svg>
-									<span className="visually-hidden">Remove Item from cart</span>
-								</button>
-								<Image src={imgUrl} width="40px" height="40px" objectFit="cover" alt={`token id ${item}`} />
-								<span className={styles.itemDetails}>
-									<span>{`#${item}`}</span>
-									<span className={styles.collectionName}>tubby cats</span>
-								</span>
+					{/* Show placeholder when fetching items in cart */}
+					{fetchingCartItems ? (
+						<CartItemsPlaceholder />
+					) : (
+						<ul className={styles.list}>
+							{cartItems?.map((item) => (
+								<li key={item} className={styles.listItem}>
+									<button className={styles.removeButton} onClick={() => saveItemToCart({ tokenId: item })}>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											strokeWidth={2}
+										>
+											<path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+										</svg>
+										<span className="visually-hidden">Remove Item from cart</span>
+									</button>
+									<Image src={imgUrl} width="40px" height="40px" objectFit="cover" alt={`token id ${item}`} />
+									<span className={styles.itemDetails}>
+										<span>{`#${item}`}</span>
+										<span className={styles.collectionName}>tubby cats</span>
+									</span>
 
-								<span className={styles.priceWrapper}>
-									<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
-									<span>{quote?.price}</span>
-								</span>
-							</li>
-						))}
-					</ul>
-					<hr />
-					<ul className={styles.list}>
-						<li className={styles.listItem}>
-							<span>You Receive</span>
-							<span className={styles.priceWrapper}>
-								<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
-								<span>{(cartItems?.length * quote?.price)?.toFixed(2)} ETH</span>
-							</span>
-						</li>
-						<li className={styles.listItem}>
-							<span>Interest</span>
-							<span className={styles.priceWrapper}>
-								<span>
-									{currentAnnualInterest &&
-										typeof currentAnnualInterest === 'number' &&
-										`${(currentAnnualInterest / 1e18).toFixed(2)}% p.a.`}
-								</span>
-							</span>
-						</li>
-						<li className={styles.listItem}>
-							<span>Deadline</span>
-							<span className={styles.priceWrapper}>
-								<span>{quote.deadline && new Date(quote.deadline * 1000)?.toLocaleString()}</span>
-							</span>
-						</li>
-					</ul>
-
-					{(errorApproving || txApproveErrorOnChain) && (
-						<p className={styles.errorMsg}>{formatErrorMsg(errorApproving) || txApproveErrorOnChain?.message}</p>
+									<span className={styles.priceWrapper}>
+										<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
+										<span>{quote?.price}</span>
+									</span>
+								</li>
+							))}
+						</ul>
 					)}
 
-					<button className={styles.checkoutButton} onClick={() => approveContract()}>
-						{approvingContract || checkingIfApproved ? <BeatLoader /> : 'Approve'}
-					</button>
+					<hr />
+
+					{/* These values are always truth as error and loading states are handles, but adding a check satisfy typescript compiler  */}
+					{cartItems && quote && cartItems?.length > 0 && quote?.price && (
+						<ul className={styles.list}>
+							<li className={styles.listItem}>
+								<span>You Receive</span>
+								<span className={styles.priceWrapper}>
+									<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
+									{/* Show placeholder when fetching quotation */}
+									{fetchingQuote ? (
+										<span className="placeholder-container" style={{ width: '4ch', height: '16px' }}></span>
+									) : (
+										<span>{(cartItems.length * quote.price).toFixed(2)} ETH</span>
+									)}
+								</span>
+							</li>
+
+							<li className={styles.listItem}>
+								<span>Interest</span>
+								<span className={styles.priceWrapper}>
+									{/* Show placeholder when fetching interest rates */}
+									{fetchingInterest ? (
+										<span className="placeholder-container" style={{ width: '7ch', height: '16px' }}></span>
+									) : (
+										<span>
+											{currentAnnualInterest &&
+												typeof currentAnnualInterest === 'number' &&
+												`${(currentAnnualInterest / 1e18).toFixed(2)}% p.a.`}
+										</span>
+									)}
+								</span>
+							</li>
+
+							<li className={styles.listItem}>
+								<span>Deadline</span>
+								<span className={styles.priceWrapper}>
+									{/* Show placeholder when fetching quotation */}
+									{fetchingQuote ? (
+										<span className="placeholder-container" style={{ width: '7ch', height: '16px' }}></span>
+									) : (
+										<span>{quote.deadline && new Date(quote.deadline * 1000)?.toLocaleString()}</span>
+									)}
+								</span>
+							</li>
+						</ul>
+					)}
+					{/* Show error message of txs/queries initiated with wallet */}
+					{errorMsgOfEthersQueries && <p className={styles.errorMsg}>{errorMsgOfEthersQueries}</p>}
+
+					{isLoading ? (
+						<button className={styles.checkoutButton}>
+							<BeatLoader />
+						</button>
+					) : (
+						<button className={styles.checkoutButton} onClick={() => approveContract()}>
+							Approve
+						</button>
+					)}
 				</>
-			) : (
-				<p className={styles.emptyMsg}>Your cart is empty. Fill it with NFTs to borrow ETH.</p>
 			)}
 		</Dialog>
 	)
