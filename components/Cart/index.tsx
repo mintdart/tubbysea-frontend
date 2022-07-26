@@ -118,7 +118,7 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 			</header>
 
 			{errorMsgOfQueries ? (
-				<p className={styles.errorMsg}>{errorMsgOfQueries}</p>
+				<p className={`${styles.emptyMsg} ${styles.errorMsg}`}>{errorMsgOfQueries}</p>
 			) : cartItems && cartItems.length <= 0 ? (
 				<p className={styles.emptyMsg}>Your cart is empty. Fill it with NFTs to borrow ETH.</p>
 			) : (
