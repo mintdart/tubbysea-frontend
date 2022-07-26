@@ -1,15 +1,13 @@
 import { useAccount, useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi'
-import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS, NFT_TESTNET_ADDRESS } from '~/lib/contracts'
+import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS } from '~/lib/contracts'
 
 export function useSetContractApproval() {
-	const { address } = useAccount()
-
 	const contractWrite = useContractWrite({
 		addressOrName: LENDING_POOL_ADDRESS,
 		contractInterface: LENDING_POOL_ABI,
 		functionName: 'setApprovalForAll',
-		args: [address, true],
-		overrides: { gasLimit: 1e7 }
+		args: [LENDING_POOL_ADDRESS, false]
+		// overrides: { gasLimit: new BigNumber(0.0005).times(1e9).toString() }
 	})
 
 	const waitForTransaction = useWaitForTransaction({
@@ -26,6 +24,6 @@ export function useGetContractApproval() {
 		addressOrName: LENDING_POOL_ADDRESS,
 		contractInterface: LENDING_POOL_ABI,
 		functionName: 'isApprovedForAll',
-		args: [address, NFT_TESTNET_ADDRESS]
+		args: [address, LENDING_POOL_ADDRESS]
 	})
 }

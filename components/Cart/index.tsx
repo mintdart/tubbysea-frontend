@@ -9,6 +9,7 @@ import { useGetInterest } from '~/hooks/useGetInterest'
 import { useGetContractApproval, useSetContractApproval } from '~/hooks/useContractApproval'
 import styles from './Cart.module.css'
 import { CartItemsPlaceholder } from './Placeholder'
+import { useBorrow } from '~/hooks/useBorrow'
 
 const imgUrl = '/minty.jpeg'
 
@@ -35,13 +36,31 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 	const {
 		write: approveContract,
 		isLoading: approvingContract,
-		isSuccess: approvedSuccessfully,
 		error: errorApproving,
-		waitForTransaction: { isSuccess: txApproveSuccess, isLoading: checkingIfApproved, error: txApproveErrorOnChain }
+		waitForTransaction: {
+			data: approvalTxOnChain,
+			isLoading: checkingForApproveTxOnChain,
+			error: txApproveErrorOnChain
+		}
 	} = useSetContractApproval()
 
 	// query to check approval of all tokens
-	const { data, isLoading: fetchingIfApproved, error: failedToFetchIfApproved } = useGetContractApproval()
+	const {
+		data: isApprovedForAll,
+		isLoading: fetchingIfApproved,
+		error: failedToFetchIfApproved
+	} = useGetContractApproval()
+
+	//query to borrow eth using nfts
+	const {
+		mutationDisabled,
+		write: borrowETH,
+		isLoading: userConfirmingBorrow,
+		error: errorConfirmingBorrow,
+		waitForTransaction: { data: borrowTxOnChain, isLoading: checkingForBorrowTxOnChain, error: txBorrowErrorOnChain }
+	} = useBorrow()
+
+	const isApproved = isApprovedForAll || approvalTxOnChain?.status === 1
 
 	// construct error messages
 	const errorMsgOfQueries = errorLoadingCartItems
@@ -58,6 +77,10 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 		? formatErrorMsg(errorApproving)
 		: txApproveErrorOnChain
 		? txApproveErrorOnChain?.message
+		: errorConfirmingBorrow
+		? errorConfirmingBorrow?.message
+		: txBorrowErrorOnChain
+		? txBorrowErrorOnChain?.message
 		: null
 
 	// check all loading states to show beat loader
@@ -66,8 +89,10 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 		fetchingQuote ||
 		fetchingInterest ||
 		approvingContract ||
-		checkingIfApproved ||
-		fetchingIfApproved
+		checkingForApproveTxOnChain ||
+		fetchingIfApproved ||
+		userConfirmingBorrow ||
+		checkingForBorrowTxOnChain
 
 	return (
 		<Dialog state={dialog} portal={typeof window !== 'undefined'} className={styles.dialog}>
@@ -185,6 +210,10 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 					{isLoading ? (
 						<button className={styles.checkoutButton}>
 							<BeatLoader />
+						</button>
+					) : isApproved ? (
+						<button className={styles.checkoutButton} onClick={() => borrowETH()} disabled={mutationDisabled}>
+							Borrow
 						</button>
 					) : (
 						<button className={styles.checkoutButton} onClick={() => approveContract()}>
