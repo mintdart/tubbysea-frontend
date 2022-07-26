@@ -63,6 +63,7 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 	const isApproved = isApprovedForAll || approvalTxOnChain?.status === 1
 
 	// construct error messages
+	// Failed queries, but user can't retry with data of these queries
 	const errorMsgOfQueries = errorLoadingCartItems
 		? "Couldn't fetch items in your cart"
 		: errorFetchingQuote
@@ -71,6 +72,7 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 		? "Couldn't fetch interest rate"
 		: null
 
+	// Failed queries, but user can retry
 	const errorMsgOfEthersQueries = failedToFetchIfApproved
 		? failedToFetchIfApproved?.message
 		: errorApproving
@@ -220,7 +222,11 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 							Borrow
 						</button>
 					) : (
-						<button className={styles.checkoutButton} onClick={() => approveContract()}>
+						<button
+							className={styles.checkoutButton}
+							onClick={() => approveContract()}
+							disabled={errorMsgOfQueries ? true : false}
+						>
 							Approve
 						</button>
 					)}
