@@ -77,10 +77,14 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 		? formatErrorMsg(errorApproving)
 		: txApproveErrorOnChain
 		? txApproveErrorOnChain?.message
+		: approvalTxOnChain
+		? 'Transaction failed, please try again'
 		: errorConfirmingBorrow
 		? errorConfirmingBorrow?.message
 		: txBorrowErrorOnChain
 		? txBorrowErrorOnChain?.message
+		: borrowTxOnChain?.status === 0
+		? 'Transaction failed, please try again'
 		: null
 
 	// check all loading states to show beat loader
