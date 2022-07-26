@@ -1,7 +1,6 @@
 .header {
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	flex-direction: column;
 	gap: 16px;
 	flex-wrap: wrap;
 	padding: 12px;
@@ -49,6 +48,10 @@
 	gap: 16px;
 }
 
+.walletsWrapper > *:first-child {
+	margin-right: auto;
+}
+
 .cartButton {
 	position: relative;
 	padding: 8px;
@@ -58,6 +61,7 @@
 	background: #fff;
 	color: #000;
 	transition: 0.125s ease;
+	flex-shrink: 0;
 }
 
 .cartButton:hover {
@@ -98,4 +102,12 @@
 	max-width: 80rem;
 	margin: 0 auto;
 	padding: 12px;
+}
+
+@media (min-width: 37.5rem) {
+	.header {
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+	}
 }

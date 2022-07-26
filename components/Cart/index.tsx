@@ -104,7 +104,9 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 							</span>
 						</li>
 					</ul>
+
 					{(error || txErrorOnChain) && <p className={styles.errorMsg}>{error?.message ?? txErrorOnChain?.message}</p>}
+
 					<button className={styles.checkoutButton} onClick={() => approveContract()}>
 						{approvingContract || isLoading ? <BeatLoader /> : 'Approve'}
 					</button>

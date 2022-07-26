@@ -1,6 +1,6 @@
 .wrapper {
 	display: grid;
-	grid-auto-columns: minmax(300px, 320px);
+	grid-auto-columns: minmax(240px, 320px);
 	place-content: center;
 	gap: 32px;
 	margin: 36px 0;
@@ -8,12 +8,18 @@
 
 @media (min-width: 37.5rem) {
 	.wrapper {
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(2, minmax(240px, 320px));
 	}
 }
 
-@media (min-width: 64rem) {
+@media (min-width: 50rem) {
 	.wrapper {
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(3, minmax(240px, 320px));
+	}
+}
+
+@media (min-width: 67.5rem) {
+	.wrapper {
+		grid-template-columns: repeat(4, minmax(240px, 320px));
 	}
 }

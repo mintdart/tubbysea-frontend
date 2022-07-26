@@ -21,7 +21,7 @@
 .dialog {
 	max-width: 100%;
 	min-height: 40vh;
-	max-height: calc(100% - 32px);
+	max-height: 55vh;
 	transform: translateY(0%);
 	transform: translateZ(0);
 	opacity: 1;
@@ -175,9 +175,10 @@
 	.dialog {
 		max-width: min(calc(100% - 32px), 560px);
 		max-height: calc(100% - 32px);
-		top: 25vh;
-		bottom: initial;
+		top: 0;
 		min-height: initial;
+		height: fit-content;
+		max-height: 70vh;
 		padding: 24px;
 		border-radius: 12px;
 	}
