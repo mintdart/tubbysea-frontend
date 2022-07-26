@@ -5,7 +5,7 @@ import { Dialog, DialogHeading } from 'ariakit/dialog'
 import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
 import { useGetQuote } from '~/hooks/useGetQuote'
 import { useGetInterest } from '~/hooks/useGetInterest'
-import { useSetContractApproval } from '~/hooks/useSetContractApproval'
+import { useSetContractApproval } from '~/hooks/useContractApproval'
 import styles from './Cart.module.css'
 import BeatLoader from '../BeatLoader'
 
@@ -23,12 +23,13 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 	const { data: quote } = useGetQuote()
 	const { data: currentAnnualInterest } = useGetInterest()
 	const { mutate: saveItemToCart } = useSaveItemToCart()
+
 	const {
 		write: approveContract,
 		isLoading: approvingContract,
 		isSuccess: approvedSuccessfully,
-		error,
-		waitForTransaction: { isSuccess: txSuccess, isLoading, error: txErrorOnChain }
+		error: errorApproving,
+		waitForTransaction: { isSuccess: txApproveSuccess, isLoading: checkingIfApproved, error: txApproveErrorOnChain }
 	} = useSetContractApproval()
 
 	return (
@@ -111,12 +112,12 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 						</li>
 					</ul>
 
-					{(error || txErrorOnChain) && (
-						<p className={styles.errorMsg}>{formatErrorMsg(error) || txErrorOnChain?.message}</p>
+					{(errorApproving || txApproveErrorOnChain) && (
+						<p className={styles.errorMsg}>{formatErrorMsg(errorApproving) || txApproveErrorOnChain?.message}</p>
 					)}
 
 					<button className={styles.checkoutButton} onClick={() => approveContract()}>
-						{approvingContract || isLoading ? <BeatLoader /> : 'Approve'}
+						{approvingContract || checkingIfApproved ? <BeatLoader /> : 'Approve'}
 					</button>
 				</>
 			) : (

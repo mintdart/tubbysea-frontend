@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { NFT_TESTNET_CONTRACT } from '~/lib/contracts'
+import { NFT_TESTNET_ADDRESS } from '~/lib/contracts'
 import { useGetNfts } from './useGetNfts'
 
-const contract = NFT_TESTNET_CONTRACT
+const contract = NFT_TESTNET_ADDRESS
 
 // save/remove items from local storage
 function saveItemToCart({ contract, tokenId }: { contract: string; tokenId: string | number }) {
