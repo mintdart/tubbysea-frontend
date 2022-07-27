@@ -10,7 +10,7 @@ import { walletTheme } from '~/lib/theme'
 
 const { chains, provider } = configureChains(
 	[chain.mainnet, chain.goerli],
-	[infuraProvider({ infuraId: 'c580a3487b1241a09f9e27b02c004f5b' })]
+	[infuraProvider({ apiKey: 'c580a3487b1241a09f9e27b02c004f5b' })]
 )
 
 const { connectors } = getDefaultWallets({

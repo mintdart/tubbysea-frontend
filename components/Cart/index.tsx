@@ -218,14 +218,18 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 							<BeatLoader />
 						</button>
 					) : isApproved ? (
-						<button className={styles.checkoutButton} onClick={() => borrowETH()} disabled={mutationDisabled}>
+						<button
+							className={styles.checkoutButton}
+							onClick={() => borrowETH && borrowETH()}
+							disabled={!borrowETH || mutationDisabled}
+						>
 							Borrow
 						</button>
 					) : (
 						<button
 							className={styles.checkoutButton}
-							onClick={() => approveContract()}
-							disabled={errorMsgOfQueries ? true : false}
+							onClick={() => approveContract && approveContract()}
+							disabled={!approveContract || errorMsgOfQueries ? true : false}
 						>
 							Approve
 						</button>

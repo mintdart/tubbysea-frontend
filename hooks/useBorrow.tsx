@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { useContractWrite, useWaitForTransaction } from 'wagmi'
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS, NFT_TESTNET_ADDRESS } from '~/lib/contracts'
 import { useGetCartItems } from './useCart'
 import { useGetQuote } from './useGetQuote'
@@ -10,7 +10,7 @@ export function useBorrow() {
 	const { data: cartItems, isLoading: fetchingCartItems, isError: failedToFetchCartItems } = useGetCartItems()
 	const { data: quote, isLoading: isFetchingQuote, isError: failedFetchQuotation } = useGetQuote()
 
-	const contractWrite = useContractWrite({
+	const { config } = usePrepareContractWrite({
 		addressOrName: LENDING_POOL_ADDRESS,
 		contractInterface: LENDING_POOL_ABI,
 		functionName: 'borrow',
@@ -24,6 +24,8 @@ export function useBorrow() {
 		],
 		overrides: { gasLimit: new BigNumber(0.0005).times(1e9).toString() }
 	})
+
+	const contractWrite = useContractWrite({ ...config })
 
 	const waitForTransaction = useWaitForTransaction({
 		hash: contractWrite.data?.hash,
