@@ -206,11 +206,7 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 									{fetchingInterest ? (
 										<span className="placeholder-container" style={{ width: '7ch', height: '16px' }}></span>
 									) : (
-										<span>
-											{currentAnnualInterest &&
-												typeof currentAnnualInterest === 'number' &&
-												`${(currentAnnualInterest / 1e18).toFixed(2)}% p.a.`}
-										</span>
+										<span>{currentAnnualInterest && `${currentAnnualInterest}% p.a.`}</span>
 									)}
 								</span>
 							</li>

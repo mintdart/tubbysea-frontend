@@ -23,5 +23,5 @@ export function useGetInterest() {
 }
 
 const transformData = (data: BigNumber): any => {
-	return data && Number(data.toString()) / 1e16
+	return data ? (Number(data.toString()) / 1e16)?.toFixed(2) : null
 }
