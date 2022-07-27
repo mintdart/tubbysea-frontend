@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import BigNumber from 'bignumber.js'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS, NFT_TESTNET_ADDRESS } from '~/lib/contracts'
@@ -9,6 +10,8 @@ const contract = NFT_TESTNET_ADDRESS
 export function useBorrow() {
 	const { data: cartItems, isLoading: fetchingCartItems, isError: failedToFetchCartItems } = useGetCartItems()
 	const { data: quote, isLoading: isFetchingQuote, isError: failedFetchQuotation } = useGetQuote()
+
+	const queryClient = useQueryClient()
 
 	const { config } = usePrepareContractWrite({
 		addressOrName: LENDING_POOL_ADDRESS,
@@ -41,6 +44,8 @@ export function useBorrow() {
 					localStorage.setItem('tubbylend', JSON.stringify({ [contract]: [] }))
 				}
 			}
+
+			queryClient.invalidateQueries()
 		}
 	})
 

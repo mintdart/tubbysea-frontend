@@ -1,20 +1,21 @@
 import * as React from 'react'
 import Image from 'next/image'
 import styles from './TubbyCard.module.css'
+import { ILoan } from '~/hooks/useGetLoans'
 
 const imgUrl = '/minty.jpeg'
 
-export function RepayTubby({ id }: { id?: number }) {
-	const price = (id || id === 0) && 0.1091
+export function RepayTubby({ details }: { details: ILoan }) {
+	const price = 0
 
 	return (
 		<article className={styles.card}>
 			<span className={styles.imageWrapper}>
-				{imgUrl && <Image src={imgUrl} alt={`token id ${id}`} layout="fill" />}
+				{imgUrl && <Image src={imgUrl} alt={`loan id ${details.loanId}`} layout="fill" />}
 			</span>
 			<span className={styles.infoWrapper}>
 				<span className={styles.flexRow}>
-					<p className={styles.dullText}>{(id || id === 0) && `#${id}`}</p>
+					<p className={styles.dullText}>{(details.nft || details.nft === 0) && `#${details.nft}`}</p>
 					<p className={`${styles.flexRowSm} ${styles.dullText}`}>
 						<span className="visually-hidden">Time left to repay loan</span>
 						<svg
@@ -39,9 +40,7 @@ export function RepayTubby({ id }: { id?: number }) {
 					<span className={styles.flexRow}>
 						<p className={styles.flexRowSm}>
 							<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
-							<span data-animate={!price ? true : false} className={styles.price}>
-								{id}
-							</span>
+							<span className={styles.price}>{details.nft}</span>
 						</p>
 						<button className={styles.actionButton}>Repay ETH</button>
 					</span>

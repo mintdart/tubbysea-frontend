@@ -2,15 +2,15 @@ import type { NextPage } from 'next'
 import Layout from '~/components/Layout'
 import { RepayTubby, RepayTubbyPlaceholder } from '~/components/TubbyCard'
 import TubbyGrid from '~/components/TubbyGrid'
-import { useGetLoans } from '~/hooks/useLoans'
+import { useGetLoans } from '~/hooks/useGetLoans'
 
 const Repay: NextPage = () => {
-	const { data: tubbies, isLoading, isError } = useGetLoans()
+	const { data: tubbies = [], isLoading, error } = useGetLoans()
 
 	return (
 		<Layout>
-			{isError ? (
-				<p className="fallback-text">Sorry, couldn't get nfts for your address</p>
+			{error ? (
+				<p className="fallback-text">{error.message ?? "Sorry, couldn't get loans of your address"}</p>
 			) : isLoading ? (
 				<TubbyGrid>
 					{new Array(8).fill('tubby').map((_, index) => (
@@ -21,8 +21,8 @@ const Repay: NextPage = () => {
 				<p className="fallback-text">You do not have any active loans</p>
 			) : (
 				<TubbyGrid>
-					{tubbies.map((id) => (
-						<RepayTubby key={id} id={id} />
+					{tubbies.map((tubby) => (
+						<RepayTubby key={tubby.nft} details={tubby} />
 					))}
 				</TubbyGrid>
 			)}
