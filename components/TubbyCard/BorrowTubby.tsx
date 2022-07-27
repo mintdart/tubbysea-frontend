@@ -76,10 +76,10 @@ export const BorrowTubbyPlaceholder = () => {
 					<span className={styles.flexRow}>
 						<p className={styles.flexRowSm}>
 							<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
-							<span data-animate={true} className={styles.price}></span>
+							<span className="placeholder-container" style={{ width: '6ch', height: '16px' }}></span>
 						</p>
 
-						<button className={styles.actionButton} disabled={true}>
+						<button className={styles.actionButton} disabled>
 							Borrow ETH
 						</button>
 					</span>

@@ -13,6 +13,7 @@ export interface ILoan {
 	nft: number
 	startInterestSum: number
 	startTime: number
+	maxLoanLength: number
 }
 
 interface IError {
@@ -31,12 +32,15 @@ async function getLoans(userAddress: string | null, provider: Provider) {
 
 		const loans = await Promise.all(nftsList.map((id) => loanContract.loans(id)))
 
+		const maxLoanLength = await loanContract.maxLoanLength()
+
 		return loans.map((loan, index) => ({
 			loanId: nftsList[index],
 			borrowed: Number(loan.borrowed.toString()),
 			nft: Number(loan.nft.toString()),
 			startInterestSum: Number(loan.startInterestSum.toString()),
-			startTime: Number(loan.startTime.toString())
+			startTime: Number(loan.startTime.toString()) * 1000,
+			maxLoanLength: Number(maxLoanLength.toString()) * 1000
 		}))
 	} catch (error: any) {
 		console.log(error)

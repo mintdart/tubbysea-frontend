@@ -5,9 +5,30 @@ import { ILoan } from '~/hooks/useGetLoans'
 
 const imgUrl = '/minty.jpeg'
 
-export function RepayTubby({ details }: { details: ILoan }) {
-	const price = 0
+const day = 24 * 60 * 60 * 1000
+const hour = 60 * 60 * 1000
+const minute = 60 * 1000
+const second = 1000
 
+const formatDate = (startTime: number, maxTime: number) => {
+	const timeElapsed = Date.now() - startTime
+	const timeLeft = maxTime - timeElapsed
+
+	// max deadline - return expired
+	if (timeLeft <= 0) {
+		return 'Expired'
+	} else if (Math.ceil(timeLeft / day) > 1) {
+		return `${Math.ceil(timeLeft / day)} days left`
+	} else if (Math.ceil(timeLeft / hour) > 1) {
+		return `${Math.ceil(timeLeft / hour)} hours left`
+	} else if (Math.ceil(timeLeft / minute) > 1) {
+		return `${Math.ceil(timeLeft / minute)} minutes left`
+	} else if (Math.ceil(timeLeft / second) > 1) {
+		return `${Math.ceil(timeLeft / second)} seconds left`
+	} else return `${timeLeft} ms left`
+}
+
+export function RepayTubby({ details }: { details: ILoan }) {
 	return (
 		<article className={styles.card}>
 			<span className={styles.imageWrapper}>
@@ -32,7 +53,7 @@ export function RepayTubby({ details }: { details: ILoan }) {
 							<circle cx="12" cy="12" r="10"></circle>
 							<polyline points="12 6 12 12 16 14"></polyline>
 						</svg>
-						<span>25 days left</span>
+						<span>{formatDate(details.startTime, details.maxLoanLength)}</span>
 					</p>
 				</span>
 				<span className={styles.quoteSection}>
@@ -73,7 +94,7 @@ export function RepayTubbyPlaceholder() {
 							<circle cx="12" cy="12" r="10"></circle>
 							<polyline points="12 6 12 12 16 14"></polyline>
 						</svg>
-						<span>25 days left</span>
+						<span className="placeholder-container" style={{ width: '10ch', height: '16px' }}></span>
 					</p>
 				</span>
 				<span className={styles.quoteSection}>
@@ -81,9 +102,11 @@ export function RepayTubbyPlaceholder() {
 					<span className={styles.flexRow}>
 						<p className={styles.flexRowSm}>
 							<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
-							<span data-animate={true} className={styles.price}></span>
+							<span className="placeholder-container" style={{ width: '6ch', height: '16px' }}></span>
 						</p>
-						<button className={styles.actionButton}>Repay ETH</button>
+						<button className={styles.actionButton} disabled>
+							Repay ETH
+						</button>
 					</span>
 				</span>
 			</span>
