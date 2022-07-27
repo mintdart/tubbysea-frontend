@@ -2,12 +2,10 @@ import type { NextPage } from 'next'
 import Layout from '~/components/Layout'
 import { RepayTubby, RepayTubbyPlaceholder } from '~/components/TubbyCard'
 import TubbyGrid from '~/components/TubbyGrid'
+import { useGetLoans } from '~/hooks/useLoans'
 
 const Repay: NextPage = () => {
-	const isError = false
-	const isLoading = false
-
-	const tubbies: number[] = []
+	const { data: tubbies, isLoading, isError } = useGetLoans()
 
 	return (
 		<Layout>

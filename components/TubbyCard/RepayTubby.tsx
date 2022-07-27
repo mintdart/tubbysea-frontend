@@ -5,7 +5,7 @@ import styles from './TubbyCard.module.css'
 const imgUrl = '/minty.jpeg'
 
 export function RepayTubby({ id }: { id?: number }) {
-	const price = id && 0.1091
+	const price = (id || id === 0) && 0.1091
 
 	return (
 		<article className={styles.card}>
@@ -14,7 +14,7 @@ export function RepayTubby({ id }: { id?: number }) {
 			</span>
 			<span className={styles.infoWrapper}>
 				<span className={styles.flexRow}>
-					<p className={styles.dullText}>{id && `#${id}`}</p>
+					<p className={styles.dullText}>{(id || id === 0) && `#${id}`}</p>
 					<p className={`${styles.flexRowSm} ${styles.dullText}`}>
 						<span className="visually-hidden">Time left to repay loan</span>
 						<svg

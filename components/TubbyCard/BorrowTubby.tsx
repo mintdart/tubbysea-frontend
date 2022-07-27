@@ -29,7 +29,7 @@ export function BorrowTubby({ id }: IBorrowTubby) {
 				{imgUrl && <Image src={imgUrl} alt={`token id ${id}`} layout="fill" />}
 			</span>
 			<span className={styles.infoWrapper}>
-				<p className={styles.dullText}>{id && `#${id}`}</p>
+				<p className={styles.dullText}>{(id || id === 0) && `#${id}`}</p>
 				<span className={styles.quoteSection}>
 					<p>Quote</p>
 					<span className={styles.flexRow}>

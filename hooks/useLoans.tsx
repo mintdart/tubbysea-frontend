@@ -1,8 +1,8 @@
 import { useAccount, useContractRead } from 'wagmi'
 import BigNumber from 'bignumber.js'
-import { NFTS_LIST_ABI, NFTS_LIST_ADDRESS, NFT_TESTNET_ADDRESS } from '~/lib/contracts'
+import { NFTS_LIST_ABI, NFTS_LIST_ADDRESS, TUBBY_LOAN_ADDRESS } from '~/lib/contracts'
 
-export function useGetNfts() {
+export function useGetLoans() {
 	const { address } = useAccount()
 
 	// get number of nft's owned by user of a given contract
@@ -10,7 +10,7 @@ export function useGetNfts() {
 		addressOrName: NFTS_LIST_ADDRESS,
 		contractInterface: NFTS_LIST_ABI,
 		functionName: 'getOwnedNfts',
-		args: [address, NFT_TESTNET_ADDRESS, 920600, 920800],
+		args: [address, TUBBY_LOAN_ADDRESS, 0, 2],
 		select: (data: any) => transformData(data),
 		watch: true
 	})
