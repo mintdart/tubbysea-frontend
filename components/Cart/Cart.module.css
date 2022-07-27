@@ -75,7 +75,6 @@
 	color: #c9c9ca;
 	border: 1px solid rgba(255, 255, 255, 0.04);
 	border-radius: 9999px;
-	cursor: pointer;
 	transition: 0.125s ease;
 }
 
@@ -129,11 +128,13 @@
 
 .checkoutButton {
 	padding: 6px;
-	border: none;
 	border-radius: 4px;
 	margin-top: 20px;
 	background: #fff;
-	cursor: pointer;
+}
+
+.checkoutButton[data-not-allowed] {
+	color: #ef4444;
 }
 
 .emptyMsg {
@@ -144,14 +145,12 @@
 
 .removeButton {
 	background: #fff;
-	border: none;
 	border-radius: 12px;
 	padding: 4px;
 	position: absolute;
 	top: -8px;
 	left: -6px;
 	z-index: 1;
-	cursor: pointer;
 	transition: 0.125s ease;
 }
 

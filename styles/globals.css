@@ -57,6 +57,16 @@ ul {
 	padding: 0;
 }
 
+button {
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+button:disabled {
+	cursor: not-allowed;
+}
+
 #__next {
 	isolation: isolate;
 	min-height: 100%;
@@ -100,12 +110,9 @@ ul {
 }
 
 .fallback-text button {
-	background: none;
-	border: none;
 	text-decoration: underline;
 	padding: 0;
 	color: inherit;
-	cursor: pointer;
 }
 
 [data-backdrop] {

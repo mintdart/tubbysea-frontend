@@ -61,7 +61,6 @@
 
 .actionButton:hover,
 .actionButton:focus-visible {
-	cursor: pointer;
 	background: hsl(329deg 94% 86%);
 	color: #000;
 	outline: none;
@@ -121,7 +120,6 @@
 
 .savedButton:hover,
 .savedButton:focus-visible {
-	cursor: pointer;
 	background: #d9fffe;
 	color: #000;
 	outline: none;

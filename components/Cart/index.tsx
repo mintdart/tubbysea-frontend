@@ -10,6 +10,8 @@ import { useGetContractApproval, useSetContractApproval } from '~/hooks/useContr
 import { useBorrow } from '~/hooks/useBorrow'
 import { CartItemsPlaceholder } from './Placeholder'
 import styles from './Cart.module.css'
+import { useBalance } from 'wagmi'
+import { LENDING_POOL_ADDRESS } from '~/lib/contracts'
 
 const imgUrl = '/minty.jpeg'
 
@@ -60,6 +62,14 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 		waitForTransaction: { data: borrowTxOnChain, isLoading: checkingForBorrowTxOnChain, error: txBorrowErrorOnChain }
 	} = useBorrow()
 
+	const {
+		data: contractBalance,
+		error: errorFetchingContractBalance,
+		isLoading: fethcingContractBalance
+	} = useBalance({
+		addressOrName: LENDING_POOL_ADDRESS
+	})
+
 	const isApproved = isApprovedForAll || approvalTxOnChain?.status === 1
 
 	// construct error messages
@@ -87,6 +97,8 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 		? txBorrowErrorOnChain?.message
 		: borrowTxOnChain?.status === 0
 		? 'Transaction failed, please try again'
+		: errorFetchingContractBalance
+		? errorFetchingContractBalance.message
 		: null
 
 	// check all loading states to show beat loader
@@ -98,7 +110,13 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 		checkingForApproveTxOnChain ||
 		fetchingIfApproved ||
 		userConfirmingBorrow ||
-		checkingForBorrowTxOnChain
+		checkingForBorrowTxOnChain ||
+		fethcingContractBalance
+
+	const canUserBorrowETH =
+		contractBalance && cartItems && quote?.price
+			? Number((cartItems.length * quote.price).toFixed(2)) < Number(contractBalance.formatted)
+			: false
 
 	return (
 		<Dialog state={dialog} portal={typeof window !== 'undefined'} className={styles.dialog}>
@@ -210,6 +228,7 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 							</li>
 						</ul>
 					)}
+
 					{/* Show error message of txs/queries initiated with wallet */}
 					{errorMsgOfEthersQueries && <p className={styles.errorMsg}>{errorMsgOfEthersQueries}</p>}
 
@@ -218,13 +237,24 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 							<BeatLoader />
 						</button>
 					) : isApproved ? (
-						<button
-							className={styles.checkoutButton}
-							onClick={() => borrowETH?.()}
-							disabled={!borrowETH || mutationDisabled}
-						>
-							Borrow
-						</button>
+						canUserBorrowETH ? (
+							<button
+								className={styles.checkoutButton}
+								onClick={() => borrowETH?.()}
+								disabled={!borrowETH || mutationDisabled}
+							>
+								Borrow
+							</button>
+						) : (
+							<>
+								<button className={styles.checkoutButton} data-not-allowed disabled={true}>
+									Borrow limit reached
+								</button>
+								<p style={{ textAlign: 'center', fontSize: '0.8rem', marginTop: '-12px' }}>
+									Try removing some items from your cart
+								</p>
+							</>
+						)
 					) : (
 						<button
 							className={styles.checkoutButton}

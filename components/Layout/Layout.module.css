@@ -55,8 +55,6 @@
 .cartButton {
 	position: relative;
 	padding: 8px;
-	cursor: pointer;
-	border: none;
 	border-radius: 12px;
 	background: #fff;
 	color: #000;
