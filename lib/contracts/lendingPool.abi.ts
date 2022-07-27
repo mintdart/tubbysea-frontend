@@ -102,11 +102,28 @@ export const LENDING_POOL_ABI = [
 		stateMutability: 'view',
 		type: 'function'
 	},
+	{
+		inputs: [],
+		name: 'currentSumInterestPerEth',
+		outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+		stateMutability: 'view',
+		type: 'function'
+	},
 	{ inputs: [], name: 'deposit', outputs: [], stateMutability: 'payable', type: 'function' },
 	{
 		inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
 		name: 'getApproved',
 		outputs: [{ internalType: 'address', name: '', type: 'address' }],
+		stateMutability: 'view',
+		type: 'function'
+	},
+	{
+		inputs: [{ internalType: 'uint256', name: 'loanId', type: 'uint256' }],
+		name: 'infoToRepayLoan',
+		outputs: [
+			{ internalType: 'uint256', name: 'deadline', type: 'uint256' },
+			{ internalType: 'uint256', name: 'totalRepay', type: 'uint256' }
+		],
 		stateMutability: 'view',
 		type: 'function'
 	},
