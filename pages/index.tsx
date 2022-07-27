@@ -13,7 +13,7 @@ const Home: NextPage = () => {
 	const { cart } = router.query
 
 	// get number of nft's owned by user of a given contract
-	const { data: tubbies, isError, isLoading } = useGetNfts()
+	const { data: tubbies, isError, isLoading: fetchingNftsList } = useGetNfts()
 
 	const dialog = useDialogState({
 		open: typeof cart === 'string' && cart === 'true',
@@ -29,7 +29,7 @@ const Home: NextPage = () => {
 			<Layout>
 				{isError ? (
 					<p className="fallback-text">Sorry, couldn't get nfts for your address</p>
-				) : isLoading ? (
+				) : fetchingNftsList ? (
 					<TubbyGrid>
 						{new Array(8).fill('tubby').map((_, index) => (
 							<BorrowTubbyPlaceholder key={index} />

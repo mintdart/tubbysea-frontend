@@ -220,7 +220,7 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 					) : isApproved ? (
 						<button
 							className={styles.checkoutButton}
-							onClick={() => borrowETH && borrowETH()}
+							onClick={() => borrowETH?.()}
 							disabled={!borrowETH || mutationDisabled}
 						>
 							Borrow
@@ -228,7 +228,7 @@ export default function Cart({ dialog }: { dialog: DisclosureState }) {
 					) : (
 						<button
 							className={styles.checkoutButton}
-							onClick={() => approveContract && approveContract()}
+							onClick={() => approveContract?.()}
 							disabled={!approveContract || errorMsgOfQueries ? true : false}
 						>
 							Approve
