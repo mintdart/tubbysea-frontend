@@ -35,7 +35,7 @@ async function getLoans({ userAddress, provider, totalSupply, maxLoanLength }: I
 		const nftListContract = new ethers.Contract(NFTS_LIST_ADDRESS, NFTS_LIST_ABI, provider)
 		const loanContract = new ethers.Contract(TUBBY_LOAN_ADDRESS, TUBBY_LOAN_ABI, provider)
 
-		const list = await nftListContract.getOwnedNfts(userAddress, TUBBY_LOAN_ADDRESS, 0, maxLoanLength)
+		const list = await nftListContract.getOwnedNfts(userAddress, TUBBY_LOAN_ADDRESS, 0, totalSupply)
 		const nftsList = formatNftsListResponse(list)
 
 		const loans = await Promise.all(nftsList.map((id) => loanContract.loans(id)))
