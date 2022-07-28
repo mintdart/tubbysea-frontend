@@ -9,12 +9,9 @@ type Provider = ethers.providers.BaseProvider
 
 export interface ILoan {
 	loanId: number
-	borrowed: number
 	nft: number
-	startInterestSum: number
-	startTime: number
-	maxLoanLength: number
-	totalSupply: number
+	deadline: number
+	totalRepay: number
 }
 
 interface IError {
@@ -39,18 +36,14 @@ async function getLoans({ userAddress, provider, totalSupply, maxLoanLength }: I
 		const nftsList = formatNftsListResponse(list)
 
 		const loans = await Promise.all(nftsList.map((id) => loanContract.loans(id)))
+		const infoToRepayLoans = await Promise.all(nftsList.map((id) => loanContract.infoToRepayLoan(id)))
 
 		return loans.map((loan, index) => ({
 			loanId: nftsList[index],
-			borrowed: Number(loan.borrowed.toString()),
-			nft: Number(loan.nft.toString()),
-			startInterestSum: Number(loan.startInterestSum.toString()),
-			startTime: Number(loan.startTime.toString()) * 1000,
-			maxLoanLength,
-			totalSupply
+			nft: Number(loan.nft),
+			deadline: Number(infoToRepayLoans[index].deadline) * 1000,
+			totalRepay: Number(infoToRepayLoans[index].totalRepay) / 1e18
 		}))
-
-		return []
 	} catch (error: any) {
 		console.log(error)
 		throw new Error(error.message || (error?.reason ?? "Couldn't get loans of user"))

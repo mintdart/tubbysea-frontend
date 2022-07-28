@@ -10,9 +10,8 @@ const hour = 60 * 60 * 1000
 const minute = 60 * 1000
 const second = 1000
 
-const formatDate = (startTime: number, maxTime: number) => {
-	const timeElapsed = Date.now() - startTime
-	const timeLeft = maxTime - timeElapsed
+const formatDate = (deadline: number) => {
+	const timeLeft = deadline - Date.now()
 
 	// max deadline - return expired
 	if (timeLeft <= 0) {
@@ -53,7 +52,7 @@ export function RepayTubby({ details }: { details: ILoan }) {
 							<circle cx="12" cy="12" r="10"></circle>
 							<polyline points="12 6 12 12 16 14"></polyline>
 						</svg>
-						<span>{formatDate(details.startTime, details.maxLoanLength)}</span>
+						<span>{formatDate(details.deadline)}</span>
 					</p>
 				</span>
 				<span className={styles.quoteSection}>
@@ -61,7 +60,7 @@ export function RepayTubby({ details }: { details: ILoan }) {
 					<span className={styles.flexRow}>
 						<p className={styles.flexRowSm}>
 							<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
-							<span className={styles.price}>{details.nft}</span>
+							<span className={styles.price}>{details.totalRepay.toFixed(2)}</span>
 						</p>
 						<button className={styles.actionButton}>Repay ETH</button>
 					</span>
