@@ -2,20 +2,20 @@ import * as React from 'react'
 import Image from 'next/image'
 import { useGetQuote } from '~/hooks/useGetQuote'
 import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
+import { useGetNftImg } from '~/hooks/useGetNftImg'
 import styles from './TubbyCard.module.css'
 
 interface IBorrowTubby {
 	id: number
 }
 
-const imgUrl = '/minty.jpeg'
-
 // TODO: handle queries error
-
 export function BorrowTubby({ id }: IBorrowTubby) {
 	const { data: quote, isLoading: isFetchingQuote } = useGetQuote()
 	const { data: cartItems } = useGetCartItems()
 	const { mutate } = useSaveItemToCart()
+
+	const { data: imgURL } = useGetNftImg(id)
 
 	const storeItem = () => {
 		if (!id) return
@@ -26,7 +26,13 @@ export function BorrowTubby({ id }: IBorrowTubby) {
 	return (
 		<article className={styles.card}>
 			<span className={styles.imageWrapper}>
-				{imgUrl && <Image src={imgUrl} alt={`token id ${id}`} layout="fill" />}
+				{imgURL && (
+					<Image
+						src={imgURL ? `https://cloudflare-ipfs.com/${imgURL}` : '/minty.jpeg'}
+						alt={`token id ${id}`}
+						layout="fill"
+					/>
+				)}
 			</span>
 			<span className={styles.infoWrapper}>
 				<p className={styles.dullText}>{(id || id === 0) && `#${id}`}</p>
