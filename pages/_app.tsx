@@ -34,7 +34,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 		<QueryClientProvider client={queryClient}>
 			<Hydrate state={pageProps.dehydratedState}>
 				<WagmiConfig client={wagmiClient}>
-					<RainbowKitProvider theme={walletTheme} chains={chains} initialChain={chain.goerli}>
+					<RainbowKitProvider
+						theme={walletTheme}
+						chains={chains}
+						initialChain={chain.goerli}
+						showRecentTransactions={true}
+					>
 						{isMounted && <Component {...pageProps} />}
 					</RainbowKitProvider>
 				</WagmiConfig>

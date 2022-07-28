@@ -1,7 +1,9 @@
 import * as React from 'react'
 import Image from 'next/image'
-import styles from './TubbyCard.module.css'
+import BeatLoader from '~/components/BeatLoader'
 import { ILoan } from '~/hooks/useGetLoans'
+import { useRepay } from '~/hooks/useRepay'
+import styles from './TubbyCard.module.css'
 
 const imgUrl = '/minty.jpeg'
 
@@ -28,6 +30,8 @@ const formatDate = (deadline: number) => {
 }
 
 export function RepayTubby({ details }: { details: ILoan }) {
+	const { write, isLoading, error } = useRepay(details.loanId, details.totalRepay)
+
 	return (
 		<article className={styles.card}>
 			<span className={styles.imageWrapper}>
@@ -60,9 +64,11 @@ export function RepayTubby({ details }: { details: ILoan }) {
 					<span className={styles.flexRow}>
 						<p className={styles.flexRowSm}>
 							<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
-							<span className={styles.price}>{details.totalRepay.toFixed(2)}</span>
+							<span className={styles.price}>{(details.totalRepay / 1e18).toFixed(2)}</span>
 						</p>
-						<button className={styles.actionButton}>Repay ETH</button>
+						<button className={styles.actionButton} onClick={() => write?.()}>
+							{isLoading ? <BeatLoader /> : 'Repay ETH'}
+						</button>
 					</span>
 				</span>
 			</span>
@@ -76,7 +82,7 @@ export function RepayTubbyPlaceholder() {
 			<span className={styles.imageWrapper}></span>
 			<span className={styles.infoWrapper}>
 				<span className={styles.flexRow}>
-					<p className={styles.dullText}></p>
+					<span className="placeholder-container" style={{ width: '10ch', height: '16px' }}></span>
 					<p className={`${styles.flexRowSm} ${styles.dullText}`}>
 						<span className="visually-hidden">Time left to repay loan</span>
 						<svg
