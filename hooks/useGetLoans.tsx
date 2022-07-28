@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { ethers } from 'ethers'
-import { useAccount, useNetwork, useProvider } from 'wagmi'
+import { useAccount, useContractReads, useNetwork, useProvider } from 'wagmi'
 import { NFTS_LIST_ABI, NFTS_LIST_ADDRESS, TUBBY_LOAN_ADDRESS } from '~/lib/contracts'
 import { TUBBY_LOAN_ABI } from '~/lib/contracts/tubbyLoan.abi'
 import { formatNftsListResponse } from './utils'
@@ -14,25 +14,31 @@ export interface ILoan {
 	startInterestSum: number
 	startTime: number
 	maxLoanLength: number
+	totalSupply: number
 }
 
 interface IError {
 	message?: string
 }
 
-async function getLoans(userAddress: string | null, provider: Provider) {
+interface IGetLoans {
+	userAddress?: string
+	provider: Provider
+	totalSupply?: number
+	maxLoanLength?: number
+}
+
+async function getLoans({ userAddress, provider, totalSupply, maxLoanLength }: IGetLoans) {
 	try {
-		if (!userAddress) throw new Error('Wallet not connected')
+		if (!userAddress || !provider || !totalSupply || !maxLoanLength) throw new Error('Invalid arguments')
 
 		const nftListContract = new ethers.Contract(NFTS_LIST_ADDRESS, NFTS_LIST_ABI, provider)
 		const loanContract = new ethers.Contract(TUBBY_LOAN_ADDRESS, TUBBY_LOAN_ABI, provider)
 
-		const list = await nftListContract.getOwnedNfts(userAddress, TUBBY_LOAN_ADDRESS, 0, 2)
+		const list = await nftListContract.getOwnedNfts(userAddress, TUBBY_LOAN_ADDRESS, 0, maxLoanLength)
 		const nftsList = formatNftsListResponse(list)
 
 		const loans = await Promise.all(nftsList.map((id) => loanContract.loans(id)))
-
-		const maxLoanLength = await loanContract.maxLoanLength()
 
 		return loans.map((loan, index) => ({
 			loanId: nftsList[index],
@@ -40,8 +46,11 @@ async function getLoans(userAddress: string | null, provider: Provider) {
 			nft: Number(loan.nft.toString()),
 			startInterestSum: Number(loan.startInterestSum.toString()),
 			startTime: Number(loan.startTime.toString()) * 1000,
-			maxLoanLength: Number(maxLoanLength.toString()) * 1000
+			maxLoanLength,
+			totalSupply
 		}))
+
+		return []
 	} catch (error: any) {
 		console.log(error)
 		throw new Error(error.message || (error?.reason ?? "Couldn't get loans of user"))
@@ -52,7 +61,35 @@ export function useGetLoans() {
 	const { address } = useAccount()
 	const provider = useProvider()
 	const { chain } = useNetwork()
-	return useQuery<ILoan[], IError>(['loans', address, chain], () => getLoans(address || null, provider), {
-		refetchInterval: 20 * 100
+
+	const { data } = useContractReads({
+		contracts: [
+			{
+				addressOrName: TUBBY_LOAN_ADDRESS,
+				contractInterface: TUBBY_LOAN_ABI,
+				functionName: 'totalSupply'
+			},
+			{
+				addressOrName: TUBBY_LOAN_ADDRESS,
+				contractInterface: TUBBY_LOAN_ABI,
+				functionName: 'maxLoanLength'
+			}
+		],
+		watch: true
 	})
+
+	const [totalSupply, maxLoanLength] = transformLoanTokenData(data)
+
+	return useQuery<ILoan[], IError>(
+		['loans', address, chain, totalSupply, maxLoanLength],
+		() => getLoans({ userAddress: address, provider, totalSupply, maxLoanLength }),
+		{
+			retry: 0,
+			refetchOnWindowFocus: false
+		}
+	)
+}
+
+const transformLoanTokenData = (data: any): number[] => {
+	return data ? [data[0] && Number(data[0].toString()), data[1] && Number(data[1].toString()) * 1000] : []
 }
