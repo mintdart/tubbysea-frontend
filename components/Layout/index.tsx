@@ -7,6 +7,8 @@ import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit'
 import styles from './Layout.module.css'
 import Image from 'next/image'
 import { useGetCartItems } from '~/hooks/useCart'
+import { useGetNfts } from '~/hooks/useGetNfts'
+import { useGetLoans } from '~/hooks/useGetLoans'
 
 interface ILayoutProps {
 	children?: React.ReactNode
@@ -21,6 +23,10 @@ export default function Layout({ children, ...props }: ILayoutProps) {
 	const { openConnectModal } = useConnectModal()
 
 	const { data: cartItems } = useGetCartItems()
+
+	// prefetch queries
+	useGetNfts()
+	useGetLoans()
 
 	return (
 		<>
