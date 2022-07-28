@@ -5,9 +5,6 @@ const nextConfig = {
 	images: {
 		domains: ['cloudflare-ipfs.com']
 	},
-	experimental: {
-		runtime: 'experimental-edge'
-	},
 	async redirects() {
 		return [
 			{
