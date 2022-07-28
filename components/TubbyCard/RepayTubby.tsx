@@ -4,6 +4,7 @@ import BeatLoader from '~/components/BeatLoader'
 import { ILoan } from '~/hooks/useGetLoans'
 import { useRepay } from '~/hooks/useRepay'
 import styles from './TubbyCard.module.css'
+import { useGetNftImg } from '~/hooks/useGetNftImg'
 
 const imgUrl = '/minty.jpeg'
 
@@ -32,11 +33,24 @@ const formatDate = (deadline: number) => {
 export function RepayTubby({ details }: { details: ILoan }) {
 	const { write, isLoading, error } = useRepay(details.loanId, details.totalRepay)
 
+	const { data: imgURL, isLoading: fetchingImg } = useGetNftImg(details.nft)
+
 	return (
 		<article className={styles.card}>
-			<span className={styles.imageWrapper}>
-				{imgUrl && <Image src={imgUrl} alt={`loan id ${details.loanId}`} layout="fill" />}
-			</span>
+			{fetchingImg ? (
+				<span className="placeholder-container" style={{ width: '100%', aspectRatio: '1/1' }}></span>
+			) : (
+				<span className={styles.imageWrapper}>
+					{imgURL && (
+						<Image
+							src={imgURL ? `https://cloudflare-ipfs.com/${imgURL}` : '/minty.jpeg'}
+							alt={`token id ${details.loanId}`}
+							layout="fill"
+						/>
+					)}
+				</span>
+			)}
+
 			<span className={styles.infoWrapper}>
 				<span className={styles.flexRow}>
 					<p className={styles.dullText}>{(details.nft || details.nft === 0) && `#${details.nft}`}</p>
@@ -79,7 +93,7 @@ export function RepayTubby({ details }: { details: ILoan }) {
 export function RepayTubbyPlaceholder() {
 	return (
 		<article className={styles.card}>
-			<span className={styles.imageWrapper}></span>
+			<span className="placeholder-container" style={{ width: '100%', aspectRatio: '1/1' }}></span>
 			<span className={styles.infoWrapper}>
 				<span className={styles.flexRow}>
 					<span className="placeholder-container" style={{ width: '10ch', height: '16px' }}></span>

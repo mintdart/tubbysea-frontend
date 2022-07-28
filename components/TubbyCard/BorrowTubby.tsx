@@ -15,7 +15,7 @@ export function BorrowTubby({ id }: IBorrowTubby) {
 	const { data: cartItems } = useGetCartItems()
 	const { mutate } = useSaveItemToCart()
 
-	const { data: imgURL } = useGetNftImg(id)
+	const { data: imgURL, isLoading: fetchingImg } = useGetNftImg(id)
 
 	const storeItem = () => {
 		if (!id) return
@@ -25,15 +25,19 @@ export function BorrowTubby({ id }: IBorrowTubby) {
 
 	return (
 		<article className={styles.card}>
-			<span className={styles.imageWrapper}>
-				{imgURL && (
-					<Image
-						src={imgURL ? `https://cloudflare-ipfs.com/${imgURL}` : '/minty.jpeg'}
-						alt={`token id ${id}`}
-						layout="fill"
-					/>
-				)}
-			</span>
+			{fetchingImg ? (
+				<span className="placeholder-container" style={{ width: '100%', aspectRatio: '1/1' }}></span>
+			) : (
+				<span className={styles.imageWrapper}>
+					{imgURL && (
+						<Image
+							src={imgURL ? `https://cloudflare-ipfs.com/${imgURL}` : '/minty.jpeg'}
+							alt={`token id ${id}`}
+							layout="fill"
+						/>
+					)}
+				</span>
+			)}
 			<span className={styles.infoWrapper}>
 				<p className={styles.dullText}>{(id || id === 0) && `#${id}`}</p>
 				<span className={styles.quoteSection}>
@@ -74,7 +78,7 @@ export function BorrowTubby({ id }: IBorrowTubby) {
 export const BorrowTubbyPlaceholder = () => {
 	return (
 		<article className={styles.card}>
-			<span className={styles.imageWrapper}></span>
+			<span className="placeholder-container" style={{ width: '100%', aspectRatio: '1/1' }}></span>
 			<span className={styles.infoWrapper}>
 				<p className={styles.dullText}>{}</p>
 				<span className={styles.quoteSection}>
