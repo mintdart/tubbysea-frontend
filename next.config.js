@@ -5,6 +5,10 @@ const nextConfig = {
 	images: {
 		domains: ['cloudflare-ipfs.com']
 	},
+	experimental: {
+		legacyBrowsers: false,
+		browsersListForSwc: true
+	},
 	async redirects() {
 		return [
 			{

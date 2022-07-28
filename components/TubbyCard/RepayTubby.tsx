@@ -6,8 +6,6 @@ import { useRepay } from '~/hooks/useRepay'
 import styles from './TubbyCard.module.css'
 import { useGetNftImg } from '~/hooks/useGetNftImg'
 
-const imgUrl = '/minty.jpeg'
-
 const day = 24 * 60 * 60 * 1000
 const hour = 60 * 60 * 1000
 const minute = 60 * 1000
@@ -31,7 +29,7 @@ const formatDate = (deadline: number) => {
 }
 
 export function RepayTubby({ details }: { details: ILoan }) {
-	const { write, isLoading, error } = useRepay(details.loanId, details.totalRepay)
+	const { write, isLoading } = useRepay(details.loanId, details.totalRepay)
 
 	const { data: imgURL, isLoading: fetchingImg } = useGetNftImg(details.nft)
 
