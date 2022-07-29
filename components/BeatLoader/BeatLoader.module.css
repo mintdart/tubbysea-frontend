@@ -3,13 +3,15 @@
 	align-items: center;
 	justify-content: center;
 	height: 24px;
+	--circle-color: #000000;
+	--circle-size: 6px;
 }
 
 .circle {
 	display: inline-block;
-	background-color: #000000;
-	width: 6px;
-	height: 6px;
+	background-color: var(--circle-color);
+	width: var(--circle-size);
+	height: var(--circle-size);
 	margin: 0px 2px;
 	border-radius: 100%;
 	-webkit-animation: beat 0.7s 0s infinite linear;

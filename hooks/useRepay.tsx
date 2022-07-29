@@ -2,8 +2,13 @@ import { useQueryClient } from '@tanstack/react-query'
 import BigNumber from 'bignumber.js'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS } from '~/lib/contracts'
+import { useGetLoans } from './useGetLoans'
+import { useGetNfts } from './useGetNfts'
 
 export function useRepay(loanId: number, amount: number) {
+	const { refetch: refetchNftsList } = useGetNfts()
+	const { refetch: refetchLoans } = useGetLoans()
+
 	const queryClient = useQueryClient()
 
 	const buffer = new BigNumber(amount).times(0.05).toString()
@@ -24,6 +29,8 @@ export function useRepay(loanId: number, amount: number) {
 	const waitForTransaction = useWaitForTransaction({
 		hash: contractWrite.data?.hash,
 		onSettled: () => {
+			refetchLoans()
+			refetchNftsList()
 			queryClient.invalidateQueries()
 		}
 	})

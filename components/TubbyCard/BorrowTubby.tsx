@@ -26,7 +26,10 @@ export function BorrowTubby({ id }: IBorrowTubby) {
 	return (
 		<article className={styles.card}>
 			{fetchingImg ? (
-				<span className="placeholder-container" style={{ width: '100%', aspectRatio: '1/1' }}></span>
+				<span
+					className="placeholder-container"
+					style={{ width: '100%', aspectRatio: '1/1', borderRadius: '12px' }}
+				></span>
 			) : (
 				<span className={styles.imageWrapper}>
 					{imgURL && (

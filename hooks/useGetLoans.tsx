@@ -78,7 +78,7 @@ export function useGetLoans() {
 		['loans', address, chain, totalSupply, maxLoanLength],
 		() => getLoans({ userAddress: address, provider, totalSupply, maxLoanLength }),
 		{
-			retry: 0,
+			retry: 2,
 			refetchOnWindowFocus: false
 		}
 	)

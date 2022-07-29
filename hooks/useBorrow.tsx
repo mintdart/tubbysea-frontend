@@ -3,6 +3,8 @@ import BigNumber from 'bignumber.js'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS, NFT_TESTNET_ADDRESS } from '~/lib/contracts'
 import { useGetCartItems } from './useCart'
+import { useGetLoans } from './useGetLoans'
+import { useGetNfts } from './useGetNfts'
 import { useGetQuote } from './useGetQuote'
 
 const contract = NFT_TESTNET_ADDRESS
@@ -12,6 +14,8 @@ export function useBorrow() {
 	const { data: quote, isLoading: isFetchingQuote, isError: failedFetchQuotation } = useGetQuote()
 
 	const queryClient = useQueryClient()
+	const { refetch: refetchNftsList } = useGetNfts()
+	const { refetch: refetchLoans } = useGetLoans()
 
 	const { config } = usePrepareContractWrite({
 		addressOrName: LENDING_POOL_ADDRESS,
@@ -33,6 +37,9 @@ export function useBorrow() {
 	const waitForTransaction = useWaitForTransaction({
 		hash: contractWrite.data?.hash,
 		onSettled: (data) => {
+			refetchNftsList()
+			refetchLoans()
+
 			// clear items in cart if tx is successfull
 			if (data?.status === 1) {
 				const prevItems = localStorage.getItem('tubbylend')

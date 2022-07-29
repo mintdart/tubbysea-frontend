@@ -29,14 +29,21 @@ const formatDate = (deadline: number) => {
 }
 
 export function RepayTubby({ details }: { details: ILoan }) {
-	const { write, isLoading } = useRepay(details.loanId, details.totalRepay)
+	const {
+		write,
+		isLoading,
+		waitForTransaction: { isLoading: isConfirming }
+	} = useRepay(details.loanId, details.totalRepay)
 
 	const { data: imgURL, isLoading: fetchingImg } = useGetNftImg(details.nft)
 
 	return (
 		<article className={styles.card}>
 			{fetchingImg ? (
-				<span className="placeholder-container" style={{ width: '100%', aspectRatio: '1/1' }}></span>
+				<span
+					className="placeholder-container"
+					style={{ width: '100%', aspectRatio: '1/1', borderRadius: '12px' }}
+				></span>
 			) : (
 				<span className={styles.imageWrapper}>
 					{imgURL && (
@@ -78,8 +85,14 @@ export function RepayTubby({ details }: { details: ILoan }) {
 							<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
 							<span className={styles.price}>{(details.totalRepay / 1e18).toFixed(2)}</span>
 						</p>
-						<button className={styles.actionButton} onClick={() => write?.()}>
-							{isLoading ? <BeatLoader /> : 'Repay ETH'}
+						<button className={styles.actionButton} onClick={() => write?.()} disabled={isLoading}>
+							{isLoading || isConfirming ? (
+								<BeatLoader
+									style={{ '--circle-color': '#fff', '--circle-size': '5px', height: '21px', width: '8ch' }}
+								/>
+							) : (
+								'Repay ETH'
+							)}
 						</button>
 					</span>
 				</span>
