@@ -42,7 +42,7 @@ export function RepayTubby({ details }: { details: ILoan }) {
 			{fetchingImg ? (
 				<span
 					className="placeholder-container"
-					style={{ width: '100%', aspectRatio: '1/1', borderRadius: '12px' }}
+					style={{ width: '100%', aspectRatio: '1/1', borderRadius: '12px 12px 0 0' }}
 				></span>
 			) : (
 				<span className={styles.imageWrapper}>
