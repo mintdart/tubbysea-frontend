@@ -12,9 +12,7 @@ import { useGetContractApproval, useSetContractApproval } from '~/hooks/useContr
 import { useBorrow } from '~/hooks/useBorrow'
 import { LENDING_POOL_ADDRESS } from '~/lib/contracts'
 import styles from './Cart.module.css'
-
-// TODO add placeholder image
-const imgUrl = '/tubbycats.png'
+import { useGetNftImg } from '~/hooks/useGetNftImg'
 
 const formatErrorMsg = (error: any) => {
 	if (error?.code === 'UNPREDICTABLE_GAS_LIMIT') {
@@ -146,7 +144,7 @@ export function CartWithItems({ dialog }: { dialog: DisclosureState }) {
 										</svg>
 										<span className="visually-hidden">Remove Item from cart</span>
 									</button>
-									<Image src={imgUrl} width="40px" height="40px" objectFit="cover" alt={`token id ${item}`} />
+									<ItemImage tokenId={item} />
 									<span className={styles.itemDetails}>
 										<span>{`#${item}`}</span>
 										<span className={styles.collectionName}>tubby cats</span>
@@ -243,5 +241,23 @@ export function CartWithItems({ dialog }: { dialog: DisclosureState }) {
 				</>
 			)}
 		</Wrapper>
+	)
+}
+
+const ItemImage = ({ tokenId }: { tokenId: number }) => {
+	const { data, isLoading } = useGetNftImg(tokenId)
+
+	if (isLoading) {
+		return <span className="placeholder-container" style={{ width: '40px', height: '40px' }}></span>
+	}
+
+	return (
+		<Image
+			src={data ? `https://cloudflare-ipfs.com/${data}` : '/tubbycats.png'}
+			width="40px"
+			height="40px"
+			objectFit="cover"
+			alt={`token id ${tokenId}`}
+		/>
 	)
 }

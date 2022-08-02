@@ -5,13 +5,13 @@ import { useGetNfts } from './useGetNfts'
 const contract = NFT_TESTNET_ADDRESS
 
 // save/remove items from local storage
-function saveItemToCart({ contract, tokenId }: { contract: string; tokenId: string | number }) {
+function saveItemToCart({ contract, tokenId }: { contract: string; tokenId: number }) {
 	const prevItems = localStorage.getItem('tubbylend')
 
 	if (prevItems) {
 		const items = JSON.parse(prevItems)
 
-		const contractItems: Array<string | number> = items[contract] || []
+		const contractItems: Array<number> = items[contract] || []
 
 		if (contractItems.includes(tokenId)) {
 			items[contract] = contractItems.filter((item) => item !== tokenId)
@@ -39,7 +39,7 @@ function fetchCartItems(contract: string) {
 const useSaveItemToCart = () => {
 	const queryClient = useQueryClient()
 
-	return useMutation(({ tokenId }: { tokenId: string | number }) => saveItemToCart({ contract, tokenId }), {
+	return useMutation(({ tokenId }: { tokenId: number }) => saveItemToCart({ contract, tokenId }), {
 		onSettled: () => {
 			queryClient.invalidateQueries()
 		}
@@ -50,7 +50,7 @@ const useGetCartItems = () => {
 	const { data: tubbies } = useGetNfts()
 
 	// fetch and filter cart items which are owned by user
-	return useQuery<Array<string | number>>(['cartItems', contract, tubbies?.length], () => fetchCartItems(contract), {
+	return useQuery<Array<number>>(['cartItems', contract, tubbies?.length], () => fetchCartItems(contract), {
 		select: (data) => {
 			return data.filter((item) => tubbies?.includes(item))
 		}
