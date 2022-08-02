@@ -34,7 +34,7 @@ export function BorrowTubby({ id }: IBorrowTubby) {
 				<span className={styles.imageWrapper}>
 					{imgURL && (
 						<Image
-							src={imgURL ? `https://cloudflare-ipfs.com/${imgURL}` : '/minty.jpeg'}
+							src={imgURL ? `https://cloudflare-ipfs.com/${imgURL}` : '/tubbycats.png'}
 							alt={`token id ${id}`}
 							layout="fill"
 						/>

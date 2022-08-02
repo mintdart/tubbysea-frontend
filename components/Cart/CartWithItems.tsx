@@ -14,7 +14,7 @@ import { LENDING_POOL_ADDRESS } from '~/lib/contracts'
 import styles from './Cart.module.css'
 
 // TODO add placeholder image
-const imgUrl = '/minty.jpeg'
+const imgUrl = '/tubbycats.png'
 
 const formatErrorMsg = (error: any) => {
 	if (error?.code === 'UNPREDICTABLE_GAS_LIMIT') {

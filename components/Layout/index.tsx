@@ -2,11 +2,12 @@ import * as React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit'
-import styles from './Layout.module.css'
-import Image from 'next/image'
+
 import CartButton from '~/components/Cart/CartButton'
+import styles from './Layout.module.css'
 
 interface ILayoutProps {
 	children?: React.ReactNode
@@ -42,8 +43,8 @@ export default function Layout({ children, ...props }: ILayoutProps) {
 				</span>
 			</header>
 
-			<main className={styles.main} {...props}>
-				<React.Suspense fallback={null}>
+			<React.Suspense fallback={null}>
+				<main className={styles.main} {...props}>
 					{isConnected ? (
 						children
 					) : (
@@ -52,8 +53,8 @@ export default function Layout({ children, ...props }: ILayoutProps) {
 							<span> to view your nfts and loans</span>
 						</p>
 					)}
-				</React.Suspense>
-			</main>
+				</main>
+			</React.Suspense>
 		</>
 	)
 }
