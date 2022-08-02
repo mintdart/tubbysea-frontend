@@ -1,0 +1,40 @@
+.cartButton {
+	position: relative;
+	padding: 8px;
+	border-radius: 12px;
+	background: #fff;
+	color: #000;
+	transition: 0.125s ease;
+	flex-shrink: 0;
+}
+
+.cartButton:hover {
+	transform: scale(1.025);
+}
+
+.cartButton:active {
+	transform: scale(0.95);
+}
+
+.cartButton svg {
+	height: 24px;
+	width: 24px;
+	position: relative;
+	top: 2px;
+}
+
+.noOfItems {
+	position: absolute;
+	top: -6px;
+	right: -6px;
+	font-size: 11px;
+	background: #fff;
+	color: #000;
+	border-radius: 50%;
+	width: 1.2rem;
+	height: 1.2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid hotpink;
+}

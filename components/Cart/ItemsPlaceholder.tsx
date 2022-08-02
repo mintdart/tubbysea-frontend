@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import styles from './Cart.module.css'
 
-export const CartItemsPlaceholder = () => {
+export default function ItemsPlaceholder() {
 	return (
 		<ul className={styles.list}>
 			{new Array(2).fill('tubby').map((_, index) => (
