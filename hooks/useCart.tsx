@@ -35,11 +35,13 @@ function fetchCartItems(contract: string, tubbies?: Array<INftItem>) {
 
 	const itemsInStorage: Array<number> = prevItems[contract] || []
 
-	return itemsInStorage.map((item) => {
-		const tubby = tubbies?.find((t) => t.tokenId === item)
+	return itemsInStorage
+		.map((item) => {
+			const tubby = tubbies?.find((t) => t.tokenId === item)
 
-		return tubby || null
-	}) as Array<INftItem>
+			return tubby || null
+		})
+		.filter((item) => item) as Array<INftItem>
 }
 
 // *------------------------------------------------*

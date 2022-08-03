@@ -17,12 +17,14 @@ export function useBorrow() {
 	const { refetch: refetchNftsList } = useGetNftsList()
 	const { refetch: refetchLoans } = useGetLoans()
 
+	const cartTokenIds = cartItems?.map((item) => item.tokenId) ?? []
+
 	const { config } = usePrepareContractWrite({
 		addressOrName: LENDING_POOL_ADDRESS,
 		contractInterface: LENDING_POOL_ABI,
 		functionName: 'borrow',
 		args: [
-			[...(cartItems || [])],
+			[...cartTokenIds],
 			new BigNumber(quote?.price ?? 0).times(1e18).toString(),
 			quote?.deadline,
 			quote?.signature?.v,

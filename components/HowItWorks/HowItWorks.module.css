@@ -41,5 +41,6 @@
 }
 
 .connectWalletText button {
+	color: #fff;
 	text-decoration: underline;
 }
