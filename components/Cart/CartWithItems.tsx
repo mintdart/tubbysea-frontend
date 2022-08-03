@@ -10,9 +10,9 @@ import { useGetQuote } from '~/hooks/useGetQuote'
 import { useGetInterest } from '~/hooks/useGetInterest'
 import { useGetContractApproval, useSetContractApproval } from '~/hooks/useContractApproval'
 import { useBorrow } from '~/hooks/useBorrow'
+import { useGetNftImg } from '~/hooks/useGetNftImg'
 import { LENDING_POOL_ADDRESS } from '~/lib/contracts'
 import styles from './Cart.module.css'
-import { useGetNftImg } from '~/hooks/useGetNftImg'
 
 const formatErrorMsg = (error: any) => {
 	if (error?.code === 'UNPREDICTABLE_GAS_LIMIT') {

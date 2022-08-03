@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import * as React from 'react'
+import Head from 'next/head'
 import Layout from '~/components/Layout'
-import { RepayTubby, RepayTubbyPlaceholder } from '~/components/TubbyCard'
 import TubbyGrid from '~/components/TubbyGrid'
+import { RepayTubby, RepayTubbyPlaceholder } from '~/components/TubbyCard'
 import { useGetLoans } from '~/hooks/useGetLoans'
 
 const Repay: NextPage = () => {
@@ -12,7 +12,7 @@ const Repay: NextPage = () => {
 	return (
 		<>
 			<Head>
-				<title>tubby sea</title>
+				<title>repay | tubby sea</title>
 			</Head>
 
 			<Layout>

@@ -1,3 +1,9 @@
+@font-face {
+	font-family: 'Coiny-fallback';
+	size-adjust: 115.9%;
+	src: local('Arial');
+}
+
 *,
 *::before,
 *::after {

@@ -1,0 +1,15 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	width: fit-content;
+	max-width: 30rem;
+	margin: 20px auto;
+	backdrop-filter: blur(5px);
+}
+
+.header {
+	font-family: 'Coiny', 'Coiny-fallback';
+	font-size: 2.5rem;
+	line-height: 1.5em;
+	text-align: center;
+}

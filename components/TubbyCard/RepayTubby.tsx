@@ -3,8 +3,8 @@ import Image from 'next/image'
 import BeatLoader from '~/components/BeatLoader'
 import { ILoan } from '~/hooks/useGetLoans'
 import { useRepay } from '~/hooks/useRepay'
-import styles from './TubbyCard.module.css'
 import { useGetNftImg } from '~/hooks/useGetNftImg'
+import styles from './TubbyCard.module.css'
 
 const day = 24 * 60 * 60 * 1000
 const hour = 60 * 60 * 1000

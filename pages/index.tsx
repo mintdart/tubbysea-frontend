@@ -1,11 +1,11 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import * as React from 'react'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useDialogState } from 'ariakit/dialog'
 import Layout from '~/components/Layout'
-import { BorrowTubbyPlaceholder, BorrowTubby } from '~/components/TubbyCard'
 import TubbyGrid from '~/components/TubbyGrid'
-import { useRouter } from 'next/router'
+import { BorrowTubbyPlaceholder, BorrowTubby } from '~/components/TubbyCard'
 import Cart from '~/components/Cart'
 import { useGetNfts } from '~/hooks/useGetNfts'
 
@@ -28,7 +28,7 @@ const Home: NextPage = () => {
 	return (
 		<>
 			<Head>
-				<title>pawn your tubby cats!</title>
+				<title>borrow | tubby sea</title>
 			</Head>
 
 			<Layout>

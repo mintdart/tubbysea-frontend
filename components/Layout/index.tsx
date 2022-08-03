@@ -5,9 +5,9 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit'
-
 import CartButton from '~/components/Cart/CartButton'
 import styles from './Layout.module.css'
+import HowItWorks from '../HowItWorks'
 
 interface ILayoutProps {
 	children?: React.ReactNode
@@ -47,6 +47,13 @@ export default function Layout({ children, ...props }: ILayoutProps) {
 				<main className={styles.main} {...props}>
 					{isConnected ? (
 						children
+					) : router.pathname === '/' ? (
+						<HowItWorks />
+					) : router.pathname === '/repay' ? (
+						<p className="fallback-text">
+							<button onClick={openConnectModal}>Connect Wallet</button>
+							<span> to view your active loans</span>
+						</p>
 					) : (
 						<p className="fallback-text">
 							<button onClick={openConnectModal}>Connect Wallet</button>
