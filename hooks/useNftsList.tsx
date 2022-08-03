@@ -23,12 +23,11 @@ async function getOwnedNfts({ address, chainId }: IGetOwnedNfts): Promise<Array<
 			imgUrl: `https://cloudflare-ipfs.com/` + item.metadata.image.split('https://ipfs.io/')[1]
 		}))
 	} catch (error: any) {
-		console.log(error)
 		throw new Error(error.message || (error?.reason ?? "Couldn't get nfts of user"))
 	}
 }
 
-export function useGetNfts() {
+export function useGetNftsList() {
 	const { address } = useAccount()
 	const { chain } = useNetwork()
 

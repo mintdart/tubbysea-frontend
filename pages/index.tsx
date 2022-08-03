@@ -7,14 +7,14 @@ import Layout from '~/components/Layout'
 import TubbyGrid from '~/components/TubbyGrid'
 import { BorrowTubbyPlaceholder, BorrowTubby } from '~/components/TubbyCard'
 import Cart from '~/components/Cart'
-import { useGetNfts } from '~/hooks/useGetNfts'
+import { useGetNftsList } from '~/hooks/useNftsList'
 
 const Home: NextPage = () => {
 	const router = useRouter()
 	const { cart } = router.query
 
 	// get number of nft's owned by user of a given contract
-	const { data: tubbies, isError, isLoading: fetchingNftsList } = useGetNfts()
+	const { data: tubbies, isError, isLoading: fetchingNftsList } = useGetNftsList()
 
 	const dialog = useDialogState({
 		open: typeof cart === 'string' && cart === 'true',

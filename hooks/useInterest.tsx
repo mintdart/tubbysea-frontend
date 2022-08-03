@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import { useContractRead } from 'wagmi'
 import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS } from '~/lib/contracts'
 import { useGetCartItems } from './useCart'
-import { useGetQuote } from './useGetQuote'
+import { useGetQuote } from './useQuotation'
 
 export function useGetInterest() {
 	const { data: cartItems } = useGetCartItems()

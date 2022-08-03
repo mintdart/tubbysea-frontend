@@ -2,11 +2,11 @@ import { useQueryClient } from '@tanstack/react-query'
 import BigNumber from 'bignumber.js'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS } from '~/lib/contracts'
-import { useGetLoans } from './useGetLoans'
-import { useGetNfts } from './useGetNfts'
+import { useGetLoans } from './useLoans'
+import { useGetNftsList } from './useNftsList'
 
 export function useRepay(loanId: number, amount: number) {
-	const { refetch: refetchNftsList } = useGetNfts()
+	const { refetch: refetchNftsList } = useGetNftsList()
 	const { refetch: refetchLoans } = useGetLoans()
 
 	const queryClient = useQueryClient()

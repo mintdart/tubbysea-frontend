@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAccount, useNetwork } from 'wagmi'
 import { NFT_TESTNET_ADDRESS } from '~/lib/contracts'
 import { IError, INftItem } from './types'
-import { useGetNfts } from './useGetNfts'
+import { useGetNftsList } from './useNftsList'
 
 const contract = NFT_TESTNET_ADDRESS
 
@@ -57,7 +57,7 @@ const useSaveItemToCart = () => {
 const useGetCartItems = () => {
 	const { address } = useAccount()
 	const { chain } = useNetwork()
-	const { data: tubbies, isLoading } = useGetNfts()
+	const { data: tubbies, isLoading } = useGetNftsList()
 
 	// fetch and filter cart items which are owned by user
 	return useQuery<Array<INftItem>, IError>(

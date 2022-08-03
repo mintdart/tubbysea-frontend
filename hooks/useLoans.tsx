@@ -3,7 +3,7 @@ import { ethers } from 'ethers'
 import { useAccount, useNetwork, useProvider } from 'wagmi'
 import { LENDING_POOL_ADDRESS, LENDING_POOL_ABI } from '~/lib/contracts'
 import type { IError, INftItem, Provider } from './types'
-import { useGetNfts } from './useGetNfts'
+import { useGetNftsList } from './useNftsList'
 
 export interface ILoan {
 	loanId: number
@@ -46,7 +46,7 @@ export function useGetLoans() {
 	const provider = useProvider()
 	const { chain } = useNetwork()
 
-	const { data: nftsList, isLoading: fetchingNfts } = useGetNfts()
+	const { data: nftsList, isLoading: fetchingNfts } = useGetNftsList()
 
 	return useQuery<Array<ILoan>, IError>(
 		['loans', address, chain?.id, fetchingNfts],

@@ -3,9 +3,9 @@ import BigNumber from 'bignumber.js'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS, NFT_TESTNET_ADDRESS } from '~/lib/contracts'
 import { useGetCartItems } from './useCart'
-import { useGetLoans } from './useGetLoans'
-import { useGetNfts } from './useGetNfts'
-import { useGetQuote } from './useGetQuote'
+import { useGetLoans } from './useLoans'
+import { useGetNftsList } from './useNftsList'
+import { useGetQuote } from './useQuotation'
 
 const contract = NFT_TESTNET_ADDRESS
 
@@ -14,7 +14,7 @@ export function useBorrow() {
 	const { data: quote, isLoading: isFetchingQuote, isError: failedFetchQuotation } = useGetQuote()
 
 	const queryClient = useQueryClient()
-	const { refetch: refetchNftsList } = useGetNfts()
+	const { refetch: refetchNftsList } = useGetNftsList()
 	const { refetch: refetchLoans } = useGetLoans()
 
 	const { config } = usePrepareContractWrite({

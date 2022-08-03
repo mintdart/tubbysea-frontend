@@ -6,13 +6,13 @@ import BeatLoader from '~/components/BeatLoader'
 import Wrapper from './CartDialogWrapper'
 import ItemsPlaceholder from './ItemsPlaceholder'
 import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
-import { useGetQuote } from '~/hooks/useGetQuote'
-import { useGetInterest } from '~/hooks/useGetInterest'
+import { useGetQuote } from '~/hooks/useQuotation'
+import { useGetInterest } from '~/hooks/useInterest'
 import { useGetContractApproval, useSetContractApproval } from '~/hooks/useContractApproval'
 import { useBorrow } from '~/hooks/useBorrow'
 import { LENDING_POOL_ADDRESS } from '~/lib/contracts'
 import styles from './Cart.module.css'
-import { useGetNfts } from '~/hooks/useGetNfts'
+import { useGetNftsList } from '~/hooks/useNftsList'
 
 const formatErrorMsg = (error: any) => {
 	if (error?.code === 'UNPREDICTABLE_GAS_LIMIT') {
@@ -21,7 +21,7 @@ const formatErrorMsg = (error: any) => {
 }
 
 export function CartWithItems({ dialog }: { dialog: DisclosureState }) {
-	const { isLoading: fetchingNftsList } = useGetNfts()
+	const { isLoading: fetchingNftsList } = useGetNftsList()
 
 	// query to get cart items from local storage
 	const { data: cartItems, isLoading: fetchingCartItems, isError: errorLoadingCartItems } = useGetCartItems()

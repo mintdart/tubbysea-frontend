@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Image from 'next/image'
 import BeatLoader from '~/components/BeatLoader'
-import { ILoan } from '~/hooks/useGetLoans'
+import { ILoan } from '~/hooks/useLoans'
 import { useRepay } from '~/hooks/useRepay'
 import styles from './TubbyCard.module.css'
 

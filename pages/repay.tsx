@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Layout from '~/components/Layout'
 import TubbyGrid from '~/components/TubbyGrid'
 import { RepayTubby, RepayTubbyPlaceholder } from '~/components/TubbyCard'
-import { useGetLoans } from '~/hooks/useGetLoans'
+import { useGetLoans } from '~/hooks/useLoans'
 
 const Repay: NextPage = () => {
 	const { data: tubbies = [], isLoading, error } = useGetLoans()

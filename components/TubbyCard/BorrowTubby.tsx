@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Image from 'next/image'
-import { useGetQuote } from '~/hooks/useGetQuote'
+import { useGetQuote } from '~/hooks/useQuotation'
 import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
 import styles from './TubbyCard.module.css'
 
