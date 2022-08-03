@@ -5,7 +5,7 @@ import * as React from 'react'
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
 import { infuraProvider } from 'wagmi/providers/infura'
-import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { connectorsForWallets, wallet, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { walletTheme } from '~/lib/theme'
 
 const { chains, provider } = configureChains(
@@ -13,10 +13,16 @@ const { chains, provider } = configureChains(
 	[infuraProvider({ apiKey: 'c580a3487b1241a09f9e27b02c004f5b' })]
 )
 
-const { connectors } = getDefaultWallets({
-	appName: 'tubby sea',
-	chains
-})
+const connectors = connectorsForWallets([
+	{
+		groupName: 'Popular',
+		wallets: [wallet.rainbow({ chains }), wallet.metaMask({ chains }), wallet.walletConnect({ chains })]
+	},
+	{
+		groupName: 'More',
+		wallets: [wallet.argent({ chains }), wallet.trust({ chains }), wallet.ledger({ chains })]
+	}
+])
 
 const wagmiClient = createClient({
 	autoConnect: true,
