@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
-import { ConnectButton, useConnectModal } from '@rainbow-me/rainbowkit'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 import CartButton from '~/components/Cart/CartButton'
 import styles from './Layout.module.css'
 import HowItWorks from '../HowItWorks'
@@ -17,7 +17,6 @@ export default function Layout({ children, ...props }: ILayoutProps) {
 	const router = useRouter()
 
 	const { isConnected } = useAccount()
-	const { openConnectModal } = useConnectModal()
 
 	return (
 		<>
@@ -45,21 +44,7 @@ export default function Layout({ children, ...props }: ILayoutProps) {
 
 			<React.Suspense fallback={null}>
 				<main className={styles.main} {...props}>
-					{isConnected ? (
-						children
-					) : router.pathname === '/' ? (
-						<HowItWorks />
-					) : router.pathname === '/repay' ? (
-						<p className="fallback-text">
-							<button onClick={openConnectModal}>Connect Wallet</button>
-							<span> to view your active loans</span>
-						</p>
-					) : (
-						<p className="fallback-text">
-							<button onClick={openConnectModal}>Connect Wallet</button>
-							<span> to view your nfts and loans</span>
-						</p>
-					)}
+					{isConnected ? children : <HowItWorks />}
 				</main>
 			</React.Suspense>
 		</>
