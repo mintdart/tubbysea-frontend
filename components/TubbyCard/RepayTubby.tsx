@@ -3,7 +3,6 @@ import Image from 'next/image'
 import BeatLoader from '~/components/BeatLoader'
 import { ILoan } from '~/hooks/useGetLoans'
 import { useRepay } from '~/hooks/useRepay'
-import { useGetNftImg } from '~/hooks/useGetNftImg'
 import styles from './TubbyCard.module.css'
 
 const day = 24 * 60 * 60 * 1000
@@ -35,11 +34,9 @@ export function RepayTubby({ details }: { details: ILoan }) {
 		waitForTransaction: { isLoading: isConfirming }
 	} = useRepay(details.loanId, details.totalRepay)
 
-	const { data: imgURL, isLoading: fetchingImg } = useGetNftImg(details.nft)
-
 	return (
 		<article className={styles.card}>
-			{fetchingImg ? (
+			{/* {fetchingImg ? (
 				<span
 					className="placeholder-container"
 					style={{ width: '100%', aspectRatio: '1/1', borderRadius: '12px 12px 0 0' }}
@@ -54,7 +51,11 @@ export function RepayTubby({ details }: { details: ILoan }) {
 						/>
 					)}
 				</span>
-			)}
+			)} */}
+
+			<span className={styles.imageWrapper}>
+				{<Image src={details.imgUrl || '/tubbycats.png'} alt={`token id ${details.loanId}`} layout="fill" />}
+			</span>
 
 			<span className={styles.infoWrapper}>
 				<span className={styles.flexRow}>

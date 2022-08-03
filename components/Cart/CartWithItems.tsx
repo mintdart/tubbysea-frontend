@@ -10,9 +10,9 @@ import { useGetQuote } from '~/hooks/useGetQuote'
 import { useGetInterest } from '~/hooks/useGetInterest'
 import { useGetContractApproval, useSetContractApproval } from '~/hooks/useContractApproval'
 import { useBorrow } from '~/hooks/useBorrow'
-import { useGetNftImg } from '~/hooks/useGetNftImg'
 import { LENDING_POOL_ADDRESS } from '~/lib/contracts'
 import styles from './Cart.module.css'
+import { useGetNfts } from '~/hooks/useGetNfts'
 
 const formatErrorMsg = (error: any) => {
 	if (error?.code === 'UNPREDICTABLE_GAS_LIMIT') {
@@ -21,6 +21,8 @@ const formatErrorMsg = (error: any) => {
 }
 
 export function CartWithItems({ dialog }: { dialog: DisclosureState }) {
+	const { isLoading: fetchingNftsList } = useGetNfts()
+
 	// query to get cart items from local storage
 	const { data: cartItems, isLoading: fetchingCartItems, isError: errorLoadingCartItems } = useGetCartItems()
 
@@ -102,6 +104,7 @@ export function CartWithItems({ dialog }: { dialog: DisclosureState }) {
 
 	// check all loading states to show beat loader
 	const isLoading =
+		fetchingNftsList ||
 		fetchingCartItems ||
 		fetchingQuote ||
 		fetchingInterest ||
@@ -126,13 +129,13 @@ export function CartWithItems({ dialog }: { dialog: DisclosureState }) {
 			) : (
 				<>
 					{/* Show placeholder when fetching items in cart */}
-					{fetchingCartItems ? (
+					{fetchingCartItems || fetchingNftsList ? (
 						<ItemsPlaceholder />
 					) : (
 						<ul className={styles.list}>
-							{cartItems?.map((item) => (
-								<li key={item} className={styles.listItem}>
-									<button className={styles.removeButton} onClick={() => saveItemToCart({ tokenId: item })}>
+							{cartItems?.map(({ tokenId, imgUrl }) => (
+								<li key={tokenId} className={styles.listItem}>
+									<button className={styles.removeButton} onClick={() => saveItemToCart({ tokenId })}>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											fill="none"
@@ -144,9 +147,15 @@ export function CartWithItems({ dialog }: { dialog: DisclosureState }) {
 										</svg>
 										<span className="visually-hidden">Remove Item from cart</span>
 									</button>
-									<ItemImage tokenId={item} />
+									<Image
+										src={imgUrl || '/tubbycats.png'}
+										width="40px"
+										height="40px"
+										objectFit="cover"
+										alt={`token id ${tokenId}`}
+									/>
 									<span className={styles.itemDetails}>
-										<span>{`#${item}`}</span>
+										<span>{`#${tokenId}`}</span>
 										<span className={styles.collectionName}>tubby cats</span>
 									</span>
 
@@ -241,23 +250,5 @@ export function CartWithItems({ dialog }: { dialog: DisclosureState }) {
 				</>
 			)}
 		</Wrapper>
-	)
-}
-
-const ItemImage = ({ tokenId }: { tokenId: number }) => {
-	const { data, isLoading } = useGetNftImg(tokenId)
-
-	if (isLoading) {
-		return <span className="placeholder-container" style={{ width: '40px', height: '40px' }}></span>
-	}
-
-	return (
-		<Image
-			src={data ? `https://cloudflare-ipfs.com/${data}` : '/tubbycats.png'}
-			width="40px"
-			height="40px"
-			objectFit="cover"
-			alt={`token id ${tokenId}`}
-		/>
 	)
 }

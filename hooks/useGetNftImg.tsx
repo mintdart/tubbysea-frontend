@@ -1,8 +1,7 @@
 import { ethers } from 'ethers'
 import { erc721ABI, useAccount, useNetwork, useProvider, useQuery } from 'wagmi'
 import { NFT_TESTNET_ADDRESS } from '~/lib/contracts'
-
-type Provider = ethers.providers.BaseProvider
+import type { Provider } from './types'
 
 async function getNfts({ tokenId, provider }: { tokenId: number; provider: Provider }) {
 	try {
@@ -27,5 +26,5 @@ export function useGetNftImg(tokenId: number) {
 	const provider = useProvider()
 	const { chain } = useNetwork()
 
-	return useQuery(['nft', address, chain, tokenId], () => getNfts({ tokenId, provider }))
+	return useQuery(['nft', address, chain?.id, tokenId], () => getNfts({ tokenId, provider }))
 }

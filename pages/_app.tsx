@@ -8,6 +8,7 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { publicProvider } from 'wagmi/providers/public'
 import { connectorsForWallets, wallet, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { walletTheme } from '~/lib/theme'
+import { chainConfig } from '~/lib/constants'
 
 const { chains, provider } = configureChains(
 	[chain.mainnet, chain.goerli],
@@ -15,9 +16,9 @@ const { chains, provider } = configureChains(
 		jsonRpcProvider({
 			rpc: (chain) => {
 				if (chain.id === 1) {
-					return { http: 'https://rpc.ankr.com/eth' }
+					return { http: chainConfig[1].ankrUrl }
 				} else if (chain.id === 5) {
-					return { http: 'https://rpc.ankr.com/eth_goerli' }
+					return { http: chainConfig[5].ankrUrl }
 				} else return { http: chain.rpcUrls.default }
 			}
 		}),

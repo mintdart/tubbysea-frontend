@@ -39,8 +39,8 @@ const Home: NextPage = () => {
 				) : (
 					<React.Suspense fallback={<Placeholder />}>
 						<TubbyGrid>
-							{tubbies?.map((id) => (
-								<BorrowTubby key={id} id={id} />
+							{tubbies?.map(({ tokenId, imgUrl }) => (
+								<BorrowTubby key={tokenId} tokenId={tokenId} imgUrl={imgUrl} />
 							))}
 						</TubbyGrid>
 					</React.Suspense>

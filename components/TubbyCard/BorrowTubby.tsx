@@ -2,30 +2,28 @@ import * as React from 'react'
 import Image from 'next/image'
 import { useGetQuote } from '~/hooks/useGetQuote'
 import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
-import { useGetNftImg } from '~/hooks/useGetNftImg'
 import styles from './TubbyCard.module.css'
 
 interface IBorrowTubby {
-	id: number
+	tokenId: number
+	imgUrl: string
 }
 
 // TODO: handle queries error
-export function BorrowTubby({ id }: IBorrowTubby) {
+export function BorrowTubby({ tokenId, imgUrl }: IBorrowTubby) {
 	const { data: quote, isLoading: isFetchingQuote } = useGetQuote()
 	const { data: cartItems } = useGetCartItems()
 	const { mutate } = useSaveItemToCart()
 
-	const { data: imgURL, isLoading: fetchingImg } = useGetNftImg(id)
-
 	const storeItem = () => {
-		if (!id) return
+		if (!tokenId) return
 
-		mutate({ tokenId: id })
+		mutate({ tokenId })
 	}
 
 	return (
 		<article className={styles.card}>
-			{fetchingImg ? (
+			{/* {fetchingImg ? (
 				<span
 					className="placeholder-container"
 					style={{ width: '100%', aspectRatio: '1/1', borderRadius: '12px 12px 0 0' }}
@@ -40,9 +38,12 @@ export function BorrowTubby({ id }: IBorrowTubby) {
 						/>
 					)}
 				</span>
-			)}
+			)} */}
+			<span className={styles.imageWrapper}>
+				{imgUrl && <Image src={imgUrl || '/tubbycats.png'} alt={`token id ${tokenId}`} layout="fill" />}
+			</span>
 			<span className={styles.infoWrapper}>
-				<p className={styles.dullText}>{(id || id === 0) && `#${id}`}</p>
+				<p className={styles.dullText}>{(tokenId || tokenId === 0) && `#${tokenId}`}</p>
 				<span className={styles.quoteSection}>
 					<p>Quote</p>
 					<span className={styles.flexRow}>
@@ -52,7 +53,7 @@ export function BorrowTubby({ id }: IBorrowTubby) {
 								{quote?.price ?? (!isFetchingQuote && '-')}
 							</span>
 						</p>
-						{cartItems?.includes(id) ? (
+						{cartItems?.find((item) => item.tokenId === tokenId) ? (
 							<button className={styles.savedButton} onClick={storeItem}>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +68,11 @@ export function BorrowTubby({ id }: IBorrowTubby) {
 								<span>Added to cart</span>
 							</button>
 						) : (
-							<button className={styles.actionButton} onClick={storeItem} disabled={!id || !quote || !quote.signature}>
+							<button
+								className={styles.actionButton}
+								onClick={storeItem}
+								disabled={!tokenId || !quote || !quote.signature}
+							>
 								Borrow ETH
 							</button>
 						)}
