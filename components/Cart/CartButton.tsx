@@ -21,8 +21,8 @@ function ConnectedCartButton() {
 
 function Wrapper({ noOfItems }: { noOfItems?: number }) {
 	const router = useRouter()
-	const { cart } = router.query
-	const isCartToggled = cart && typeof cart === 'string' && cart === 'true'
+	const { mobileCart } = router.query
+	const isCartToggled = typeof mobileCart === 'string' && mobileCart === 'true'
 
 	return (
 		<button
@@ -30,7 +30,7 @@ function Wrapper({ noOfItems }: { noOfItems?: number }) {
 				router.push({
 					pathname: '/',
 					query: {
-						cart: isCartToggled ? false : true
+						mobileCart: isCartToggled ? false : true
 					}
 				})
 			}
