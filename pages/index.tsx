@@ -14,7 +14,7 @@ const Home: NextPage = () => {
 	const { cart } = router.query
 
 	// get number of nft's owned by user of a given contract
-	const { data: tubbies, isError, isLoading: fetchingNftsList } = useGetNftsList()
+	const { data: tubbies, isError, isLoading: fetchingNftsList } = useGetNftsList('borrow')
 
 	const dialog = useDialogState({
 		open: typeof cart === 'string' && cart === 'true',

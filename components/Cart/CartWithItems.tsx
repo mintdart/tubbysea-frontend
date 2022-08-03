@@ -21,7 +21,7 @@ const formatErrorMsg = (error: any) => {
 }
 
 export function CartWithItems({ dialog }: { dialog: DisclosureState }) {
-	const { isLoading: fetchingNftsList } = useGetNftsList()
+	const { isLoading: fetchingNftsList } = useGetNftsList('borrow')
 
 	// query to get cart items from local storage
 	const { data: cartItems, isLoading: fetchingCartItems, isError: errorLoadingCartItems } = useGetCartItems()

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
 import { useAccount, useNetwork, useProvider } from 'wagmi'
 import { LENDING_POOL_ADDRESS, LENDING_POOL_ABI } from '~/lib/contracts'
@@ -25,7 +26,7 @@ async function getLoans({ userAddress, provider, nftsList }: IGetLoans) {
 
 		const loanContract = new ethers.Contract(LENDING_POOL_ADDRESS, LENDING_POOL_ABI, provider)
 
-		const loans = await Promise.all(nftsList.map((item) => loanContract.loans(item.tokenId)))
+		const loans = await Promise.all(nftsList.map((item) => loanContract.loans(new BigNumber(item.tokenId).toString())))
 
 		const infoToRepayLoans = await Promise.all(nftsList.map((item) => loanContract.infoToRepayLoan(item.tokenId)))
 
@@ -46,10 +47,10 @@ export function useGetLoans() {
 	const provider = useProvider()
 	const { chain } = useNetwork()
 
-	const { data: nftsList, isLoading: fetchingNfts } = useGetNftsList()
+	const { data: nftsList, isLoading: fetchingNfts } = useGetNftsList('repay')
 
 	return useQuery<Array<ILoan>, IError>(
-		['loans', address, chain?.id, fetchingNfts],
+		['loans', address, chain?.id, fetchingNfts, nftsList?.length],
 		() => getLoans({ userAddress: address, provider, nftsList }),
 		{
 			retry: 2,

@@ -4,18 +4,21 @@ import { chainConfig } from '~/lib/constants'
 import type { IError, INftApiResponse, INftItem } from './types'
 
 interface IGetOwnedNfts {
-	address?: string
+	userAddress?: string
 	chainId?: number
+	type: string
 }
 
-async function getOwnedNfts({ address, chainId }: IGetOwnedNfts): Promise<Array<INftItem>> {
+async function getOwnedNfts({ userAddress, chainId, type }: IGetOwnedNfts): Promise<Array<INftItem>> {
 	try {
-		if (!address || !chainId || !chainConfig[chainId]) {
+		if (!userAddress || !chainId || !chainConfig[chainId]) {
 			throw new Error('Error: Invalid arguments')
 		}
 
 		const data: INftApiResponse = await fetch(
-			`${chainConfig[chainId].alchemyNftUrl}/?owner=${address}&contractAddresses[]=${chainConfig[chainId].nftContractAddress}`
+			`${chainConfig[chainId].alchemyNftUrl}/?owner=${userAddress}&contractAddresses[]=${
+				type === 'repay' ? chainConfig[chainId].repayNftAddress : chainConfig[chainId].borrowNftAddress
+			}`
 		).then((res) => res.json())
 
 		return data?.ownedNfts.map((item) => ({
@@ -27,11 +30,11 @@ async function getOwnedNfts({ address, chainId }: IGetOwnedNfts): Promise<Array<
 	}
 }
 
-export function useGetNftsList() {
-	const { address } = useAccount()
+export function useGetNftsList(type: 'borrow' | 'repay') {
+	const { address: userAddress } = useAccount()
 	const { chain } = useNetwork()
 
-	return useQuery<Array<INftItem>, IError>(['nftsList', address, chain?.id], () =>
-		getOwnedNfts({ address, chainId: chain?.id })
+	return useQuery<Array<INftItem>, IError>(['nftsList', userAddress, chain?.id, type], () =>
+		getOwnedNfts({ userAddress, chainId: chain?.id, type })
 	)
 }

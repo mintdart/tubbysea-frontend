@@ -6,7 +6,7 @@ import { useGetLoans } from './useLoans'
 import { useGetNftsList } from './useNftsList'
 
 export function useRepay(loanId: number, amount: number) {
-	const { refetch: refetchNftsList } = useGetNftsList()
+	const { refetch: refetchNftsList } = useGetNftsList('repay')
 	const { refetch: refetchLoans } = useGetLoans()
 
 	const queryClient = useQueryClient()

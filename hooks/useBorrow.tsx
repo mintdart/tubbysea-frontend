@@ -14,7 +14,7 @@ export function useBorrow() {
 	const { data: quote, isLoading: isFetchingQuote, isError: failedFetchQuotation } = useGetQuote()
 
 	const queryClient = useQueryClient()
-	const { refetch: refetchNftsList } = useGetNftsList()
+	const { refetch: refetchNftsList } = useGetNftsList('borrow')
 	const { refetch: refetchLoans } = useGetLoans()
 
 	const cartTokenIds = cartItems?.map((item) => item.tokenId) ?? []
