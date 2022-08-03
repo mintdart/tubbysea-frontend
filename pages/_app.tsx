@@ -4,13 +4,25 @@ import type { AppProps } from 'next/app'
 import * as React from 'react'
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
-import { infuraProvider } from 'wagmi/providers/infura'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+import { publicProvider } from 'wagmi/providers/public'
 import { connectorsForWallets, wallet, RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { walletTheme } from '~/lib/theme'
 
 const { chains, provider } = configureChains(
 	[chain.mainnet, chain.goerli],
-	[infuraProvider({ apiKey: 'c580a3487b1241a09f9e27b02c004f5b' })]
+	[
+		jsonRpcProvider({
+			rpc: (chain) => {
+				if (chain.id === 1) {
+					return { http: 'https://rpc.ankr.com/eth' }
+				} else if (chain.id === 5) {
+					return { http: 'https://rpc.ankr.com/eth_goerli' }
+				} else return { http: chain.rpcUrls.default }
+			}
+		}),
+		publicProvider()
+	]
 )
 
 const connectors = connectorsForWallets([

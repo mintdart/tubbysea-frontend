@@ -6,7 +6,7 @@ type Provider = ethers.providers.BaseProvider
 
 async function getNfts({ tokenId, provider }: { tokenId: number; provider: Provider }) {
 	try {
-		if (!tokenId) throw new Error('Invalid arguments')
+		if (!tokenId) throw new Error('Error: Invalid arguments')
 
 		const tubbyContract = new ethers.Contract(NFT_TESTNET_ADDRESS, erc721ABI, provider)
 
