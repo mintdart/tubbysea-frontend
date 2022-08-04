@@ -1,10 +1,28 @@
 import * as React from 'react'
 import Link from 'next/link'
-import { DisclosureState } from 'ariakit'
-import { Dialog, DialogHeading } from 'ariakit/dialog'
+import { useRouter } from 'next/router'
+import { Dialog, DialogHeading, useDialogState } from 'ariakit/dialog'
+import useMedia from '~/hooks/useMedia'
 import styles from './Mobile.module.css'
 
-export default function Wrapper({ dialog, children }: { dialog: DisclosureState; children: React.ReactNode }) {
+export default function Wrapper({ children }: { children: React.ReactNode }) {
+	const isDesktop = useMedia('(min-width: 80rem)', true)
+
+	const router = useRouter()
+
+	const { cart } = router.query
+
+	const isOpen = !isDesktop && typeof cart === 'string' && cart === 'true'
+
+	const dialog = useDialogState({
+		open: isOpen,
+		setOpen: (open) => {
+			if (!open) {
+				router.push('/')
+			}
+		}
+	})
+
 	return (
 		<Dialog state={dialog} portal={typeof window !== 'undefined'} className={styles.dialog}>
 			<header className={styles.dialogHeader}>

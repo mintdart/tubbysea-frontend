@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Layout from '~/components/Layout'
 import TubbyGrid from '~/components/TubbyGrid'
 import { BorrowTubbyPlaceholder, BorrowTubby } from '~/components/TubbyCard'
-import { MobileOnlyCart } from '~/components/Cart'
+import { MobileOnlyCart, DesktopOnlyCart } from '~/components/Cart'
 import { useGetNftsList } from '~/hooks/useNftsList'
 
 const Home: NextPage = () => {
@@ -18,19 +18,19 @@ const Home: NextPage = () => {
 			</Head>
 
 			<Layout>
-				<div>
-					{isError ? (
-						<p className="fallback-text">Sorry, couldn't get nfts for your address</p>
-					) : fetchingNftsList ? (
-						<Placeholder />
-					) : (
-						<TubbyGrid>
-							{tubbies?.map(({ tokenId, imgUrl }) => (
-								<BorrowTubby key={tokenId} tokenId={tokenId} imgUrl={imgUrl} />
-							))}
-						</TubbyGrid>
-					)}
-				</div>
+				{isError ? (
+					<p className="fallback-text">Sorry, couldn't get nfts for your address</p>
+				) : fetchingNftsList ? (
+					<Placeholder />
+				) : (
+					<TubbyGrid>
+						{tubbies?.map(({ tokenId, imgUrl }) => (
+							<BorrowTubby key={tokenId} tokenId={tokenId} imgUrl={imgUrl} />
+						))}
+					</TubbyGrid>
+				)}
+
+				<DesktopOnlyCart />
 			</Layout>
 
 			<MobileOnlyCart />

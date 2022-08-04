@@ -86,7 +86,10 @@ export function BorrowTubby({ tokenId, imgUrl }: IBorrowTubby) {
 export const BorrowTubbyPlaceholder = () => {
 	return (
 		<article className={styles.card}>
-			<span className="placeholder-container" style={{ width: '100%', aspectRatio: '1/1' }}></span>
+			<span
+				className="placeholder-container"
+				style={{ width: '100%', aspectRatio: '1/1', borderRadius: '12px 12px 0 0' }}
+			></span>
 			<span className={styles.infoWrapper}>
 				<p className={styles.dullText}>{}</p>
 				<span className={styles.quoteSection}>

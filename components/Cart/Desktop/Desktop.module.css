@@ -1,0 +1,24 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	width: clamp(320px, 360px, 600px);
+	height: 100%;
+	max-height: 100vh;
+	margin: 36px 0;
+	padding: 20px 16px;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 12px;
+	background: black;
+	overflow: auto;
+}
+
+.wrapper hr {
+	border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.title {
+	margin: 0px;
+	font-size: 1.5rem;
+	font-weight: 500;
+}

@@ -1,1 +1,2 @@
-export { default as MobileOnlyCart } from './Mobile'
+export { MobileOnlyCart } from './Mobile'
+export { DesktopOnlyCart } from './Desktop'

@@ -105,7 +105,10 @@ export function RepayTubby({ details }: { details: ILoan }) {
 export function RepayTubbyPlaceholder() {
 	return (
 		<article className={styles.card}>
-			<span className="placeholder-container" style={{ width: '100%', aspectRatio: '1/1' }}></span>
+			<span
+				className="placeholder-container"
+				style={{ width: '100%', aspectRatio: '1/1', borderRadius: '12px 12px 0 0' }}
+			></span>
 			<span className={styles.infoWrapper}>
 				<span className={styles.flexRow}>
 					<span className="placeholder-container" style={{ width: '10ch', height: '16px' }}></span>

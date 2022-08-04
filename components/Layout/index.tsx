@@ -11,9 +11,11 @@ import HowItWorks from '../HowItWorks'
 
 interface ILayoutProps {
 	children?: React.ReactNode
+	style?: React.CSSProperties
+	className?: string
 }
 
-export default function Layout({ children, ...props }: ILayoutProps) {
+export default function Layout({ children, className, ...props }: ILayoutProps) {
 	const router = useRouter()
 
 	const { isConnected } = useAccount()
@@ -42,11 +44,9 @@ export default function Layout({ children, ...props }: ILayoutProps) {
 				</span>
 			</header>
 
-			<React.Suspense fallback={null}>
-				<main className={styles.main} {...props}>
-					{isConnected ? children : <HowItWorks />}
-				</main>
-			</React.Suspense>
+			<main className={`${styles.main} ${className}`} {...props}>
+				{isConnected ? children : <HowItWorks />}
+			</main>
 		</>
 	)
 }
