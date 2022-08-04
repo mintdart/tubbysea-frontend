@@ -1,18 +1,16 @@
 import * as React from 'react'
 import Image from 'next/image'
-import { DisclosureState } from 'ariakit'
 import { useBalance } from 'wagmi'
 import BeatLoader from '~/components/BeatLoader'
-import Wrapper from './CartDialogWrapper'
 import ItemsPlaceholder from './ItemsPlaceholder'
 import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
 import { useGetQuote } from '~/hooks/useQuotation'
 import { useGetInterest } from '~/hooks/useInterest'
 import { useGetContractApproval, useSetContractApproval } from '~/hooks/useContractApproval'
 import { useBorrow } from '~/hooks/useBorrow'
+import { useGetNftsList } from '~/hooks/useNftsList'
 import { LENDING_POOL_ADDRESS } from '~/lib/contracts'
 import styles from './Cart.module.css'
-import { useGetNftsList } from '~/hooks/useNftsList'
 
 const formatErrorMsg = (error: any) => {
 	if (error?.code === 'UNPREDICTABLE_GAS_LIMIT') {
@@ -20,7 +18,7 @@ const formatErrorMsg = (error: any) => {
 	} else return error.reason
 }
 
-export function CartWithItems({ dialog }: { dialog: DisclosureState }) {
+export function CartWithItems() {
 	const { isLoading: fetchingNftsList } = useGetNftsList('borrow')
 
 	// query to get cart items from local storage
@@ -121,7 +119,7 @@ export function CartWithItems({ dialog }: { dialog: DisclosureState }) {
 			: false
 
 	return (
-		<Wrapper dialog={dialog}>
+		<>
 			{errorMsgOfQueries ? (
 				<p className={`${styles.emptyMsg} ${styles.errorMsg}`}>{errorMsgOfQueries}</p>
 			) : cartItems && cartItems.length <= 0 ? (
@@ -249,6 +247,6 @@ export function CartWithItems({ dialog }: { dialog: DisclosureState }) {
 					)}
 				</>
 			)}
-		</Wrapper>
+		</>
 	)
 }

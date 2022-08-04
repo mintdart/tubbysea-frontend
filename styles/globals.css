@@ -66,7 +66,6 @@ ul {
 button {
 	background: none;
 	border: none;
-	cursor: pointer;
 }
 
 button:disabled {
@@ -142,7 +141,7 @@ button:disabled {
 	}
 }
 
-@media (min-width: 37.5rem) {
+@media (min-width: 40rem) {
 	#__next {
 		background-image: url('/bgLarge.png');
 	}

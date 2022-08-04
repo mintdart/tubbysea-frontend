@@ -64,7 +64,7 @@
 	padding: 12px;
 }
 
-@media (min-width: 37.5rem) {
+@media (min-width: 40rem) {
 	.header {
 		flex-direction: row;
 		justify-content: space-between;

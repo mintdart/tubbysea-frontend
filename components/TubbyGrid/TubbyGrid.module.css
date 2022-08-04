@@ -6,7 +6,7 @@
 	margin: 36px 0;
 }
 
-@media (min-width: 37.5rem) {
+@media (min-width: 40rem) {
 	.wrapper {
 		grid-template-columns: repeat(2, minmax(240px, 320px));
 	}

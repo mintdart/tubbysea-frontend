@@ -2,7 +2,7 @@ import * as React from 'react'
 import Link from 'next/link'
 import { DisclosureState } from 'ariakit'
 import { Dialog, DialogHeading } from 'ariakit/dialog'
-import styles from './Cart.module.css'
+import styles from './Mobile.module.css'
 
 export default function Wrapper({ dialog, children }: { dialog: DisclosureState; children: React.ReactNode }) {
 	return (
