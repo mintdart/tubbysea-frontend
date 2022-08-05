@@ -7,7 +7,7 @@ export default function CartButton() {
 	const { isConnected } = useAccount()
 
 	if (!isConnected) {
-		return <Wrapper />
+		return <Wrapper disabled />
 	}
 
 	return <ConnectedCartButton />
@@ -19,7 +19,7 @@ function ConnectedCartButton() {
 	return <Wrapper noOfItems={cartItems?.length} />
 }
 
-function Wrapper({ noOfItems }: { noOfItems?: number }) {
+function Wrapper({ noOfItems, ...props }: { noOfItems?: number; disabled?: boolean }) {
 	const router = useRouter()
 
 	const { cart } = router.query
@@ -35,6 +35,7 @@ function Wrapper({ noOfItems }: { noOfItems?: number }) {
 				})
 			}
 			className={styles.cartButton}
+			{...props}
 		>
 			<span className="visually-hidden">{isCartToggled ? 'Close Cart' : 'Open Cart'}</span>
 
