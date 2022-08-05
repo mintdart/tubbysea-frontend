@@ -1,13 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAccount, useNetwork } from 'wagmi'
-import { NFT_TESTNET_ADDRESS } from '~/lib/contracts'
+import { chainConfig } from '~/lib/constants'
 import { IError, INftItem } from './types'
 import { useGetNftsList } from './useNftsList'
 
-const contract = NFT_TESTNET_ADDRESS
-
 // save/remove items from local storage
-function saveItemToCart({ contract, tokenId }: { contract: string; tokenId: number }) {
+function saveItemToCart({ chainId, tokenId }: { chainId?: number; tokenId: number }) {
+	const contract = chainId ? chainConfig[chainId]?.borrowNftAddress : null
+
+	if (!contract) {
+		throw new Error("Error: Couldn't get contract address of nft collection")
+	}
+
 	const prevItems = localStorage.getItem('tubbylend')
 
 	if (prevItems) {
@@ -30,8 +34,14 @@ function saveItemToCart({ contract, tokenId }: { contract: string; tokenId: numb
 }
 
 // get cart items from local storage
-function fetchCartItems(contract: string, tubbies?: Array<INftItem>) {
-	const prevItems = JSON.parse(localStorage.getItem('tubbylend') || '')
+function fetchCartItems({ chainId, tubbies }: { chainId?: number; tubbies?: Array<INftItem> }) {
+	const contract = chainId ? chainConfig[chainId]?.borrowNftAddress : null
+
+	if (!contract) {
+		throw new Error("Error: Couldn't get contract address of nft collection")
+	}
+
+	const prevItems = JSON.parse(localStorage.getItem('tubbylend') || '{}')
 
 	const itemsInStorage: Array<number> = prevItems[contract] || []
 
@@ -49,7 +59,9 @@ function fetchCartItems(contract: string, tubbies?: Array<INftItem>) {
 const useSaveItemToCart = () => {
 	const queryClient = useQueryClient()
 
-	return useMutation(({ tokenId }: { tokenId: number }) => saveItemToCart({ contract, tokenId }), {
+	const { chain } = useNetwork()
+
+	return useMutation(({ tokenId }: { tokenId: number }) => saveItemToCart({ chainId: chain?.id, tokenId }), {
 		onSettled: () => {
 			queryClient.invalidateQueries()
 		}
@@ -62,9 +74,8 @@ const useGetCartItems = () => {
 	const { data: tubbies, isLoading } = useGetNftsList('borrow')
 
 	// fetch and filter cart items which are owned by user
-	return useQuery<Array<INftItem>, IError>(
-		['cartItems', contract, address, chain?.id, tubbies?.length, isLoading],
-		() => fetchCartItems(contract, tubbies)
+	return useQuery<Array<INftItem>, IError>(['cartItems', address, chain?.id, tubbies?.length, isLoading], () =>
+		fetchCartItems({ chainId: chain?.id, tubbies })
 	)
 }
 
