@@ -28,7 +28,8 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
 			<header className={styles.dialogHeader}>
 				<DialogHeading className={styles.dialogHeading}>Checkout</DialogHeading>
 				<Link href="/">
-					<a className={styles.dialogButtonDismiss}>
+					<a className="buttonDismiss">
+						<span className="visually-hidden">Close checkout dialog</span>
 						<svg
 							aria-hidden="true"
 							fill="none"

@@ -43,6 +43,15 @@
 	border-radius: 4px;
 	margin-top: 20px;
 	background: #fff;
+	filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 30%));
+}
+
+.checkoutButton:hover {
+	background: rgb(244, 244, 244);
+}
+
+.checkoutButton:active {
+	transform: translateY(1px);
 }
 
 .checkoutButton[data-not-allowed] {
@@ -80,4 +89,11 @@
 	text-align: center;
 	margin-top: 20px;
 	color: #ff9393;
+}
+
+@media (min-width: 80rem) {
+	.errorMsg,
+	.emptyMsg {
+		margin-top: 60%;
+	}
 }

@@ -66,6 +66,7 @@ ul {
 button {
 	background: none;
 	border: none;
+	cursor: pointer;
 }
 
 button:disabled {
@@ -133,6 +134,27 @@ button:disabled {
 	background: linear-gradient(to right, #3a3a3a 5%, #4a4a4a 20%, #3a3a3a 40%);
 	background-size: 1000px 100%;
 	border-radius: 4px;
+}
+
+.buttonDismiss {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 28px;
+	width: 28px;
+	background-color: rgba(255, 255, 255, 0.08);
+	color: #c9c9ca;
+	border: 1px solid rgba(255, 255, 255, 0.04);
+	border-radius: 9999px;
+	transition: 0.125s ease;
+}
+
+.buttonDismiss:hover {
+	transform: scale(1.1);
+}
+
+.buttonDismiss:active {
+	transform: scale(0.9);
 }
 
 @keyframes shimmer {

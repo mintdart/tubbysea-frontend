@@ -65,27 +65,6 @@
 	font-weight: 500;
 }
 
-.dialogButtonDismiss {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 28px;
-	width: 28px;
-	background-color: rgba(255, 255, 255, 0.08);
-	color: #c9c9ca;
-	border: 1px solid rgba(255, 255, 255, 0.04);
-	border-radius: 9999px;
-	transition: 0.125s ease;
-}
-
-.dialogButtonDismiss:hover {
-	transform: scale(1.1);
-}
-
-.dialogButtonDismiss:active {
-	transform: scale(0.9);
-}
-
 @media (min-width: 40rem) {
 	.dialog {
 		max-width: min(calc(100% - 32px), 560px);
