@@ -23,13 +23,11 @@ const Repay: NextPage = () => {
 				) : tubbies.length === 0 ? (
 					<p className="fallback-text">You do not have any active loans</p>
 				) : (
-					<React.Suspense fallback={<Placeholder />}>
-						<TubbyGrid>
-							{tubbies.map((tubby) => (
-								<RepayTubby key={tubby.nft} details={tubby} />
-							))}
-						</TubbyGrid>
-					</React.Suspense>
+					<TubbyGrid>
+						{tubbies.map((tubby) => (
+							<RepayTubby key={tubby.nft} details={tubby} />
+						))}
+					</TubbyGrid>
 				)}
 			</Layout>
 		</>

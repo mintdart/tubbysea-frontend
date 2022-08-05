@@ -109,9 +109,7 @@ button:disabled {
 .fallback-text {
 	max-width: min(640px, 80vw);
 	padding: 24px 8px;
-	position: relative;
-	top: 20vh;
-	margin: auto;
+	margin: 20vh auto auto;
 	background: #000;
 	text-align: center;
 	border-radius: 12px;
