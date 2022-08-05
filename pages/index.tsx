@@ -41,7 +41,7 @@ const Home: NextPage = () => {
 const Placeholder = () => {
 	return (
 		<TubbyGrid>
-			{new Array(8).fill('tubby').map((_, index) => (
+			{new Array(10).fill('tubby').map((_, index) => (
 				<BorrowTubbyPlaceholder key={index} />
 			))}
 		</TubbyGrid>

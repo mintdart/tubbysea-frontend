@@ -1,25 +1,15 @@
 .wrapper {
 	display: grid;
-	grid-auto-columns: minmax(240px, 320px);
+	grid-template-columns: repeat(auto-fit, 240px);
 	place-content: center;
 	gap: 32px;
-	margin: 36px 0;
+	margin: 36px 0 auto;
 }
 
-@media (min-width: 40rem) {
+@media (min-width: 80rem) {
 	.wrapper {
-		grid-template-columns: repeat(2, minmax(240px, 320px));
-	}
-}
-
-@media (min-width: 50rem) {
-	.wrapper {
-		grid-template-columns: repeat(3, minmax(240px, 320px));
-	}
-}
-
-@media (min-width: 67.5rem) {
-	.wrapper {
-		grid-template-columns: repeat(4, minmax(240px, 320px));
+		grid-template-columns: repeat(auto-fit, 260px);
+		place-content: initial;
+		margin: 36px 0;
 	}
 }
