@@ -6,7 +6,7 @@ specifiers:
   '@types/node': 18.0.5
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
-  ariakit: 2.0.0-next.36
+  ariakit: 2.0.0-next.37
   bignumber.js: ^9.0.2
   eslint: 8.21.0
   eslint-config-next: 12.2.4
@@ -17,18 +17,18 @@ specifiers:
   react: 18.2.0
   react-dom: 18.2.0
   typescript: 4.7.4
-  wagmi: ^0.6.0
+  wagmi: ^0.6.1
 
 dependencies:
-  '@rainbow-me/rainbowkit': 0.4.5_nvyuxgmwrnmxsyegmvf37enoie
+  '@rainbow-me/rainbowkit': 0.4.5_e3l36fg5yiuaj75b7ktzipa75a
   '@tanstack/react-query': 4.0.10_biqbaboplfbrettd7655fr4n2y
-  ariakit: 2.0.0-next.36_biqbaboplfbrettd7655fr4n2y
+  ariakit: 2.0.0-next.37_biqbaboplfbrettd7655fr4n2y
   bignumber.js: 9.0.2
   ethers: 5.6.9
   next: 12.2.4_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
-  wagmi: 0.6.0_um4cugg2i3ywhvigsmvsir7hgy
+  wagmi: 0.6.1_um4cugg2i3ywhvigsmvsir7hgy
 
 devDependencies:
   '@types/node': 18.0.5
@@ -825,7 +825,7 @@ packages:
     resolution: {integrity: sha512-HaW78NszGzRZd9SeoI3JD11JqY+lubnaOx7Pewj5pfjqWXOEATpeKIFb9Z4t2WBUK2iryiXX3lzWwmYWgUL0Ug==}
     dev: false
 
-  /@rainbow-me/rainbowkit/0.4.5_nvyuxgmwrnmxsyegmvf37enoie:
+  /@rainbow-me/rainbowkit/0.4.5_e3l36fg5yiuaj75b7ktzipa75a:
     resolution: {integrity: sha512-9JikVOkkaK41T3a1Tg8VK1h92QDJsC9Fk7vSkEmNI99gM9MKRdbsrHyRwM1Z1U/0I/PnYAi8CvShfjwfNw5jAg==}
     engines: {node: '>=12.4'}
     peerDependencies:
@@ -843,7 +843,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-remove-scroll: 2.5.4_3hx2ussxxho4jajbwrd6gq34qe
-      wagmi: 0.6.0_um4cugg2i3ywhvigsmvsir7hgy
+      wagmi: 0.6.1_um4cugg2i3ywhvigsmvsir7hgy
     transitivePeerDependencies:
       - '@types/react'
     dev: false
@@ -1025,8 +1025,8 @@ packages:
       '@vanilla-extract/css': 1.7.0
     dev: false
 
-  /@wagmi/core/0.5.0_2ocw4wf2kb3i6lf4ct7nhauhqu:
-    resolution: {integrity: sha512-bh4cI7WaBDtEM8E7KPCLnK5PfmBPg5iIUydTw5DTX2yo6BiRhcFIflRn/Bg9IJCFq3SGhW6Zmpu+jHHeH9ZELQ==}
+  /@wagmi/core/0.5.1_2ocw4wf2kb3i6lf4ct7nhauhqu:
+    resolution: {integrity: sha512-EgFppUNDLVtjThSoGqr3yzY/jq5qZUPhCgfubcPGET8Xd1OMoag/Z85e2krcxkVZ+ExWPSUGCFLau4odd2PDFQ==}
     peerDependencies:
       '@coinbase/wallet-sdk': '>=3.3.0'
       '@walletconnect/ethereum-provider': '>=1.7.5'
@@ -1301,22 +1301,22 @@ packages:
       '@babel/runtime-corejs3': 7.18.6
     dev: true
 
-  /ariakit-utils/0.17.0-next.23_react@18.2.0:
-    resolution: {integrity: sha512-r6a8rvjTBNbdNVWhGm4XL8hTlpIlP0G+yJf3No48kK6QpR1JN9QinLI/wMwWwJnxDYfwnBhkbcROCqF7iT/4ig==}
+  /ariakit-utils/0.17.0-next.24_react@18.2.0:
+    resolution: {integrity: sha512-X8qwmY8erXY7A2BSnWdeONNOXkmAWSt3jBr8OpSgbvwE09uWoOsz3WGvZWb7+G1ca9+9DnN0Ji2xpJcCFFioGQ==}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
     dev: false
 
-  /ariakit/2.0.0-next.36_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-H/ZqRgy5tGGKOcOsZ24lc5cBoQ83vgCFd+mC87UWdIEdYqhKNPPjFZona/V/l0SRtn9Mar+t93QbggyThOw6Qg==}
+  /ariakit/2.0.0-next.37_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-z0OrXGHAcWdnKJveRmaPOUZiaNxY8Lq4dV3pN5oFoY3870igPU3CiWcygOj5qlJuFlO9tCXi+1cCOSTuz2mv0g==}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0
       react-dom: ^17.0.0 || ^18.0.0
     dependencies:
       '@floating-ui/dom': 1.0.0
-      ariakit-utils: 0.17.0-next.23_react@18.2.0
+      ariakit-utils: 0.17.0-next.24_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: false
@@ -4061,14 +4061,14 @@ packages:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
 
-  /wagmi/0.6.0_um4cugg2i3ywhvigsmvsir7hgy:
-    resolution: {integrity: sha512-Jyj22eQNoNcs9DoLDhD+foF5skEc7XPAZjqZ7GK+rVzxWVlA6Vx+qrcAALNGnxayE6H+CYVKWGtTK8PPN/WHOw==}
+  /wagmi/0.6.1_um4cugg2i3ywhvigsmvsir7hgy:
+    resolution: {integrity: sha512-QS/QDlRz6vVt8ZcKqaR7OGawQcN6mC/qCEhmO1qAmXx3LTkNyszBDJOdvn6AuGAljFowqb6aqD87RcKfjyEhyQ==}
     peerDependencies:
       ethers: '>=5.5.1'
       react: '>=17.0.0'
     dependencies:
       '@coinbase/wallet-sdk': 3.3.0
-      '@wagmi/core': 0.5.0_2ocw4wf2kb3i6lf4ct7nhauhqu
+      '@wagmi/core': 0.5.1_2ocw4wf2kb3i6lf4ct7nhauhqu
       '@walletconnect/ethereum-provider': 1.7.8
       ethers: 5.6.9
       react: 18.2.0

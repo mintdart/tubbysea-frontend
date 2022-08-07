@@ -12,13 +12,13 @@
 	"dependencies": {
 		"@rainbow-me/rainbowkit": "^0.4.5",
 		"@tanstack/react-query": "^4.0.10",
-		"ariakit": "2.0.0-next.36",
+		"ariakit": "2.0.0-next.37",
 		"bignumber.js": "^9.0.2",
 		"ethers": "^5.6.9",
 		"next": "12.2.4",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"wagmi": "^0.6.0"
+		"wagmi": "^0.6.1"
 	},
 	"devDependencies": {
 		"@types/node": "18.0.5",
