@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/router'
 import { useAccount, useNetwork } from 'wagmi'
-import { chainConfig } from '~/lib/constants'
-import { IError, INftItem } from './types'
+import { chainConfig, LOCAL_STORAGE_KEY } from '~/lib/constants'
+import { ICart, IError, INftItem } from './types'
 import { useGetNftsList } from './useNftsList'
 
 // save/remove items from local storage
@@ -12,7 +13,7 @@ function saveItemToCart({ chainId, tokenId }: { chainId?: number; tokenId: numbe
 		throw new Error("Error: Couldn't get contract address of nft collection")
 	}
 
-	const prevItems = localStorage.getItem('tubbylend')
+	const prevItems = localStorage.getItem(LOCAL_STORAGE_KEY)
 
 	if (prevItems) {
 		const items = JSON.parse(prevItems)
@@ -25,12 +26,12 @@ function saveItemToCart({ chainId, tokenId }: { chainId?: number; tokenId: numbe
 			items[contract] = [...contractItems, tokenId]
 		}
 
-		localStorage.setItem('tubbylend', JSON.stringify(items))
+		localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(items))
 	} else {
-		localStorage.setItem('tubbylend', JSON.stringify({ [contract]: [tokenId] }))
+		localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ [contract]: [tokenId] }))
 	}
 
-	return JSON.parse(localStorage.getItem('tubbylend') || '')
+	return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '')
 }
 
 // get cart items from local storage
@@ -41,7 +42,7 @@ function fetchCartItems({ chainId, tubbies }: { chainId?: number; tubbies?: Arra
 		throw new Error("Error: Couldn't get contract address of nft collection")
 	}
 
-	const prevItems = JSON.parse(localStorage.getItem('tubbylend') || '{}')
+	const prevItems = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}')
 
 	const itemsInStorage: Array<number> = prevItems[contract] || []
 
@@ -61,7 +62,26 @@ const useSaveItemToCart = () => {
 
 	const { chain } = useNetwork()
 
+	const router = useRouter()
+
 	return useMutation(({ tokenId }: { tokenId: number }) => saveItemToCart({ chainId: chain?.id, tokenId }), {
+		onMutate: () => {
+			const cart = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '')
+
+			const contractAddress: string | undefined | null = chain?.id ? chainConfig[chain.id]?.borrowNftAddress : null
+
+			return contractAddress ? cart[contractAddress] : []
+		},
+
+		onSuccess: (data: ICart, _variables, prevItems) => {
+			const contractAddress: string | undefined | null = chain?.id ? chainConfig[chain.id]?.borrowNftAddress : null
+
+			// If its the first item added to cart, show cart section
+			if (contractAddress && data[contractAddress]?.length === 1 && data[contractAddress]?.length > prevItems.length) {
+				router.push('/?cart=true')
+			}
+		},
+
 		onSettled: () => {
 			queryClient.invalidateQueries()
 		}

@@ -1,6 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import BigNumber from 'bignumber.js'
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
+import { LOCAL_STORAGE_KEY } from '~/lib/constants'
 import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS, NFT_TESTNET_ADDRESS } from '~/lib/contracts'
 import { useGetCartItems } from './useCart'
 import { useGetLoans } from './useLoans'
@@ -44,13 +45,13 @@ export function useBorrow() {
 
 			// clear items in cart if tx is successfull
 			if (data?.status === 1) {
-				const prevItems = localStorage.getItem('tubbylend')
+				const prevItems = localStorage.getItem(LOCAL_STORAGE_KEY)
 
 				if (prevItems) {
 					const items = JSON.parse(prevItems)
-					localStorage.setItem('tubbylend', JSON.stringify({ ...items, [contract]: [] }))
+					localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ ...items, [contract]: [] }))
 				} else {
-					localStorage.setItem('tubbylend', JSON.stringify({ [contract]: [] }))
+					localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ [contract]: [] }))
 				}
 			}
 

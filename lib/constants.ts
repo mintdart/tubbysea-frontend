@@ -34,3 +34,5 @@ interface IChainConfig {
 		ankrShortName: string
 	}
 }
+
+export const LOCAL_STORAGE_KEY = 'tubbysea'

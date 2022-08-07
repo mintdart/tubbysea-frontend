@@ -21,3 +21,7 @@ export interface IError {
 }
 
 export type Provider = ethers.providers.BaseProvider
+
+export interface ICart {
+	[key: string]: Array<number>
+}
