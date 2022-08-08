@@ -54,16 +54,25 @@ export function useBorrow() {
 				const price = contractWrite.variables?.args?.[1]
 				const total = new BigNumber(price).times(tubbies).div(1e18).toString()
 
-				toast.success(() => {
-					return (
-						<div className="toastWithLink">
-							<span>{`Borrowed ${total} ETH for ${tubbies} tubby ${tubbies > 1 ? 'cats' : 'cat'}`}</span>
-							<a href={blockExplorerUrl + '/tx/' + contractWrite.data?.hash} target="_blank" rel="noopener noreferrer">
-								View on Etherscan
-							</a>
-						</div>
-					)
-				})
+				toast.success(
+					() => {
+						return (
+							<div className="toastWithLink">
+								<span>{`Borrow ${total} ETH`}</span>
+								<a
+									href={blockExplorerUrl + '/tx/' + contractWrite.data?.hash}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									View on Etherscan
+								</a>
+							</div>
+						)
+					},
+					{
+						duration: 5000
+					}
+				)
 
 				// clear items in cart if tx is successfull
 				const prevItems = localStorage.getItem(LOCAL_STORAGE_KEY)
@@ -77,16 +86,25 @@ export function useBorrow() {
 
 				router.push('/')
 			} else {
-				toast.error(() => {
-					return (
-						<div className="toastWithLink">
-							<span>Transaction Failed</span>
-							<a href={blockExplorerUrl + '/tx/' + contractWrite.data?.hash} target="_blank" rel="noopener noreferrer">
-								View on Etherscan
-							</a>
-						</div>
-					)
-				})
+				toast.error(
+					() => {
+						return (
+							<div className="toastWithLink">
+								<span>Transaction Failed</span>
+								<a
+									href={blockExplorerUrl + '/tx/' + contractWrite.data?.hash}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									View on Etherscan
+								</a>
+							</div>
+						)
+					},
+					{
+						duration: 5000
+					}
+				)
 			}
 
 			queryClient.invalidateQueries()

@@ -9,7 +9,7 @@ interface IGetOwnedNfts {
 	type: string
 }
 
-async function getOwnedNfts({ userAddress, chainId, type }: IGetOwnedNfts): Promise<Array<INftItem>> {
+export async function getOwnedNfts({ userAddress, chainId, type }: IGetOwnedNfts): Promise<Array<INftItem>> {
 	try {
 		if (!userAddress || !chainId || !chainConfig[chainId]) {
 			throw new Error('Error: Invalid arguments')

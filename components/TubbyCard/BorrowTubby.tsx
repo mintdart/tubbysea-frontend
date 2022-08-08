@@ -23,22 +23,6 @@ export function BorrowTubby({ tokenId, imgUrl }: IBorrowTubby) {
 
 	return (
 		<li className={styles.card}>
-			{/* {fetchingImg ? (
-				<span
-					className="placeholder-container"
-					style={{ width: '100%', aspectRatio: '1/1', borderRadius: '12px 12px 0 0' }}
-				></span>
-			) : (
-				<span className={styles.imageWrapper}>
-					{imgURL && (
-						<Image
-							src={imgURL ? `https://cloudflare-ipfs.com/${imgURL}` : '/tubbycats.png'}
-							alt={`token id ${id}`}
-							layout="fill"
-						/>
-					)}
-				</span>
-			)} */}
 			<span className={styles.imageWrapper}>
 				{imgUrl && <Image src={imgUrl || '/tubbycats.png'} alt={`token id ${tokenId}`} layout="fill" />}
 			</span>

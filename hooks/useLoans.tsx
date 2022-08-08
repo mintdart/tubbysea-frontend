@@ -3,8 +3,8 @@ import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
 import { useAccount, useNetwork, useProvider } from 'wagmi'
 import { LENDING_POOL_ADDRESS, LENDING_POOL_ABI } from '~/lib/contracts'
-import type { IError, INftItem, Provider } from './types'
-import { useGetNftsList } from './useNftsList'
+import type { IError, Provider } from './types'
+import { getOwnedNfts } from './useNftsList'
 
 export interface ILoan {
 	loanId: number
@@ -17,14 +17,16 @@ export interface ILoan {
 interface IGetLoans {
 	userAddress?: string
 	provider: Provider
-	nftsList?: Array<INftItem>
+	chainId?: number
 }
 
-async function getLoans({ userAddress, provider, nftsList }: IGetLoans) {
+async function getLoans({ userAddress, provider, chainId }: IGetLoans) {
 	try {
-		if (!userAddress || !provider || !nftsList) throw new Error('Invalid arguments')
+		if (!userAddress || !provider || !chainId) throw new Error('Invalid arguments')
 
 		const loanContract = new ethers.Contract(LENDING_POOL_ADDRESS, LENDING_POOL_ABI, provider)
+
+		const nftsList = await getOwnedNfts({ userAddress, chainId, type: 'repay' })
 
 		const loans = await Promise.all(nftsList.map((item) => loanContract.loans(new BigNumber(item.tokenId).toString())))
 
@@ -47,11 +49,9 @@ export function useGetLoans() {
 	const provider = useProvider()
 	const { chain } = useNetwork()
 
-	const { data: nftsList } = useGetNftsList('repay')
-
 	return useQuery<Array<ILoan>, IError>(
-		['loansToRepay', address, chain?.id, nftsList?.length],
-		() => getLoans({ userAddress: address, provider, nftsList }),
+		['loansToRepay', address, chain?.id],
+		() => getLoans({ userAddress: address, provider, chainId: chain?.id }),
 		{
 			refetchInterval: 60 * 100
 		}

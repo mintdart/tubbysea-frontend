@@ -158,14 +158,15 @@ button:disabled {
 .toastWithLink {
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
+	gap: 4px;
 	font-size: 0.875rem;
 	font-weight: 500;
-	min-width: 240px;
+	min-width: 160px;
 }
 
 .toastWithLink a {
 	text-decoration: underline;
+	font-size: 0.75rem;
 	font-weight: 400;
 	cursor: pointer;
 }

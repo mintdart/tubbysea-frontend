@@ -4,11 +4,9 @@ import toast from 'react-hot-toast'
 import { useContractWrite, useNetwork, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS } from '~/lib/contracts'
 import { useGetLoans } from './useLoans'
-import { useGetNftsList } from './useNftsList'
 
 // TODO check for bignumber decimal error
 export function useRepay(loanId: number, amount: number) {
-	const { refetch: refetchNftsList } = useGetNftsList('repay')
 	const { refetch: refetchLoans } = useGetLoans()
 	const { chain } = useNetwork()
 
@@ -26,47 +24,64 @@ export function useRepay(loanId: number, amount: number) {
 		overrides: {
 			value: new BigNumber(amount).plus(buffer).toString(),
 			gasLimit: new BigNumber(0.0005).times(1e9).toString()
-		},
-		onSettled: () => {
-			queryClient.invalidateQueries()
 		}
 	})
 
-	const contractWrite = useContractWrite({ ...config })
+	const contractWrite = useContractWrite(config)
 
 	const waitForTransaction = useWaitForTransaction({
 		hash: contractWrite.data?.hash,
-		onSettled: (data) => {
+		onSuccess: () => {
 			refetchLoans()
-			refetchNftsList()
+		},
+		onSettled: (data) => {
+			queryClient.invalidateQueries()
 
 			const paidAmount = contractWrite.variables?.overrides?.value
 
-			if (data?.status === 1 && paidAmount) {
-				toast.success(() => {
-					return (
-						<div className="toastWithLink">
-							<span>{`Repay ${new BigNumber(Number(paidAmount)).div(1e18).toFixed(3)} ETH`}</span>
-							<a href={blockExplorerUrl + '/tx/' + contractWrite.data?.hash} target="_blank" rel="noopener noreferrer">
-								View on Etherscan
-							</a>
-						</div>
-					)
-				})
-			} else {
-				toast.error(() => {
-					return (
-						<div className="toastWithLink">
-							<span>Transaction Failed</span>
-							<a href={blockExplorerUrl + '/tx/' + contractWrite.data?.hash} target="_blank" rel="noopener noreferrer">
-								View on Etherscan
-							</a>
-						</div>
-					)
-				})
-			}
+			console.log({ paidAmount })
 
-			queryClient.invalidateQueries()
+			if (data?.status === 1) {
+				toast.success(
+					() => {
+						return (
+							<div className="toastWithLink">
+								<span>{`Repay ${new BigNumber(Number(paidAmount)).div(1e18).toFixed(3)} ETH`}</span>
+								<a
+									href={blockExplorerUrl + '/tx/' + contractWrite.data?.hash}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									View on Etherscan
+								</a>
+							</div>
+						)
+					},
+					{
+						duration: 5000
+					}
+				)
+			} else {
+				toast.error(
+					() => {
+						return (
+							<div className="toastWithLink">
+								<span>Transaction Failed</span>
+								<a
+									href={blockExplorerUrl + '/tx/' + contractWrite.data?.hash}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									View on Etherscan
+								</a>
+							</div>
+						)
+					},
+					{
+						duration: 5000
+					}
+				)
+			}
 		}
 	})
 

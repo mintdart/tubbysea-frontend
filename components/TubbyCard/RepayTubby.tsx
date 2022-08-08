@@ -31,29 +31,11 @@ export function RepayTubby({ details }: { details: ILoan }) {
 	const {
 		write,
 		isLoading,
-		isError,
 		waitForTransaction: { isLoading: isConfirming }
 	} = useRepay(details.loanId, details.totalRepay)
 
 	return (
 		<li className={styles.card}>
-			{/* {fetchingImg ? (
-				<span
-					className="placeholder-container"
-					style={{ width: '100%', aspectRatio: '1/1', borderRadius: '12px 12px 0 0' }}
-				></span>
-			) : (
-				<span className={styles.imageWrapper}>
-					{imgURL && (
-						<Image
-							src={imgURL ? `https://cloudflare-ipfs.com/${imgURL}` : '/tubbycats.png'}
-							alt={`token id ${details.loanId}`}
-							layout="fill"
-						/>
-					)}
-				</span>
-			)} */}
-
 			<span className={styles.imageWrapper}>
 				{<Image src={details.imgUrl || '/tubbycats.png'} alt={`token id ${details.loanId}`} layout="fill" />}
 			</span>
@@ -87,7 +69,7 @@ export function RepayTubby({ details }: { details: ILoan }) {
 							<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
 							<span className={styles.price}>{(details.totalRepay / 1e18).toFixed(2)}</span>
 						</p>
-						<button className={styles.actionButton} onClick={() => write?.()} disabled={isLoading || isError}>
+						<button className={styles.actionButton} onClick={() => write?.()} disabled={isLoading || !write}>
 							{isLoading || isConfirming ? (
 								<BeatLoader
 									style={{ '--circle-color': '#fff', '--circle-size': '5px', height: '21px', width: '8ch' }}
