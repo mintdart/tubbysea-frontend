@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { useAccount } from 'wagmi'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
+import { Toaster } from 'react-hot-toast'
 import CartButton from '~/components/Cart/CartButton'
 import styles from './Layout.module.css'
 import HowItWorks from '../HowItWorks'
@@ -47,6 +48,8 @@ export default function Layout({ children, className, ...props }: ILayoutProps) 
 			<main className={`${styles.main} ${className}`} {...props}>
 				{isConnected ? children : <HowItWorks />}
 			</main>
+
+			<Toaster position="top-right" reverseOrder={true} />
 		</>
 	)
 }

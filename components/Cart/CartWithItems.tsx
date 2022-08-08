@@ -11,6 +11,7 @@ import { useBorrow } from '~/hooks/useBorrow'
 import { useGetNftsList } from '~/hooks/useNftsList'
 import { LENDING_POOL_ADDRESS } from '~/lib/contracts'
 import styles from './Cart.module.css'
+import toast from 'react-hot-toast'
 
 const formatErrorMsg = (error: any) => {
 	if (error?.code === 'UNPREDICTABLE_GAS_LIMIT') {
@@ -168,11 +169,13 @@ export function CartWithItems() {
 
 					<hr />
 
+					<h2 className={styles.detailsHeader}>Loan Details</h2>
+
 					{/* These values are always truth as error and loading states are handles, but adding a check satisfy typescript compiler  */}
 					{cartItems && quote && cartItems?.length > 0 && quote?.price && (
 						<ul className={styles.list}>
 							<li className={styles.listItem}>
-								<span>You Receive</span>
+								<span className={styles.detailName}>You Receive</span>
 								<span className={styles.priceWrapper}>
 									<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
 									{/* Show placeholder when fetching quotation */}
@@ -185,7 +188,7 @@ export function CartWithItems() {
 							</li>
 
 							<li className={styles.listItem}>
-								<span>Interest</span>
+								<span className={styles.detailName}>Interest</span>
 								<span className={styles.priceWrapper}>
 									{/* Show placeholder when fetching interest rates */}
 									{fetchingInterest ? (
@@ -197,7 +200,7 @@ export function CartWithItems() {
 							</li>
 
 							<li className={styles.listItem}>
-								<span>Deadline</span>
+								<span className={styles.detailName}>Deadline</span>
 								<span className={styles.priceWrapper}>
 									{/* Show placeholder when fetching quotation */}
 									{fetchingQuote ? (
@@ -224,7 +227,7 @@ export function CartWithItems() {
 								onClick={() => borrowETH?.()}
 								disabled={!borrowETH || mutationDisabled}
 							>
-								Borrow
+								Confirm Borrow
 							</button>
 						) : (
 							<>

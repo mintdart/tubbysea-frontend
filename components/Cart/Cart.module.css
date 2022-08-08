@@ -29,13 +29,25 @@
 
 .collectionName {
 	font-size: 0.8rem;
-	font-weight: 300;
+	font-weight: 400;
+	color: #989898;
 }
 
 .priceWrapper {
 	display: flex;
 	gap: 6px;
 	margin-left: auto;
+}
+
+.detailsHeader {
+	font-size: 0.875rem;
+	font-weight: 500;
+	margin: -6px 0 -12px;
+}
+
+.detailName {
+	font-weight: 400;
+	color: #989898;
 }
 
 .checkoutButton {
@@ -92,7 +104,6 @@
 }
 
 @media (min-width: 80rem) {
-	.errorMsg,
 	.emptyMsg {
 		margin-top: 60%;
 	}

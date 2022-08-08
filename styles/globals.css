@@ -155,6 +155,20 @@ button:disabled {
 	transform: scale(0.9);
 }
 
+.toastWithLink {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	font-size: 0.875rem;
+	font-weight: 500;
+}
+
+.toastWithLink a {
+	text-decoration: underline;
+	font-weight: 400;
+	cursor: pointer;
+}
+
 @keyframes shimmer {
 	0% {
 		background-position: -1000px 0;
