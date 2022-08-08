@@ -8,6 +8,7 @@ import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { publicProvider } from 'wagmi/providers/public'
 import { connectorsForWallets, wallet, RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { Toaster } from 'react-hot-toast'
 import { walletTheme } from '~/lib/theme'
 import { chainConfig } from '~/lib/constants'
 
@@ -62,6 +63,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 							showRecentTransactions={true}
 						>
 							{isMounted && <Component {...pageProps} />}
+							<Toaster position="top-right" reverseOrder={true} />
 						</RainbowKitProvider>
 					</WagmiConfig>
 				</Hydrate>

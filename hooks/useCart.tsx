@@ -91,10 +91,10 @@ const useSaveItemToCart = () => {
 const useGetCartItems = () => {
 	const { address } = useAccount()
 	const { chain } = useNetwork()
-	const { data: tubbies, isLoading } = useGetNftsList('borrow')
+	const { data: tubbies } = useGetNftsList('borrow')
 
 	// fetch and filter cart items which are owned by user
-	return useQuery<Array<INftItem>, IError>(['cartItems', address, chain?.id, tubbies?.length, isLoading], () =>
+	return useQuery<Array<INftItem>, IError>(['cartItems', address, chain?.id, tubbies?.length], () =>
 		fetchCartItems({ chainId: chain?.id, tubbies })
 	)
 }

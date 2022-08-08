@@ -5,9 +5,13 @@ import Layout from '~/components/Layout'
 import TubbyGrid from '~/components/TubbyGrid'
 import { RepayTubby, RepayTubbyPlaceholder } from '~/components/TubbyCard'
 import { useGetLoans } from '~/hooks/useLoans'
+import { useGetNftsList } from '~/hooks/useNftsList'
 
 const Repay: NextPage = () => {
 	const { data: tubbies = [], isLoading, error } = useGetLoans()
+
+	// prefetch
+	useGetNftsList('borrow')
 
 	return (
 		<>

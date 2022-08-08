@@ -36,7 +36,11 @@ export function useGetNftsList(type: 'borrow' | 'repay') {
 	const { address: userAddress } = useAccount()
 	const { chain } = useNetwork()
 
-	return useQuery<Array<INftItem>, IError>(['nftsList', userAddress, chain?.id, type], () =>
-		getOwnedNfts({ userAddress, chainId: chain?.id, type })
+	return useQuery<Array<INftItem>, IError>(
+		['nftsList', userAddress, chain?.id, type],
+		() => getOwnedNfts({ userAddress, chainId: chain?.id, type }),
+		{
+			refetchInterval: 60 * 100
+		}
 	)
 }

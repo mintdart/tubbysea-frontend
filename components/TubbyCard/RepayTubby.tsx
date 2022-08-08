@@ -31,6 +31,7 @@ export function RepayTubby({ details }: { details: ILoan }) {
 	const {
 		write,
 		isLoading,
+		isError,
 		waitForTransaction: { isLoading: isConfirming }
 	} = useRepay(details.loanId, details.totalRepay)
 
@@ -59,7 +60,7 @@ export function RepayTubby({ details }: { details: ILoan }) {
 
 			<span className={styles.infoWrapper}>
 				<span className={styles.flexRow}>
-					<p className={styles.dullText}>{(details.nft || details.nft === 0) && `#${details.nft}`}</p>
+					<p className={styles.dullText}>{(details.nft || details.nft === 0) && `#${details.loanId}`}</p>
 					<p className={`${styles.flexRowSm} ${styles.dullText}`}>
 						<span className="visually-hidden">Time left to repay loan</span>
 						<svg
@@ -86,7 +87,7 @@ export function RepayTubby({ details }: { details: ILoan }) {
 							<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
 							<span className={styles.price}>{(details.totalRepay / 1e18).toFixed(2)}</span>
 						</p>
-						<button className={styles.actionButton} onClick={() => write?.()} disabled={isLoading}>
+						<button className={styles.actionButton} onClick={() => write?.()} disabled={isLoading || isError}>
 							{isLoading || isConfirming ? (
 								<BeatLoader
 									style={{ '--circle-color': '#fff', '--circle-size': '5px', height: '21px', width: '8ch' }}

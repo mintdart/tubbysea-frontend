@@ -6,10 +6,14 @@ import TubbyGrid from '~/components/TubbyGrid'
 import { BorrowTubbyPlaceholder, BorrowTubby } from '~/components/TubbyCard'
 import { MobileOnlyCart, DesktopOnlyCart } from '~/components/Cart'
 import { useGetNftsList } from '~/hooks/useNftsList'
+import { useGetLoans } from '~/hooks/useLoans'
 
 const Home: NextPage = () => {
 	// get number of nft's owned by user of a given contract
 	const { data: tubbies, isError, isLoading: fetchingNftsList } = useGetNftsList('borrow')
+
+	// prefetch
+	useGetLoans()
 
 	return (
 		<>

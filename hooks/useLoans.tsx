@@ -47,14 +47,13 @@ export function useGetLoans() {
 	const provider = useProvider()
 	const { chain } = useNetwork()
 
-	const { data: nftsList, isLoading: fetchingNfts } = useGetNftsList('repay')
+	const { data: nftsList } = useGetNftsList('repay')
 
 	return useQuery<Array<ILoan>, IError>(
-		['loans', address, chain?.id, fetchingNfts, nftsList?.length],
+		['loansToRepay', address, chain?.id, nftsList?.length],
 		() => getLoans({ userAddress: address, provider, nftsList }),
 		{
-			retry: 2,
-			refetchOnWindowFocus: false
+			refetchInterval: 60 * 100
 		}
 	)
 }
