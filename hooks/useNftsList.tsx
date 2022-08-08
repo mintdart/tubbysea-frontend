@@ -23,7 +23,9 @@ async function getOwnedNfts({ userAddress, chainId, type }: IGetOwnedNfts): Prom
 
 		return data?.ownedNfts.map((item) => ({
 			tokenId: Number(item.id.tokenId),
-			imgUrl: `https://cloudflare-ipfs.com/` + item.metadata.image.split('https://ipfs.io/')[1]
+			imgUrl: item.metadata.image
+				? `https://cloudflare-ipfs.com/` + item.metadata.image.split('https://ipfs.io/')[1]
+				: '/tubbycats.png'
 		}))
 	} catch (error: any) {
 		throw new Error(error.message || (error?.reason ?? "Couldn't get nfts of user"))
