@@ -22,7 +22,7 @@ export function BorrowTubby({ tokenId, imgUrl }: IBorrowTubby) {
 	}
 
 	return (
-		<article className={styles.card}>
+		<li className={styles.card}>
 			{/* {fetchingImg ? (
 				<span
 					className="placeholder-container"
@@ -79,19 +79,19 @@ export function BorrowTubby({ tokenId, imgUrl }: IBorrowTubby) {
 					</span>
 				</span>
 			</span>
-		</article>
+		</li>
 	)
 }
 
 export const BorrowTubbyPlaceholder = () => {
 	return (
-		<article className={styles.card}>
+		<li className={styles.card}>
 			<span
 				className="placeholder-container"
 				style={{ width: '100%', aspectRatio: '1/1', borderRadius: '12px 12px 0 0' }}
 			></span>
 			<span className={styles.infoWrapper}>
-				<p className={styles.dullText}>{}</p>
+				<span className="placeholder-container" style={{ width: '10ch', height: '18px', marginBottom: '3px' }}></span>
 				<span className={styles.quoteSection}>
 					<p>Quote</p>
 					<span className={styles.flexRow}>
@@ -106,6 +106,6 @@ export const BorrowTubbyPlaceholder = () => {
 					</span>
 				</span>
 			</span>
-		</article>
+		</li>
 	)
 }

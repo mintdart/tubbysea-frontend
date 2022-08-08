@@ -1,8 +1,14 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { m } from 'framer-motion'
 import useMedia from '~/hooks/useMedia'
 import styles from './Desktop.module.css'
+
+const variants = {
+	open: { opacity: 1, x: 0, display: 'flex' },
+	closed: { opacity: 0, x: '100%', display: 'none' }
+}
 
 export default function Wrapper({ children }: { children: React.ReactNode }) {
 	const router = useRouter()
@@ -18,7 +24,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
 	}
 
 	return (
-		<div className={styles.wrapper} style={{ display: isOpen ? 'flex' : 'none' }}>
+		<m.div className={styles.wrapper} animate={isOpen ? 'open' : 'closed'} variants={variants}>
 			<span className={styles.header}>
 				<h1 className={styles.title}>Checkout</h1>
 				<Link href="/">
@@ -41,6 +47,6 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
 				</Link>
 			</span>
 			{children}
-		</div>
+		</m.div>
 	)
 }

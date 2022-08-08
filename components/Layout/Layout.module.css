@@ -25,15 +25,15 @@
 
 .nav a {
 	padding: 2px 8px;
-	border: 2px solid transparent;
 	flex: 1;
 	text-align: center;
+	border: 2px solid transparent;
+	border-radius: 12px;
 }
 
 .nav a[data-active='true'] {
 	background: #d9fffe;
 	border-color: #89cfdd;
-	border-radius: 12px;
 }
 
 .logoWrapper {
@@ -62,6 +62,7 @@
 	max-width: 96rem;
 	margin: 0 auto;
 	padding: 12px;
+	overflow-x: hidden;
 }
 
 @media (min-width: 40rem) {

@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import '@rainbow-me/rainbowkit/styles.css'
 import type { AppProps } from 'next/app'
 import * as React from 'react'
+import { LazyMotion, domAnimation } from 'framer-motion'
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
@@ -50,20 +51,22 @@ function MyApp({ Component, pageProps }: AppProps) {
 	React.useEffect(() => setIsMounted(true), [])
 
 	return (
-		<QueryClientProvider client={queryClient}>
-			<Hydrate state={pageProps.dehydratedState}>
-				<WagmiConfig client={wagmiClient}>
-					<RainbowKitProvider
-						theme={walletTheme}
-						chains={chains}
-						initialChain={chain.goerli}
-						showRecentTransactions={true}
-					>
-						{isMounted && <Component {...pageProps} />}
-					</RainbowKitProvider>
-				</WagmiConfig>
-			</Hydrate>
-		</QueryClientProvider>
+		<LazyMotion features={domAnimation}>
+			<QueryClientProvider client={queryClient}>
+				<Hydrate state={pageProps.dehydratedState}>
+					<WagmiConfig client={wagmiClient}>
+						<RainbowKitProvider
+							theme={walletTheme}
+							chains={chains}
+							initialChain={chain.goerli}
+							showRecentTransactions={true}
+						>
+							{isMounted && <Component {...pageProps} />}
+						</RainbowKitProvider>
+					</WagmiConfig>
+				</Hydrate>
+			</QueryClientProvider>
+		</LazyMotion>
 	)
 }
 

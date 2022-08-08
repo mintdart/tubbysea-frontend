@@ -35,7 +35,7 @@ export function RepayTubby({ details }: { details: ILoan }) {
 	} = useRepay(details.loanId, details.totalRepay)
 
 	return (
-		<article className={styles.card}>
+		<li className={styles.card}>
 			{/* {fetchingImg ? (
 				<span
 					className="placeholder-container"
@@ -98,13 +98,13 @@ export function RepayTubby({ details }: { details: ILoan }) {
 					</span>
 				</span>
 			</span>
-		</article>
+		</li>
 	)
 }
 
 export function RepayTubbyPlaceholder() {
 	return (
-		<article className={styles.card}>
+		<li className={styles.card}>
 			<span
 				className="placeholder-container"
 				style={{ width: '100%', aspectRatio: '1/1', borderRadius: '12px 12px 0 0' }}
@@ -144,6 +144,6 @@ export function RepayTubbyPlaceholder() {
 					</span>
 				</span>
 			</span>
-		</article>
+		</li>
 	)
 }

@@ -6,5 +6,5 @@ interface ITubbyGrid {
 }
 
 export default function TubbyGrid({ children }: ITubbyGrid) {
-	return <div className={styles.wrapper}>{children}</div>
+	return <ul className={styles.wrapper}>{children}</ul>
 }
