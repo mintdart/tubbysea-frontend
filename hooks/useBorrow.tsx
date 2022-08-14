@@ -32,13 +32,13 @@ export function useBorrow() {
 		functionName: 'borrow',
 		args: [
 			[...cartTokenIds],
-			new BigNumber(quote?.price ?? 0).times(1e18).toString(),
+			new BigNumber(quote?.price ?? 0).times(1e18).toFixed(0),
 			quote?.deadline,
 			quote?.signature?.v,
 			quote?.signature?.r,
 			quote?.signature?.s
 		],
-		overrides: { gasLimit: new BigNumber(0.0005).times(1e9).toString() }
+		overrides: { gasLimit: new BigNumber(0.0005).times(1e9).toFixed(0) }
 	})
 
 	const contractWrite = useContractWrite({ ...config })
@@ -52,7 +52,7 @@ export function useBorrow() {
 			if (data?.status === 1) {
 				const tubbies = contractWrite.variables?.args?.[0].length
 				const price = contractWrite.variables?.args?.[1]
-				const total = new BigNumber(price).times(tubbies).div(1e18).toString()
+				const total = new BigNumber(price).times(tubbies).div(1e18).toFixed(0)
 
 				toast.success(
 					() => {

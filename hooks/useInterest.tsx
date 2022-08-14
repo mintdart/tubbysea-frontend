@@ -15,7 +15,7 @@ export function useGetInterest() {
 		addressOrName: LENDING_POOL_ADDRESS,
 		contractInterface: LENDING_POOL_ABI,
 		functionName: 'currentAnnualInterest',
-		args: new BigNumber(totalPrice || 0).multipliedBy(1e18).toString(),
+		args: new BigNumber(totalPrice || 0).multipliedBy(1e18).toFixed(0),
 		select: (data: any) => transformData(data)
 	})
 

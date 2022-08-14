@@ -31,7 +31,7 @@ function saveItemToCart({ chainId, tokenId }: { chainId?: number; tokenId: numbe
 		localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ [contract]: [tokenId] }))
 	}
 
-	return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '')
+	return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}')
 }
 
 // get cart items from local storage
@@ -66,7 +66,7 @@ const useSaveItemToCart = () => {
 
 	return useMutation(({ tokenId }: { tokenId: number }) => saveItemToCart({ chainId: chain?.id, tokenId }), {
 		onMutate: () => {
-			const cart = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '')
+			const cart = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}')
 
 			const contractAddress: string | undefined | null = chain?.id ? chainConfig[chain.id]?.borrowNftAddress : null
 

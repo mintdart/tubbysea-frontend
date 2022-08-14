@@ -14,7 +14,7 @@ export function useRepay(loanId: number, amount: number) {
 
 	const queryClient = useQueryClient()
 
-	const buffer = new BigNumber(amount).times(0.05).toString()
+	const buffer = new BigNumber(amount).times(0.05).toFixed(0)
 
 	const { config } = usePrepareContractWrite({
 		addressOrName: LENDING_POOL_ADDRESS,
@@ -22,8 +22,8 @@ export function useRepay(loanId: number, amount: number) {
 		functionName: 'repay',
 		args: [loanId],
 		overrides: {
-			value: new BigNumber(amount).plus(buffer).toString(),
-			gasLimit: new BigNumber(0.0005).times(1e9).toString()
+			value: new BigNumber(amount).plus(buffer).toFixed(0),
+			gasLimit: new BigNumber(0.0005).times(1e9).toFixed(0)
 		}
 	})
 
@@ -38,8 +38,6 @@ export function useRepay(loanId: number, amount: number) {
 			queryClient.invalidateQueries()
 
 			const paidAmount = contractWrite.variables?.overrides?.value
-
-			console.log({ paidAmount })
 
 			if (data?.status === 1) {
 				toast.success(

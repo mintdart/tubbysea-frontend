@@ -14,7 +14,7 @@ export function useSetContractApproval() {
 		contractInterface: erc721ABI,
 		functionName: 'setApprovalForAll',
 		args: [LENDING_POOL_ADDRESS, true]
-		// overrides: { gasLimit: new BigNumber(0.0005).times(1e9).toString() }
+		// overrides: { gasLimit: new BigNumber(0.0005).times(1e9).toFixed(0) }
 	})
 
 	const contractWrite = useContractWrite({ ...config })
