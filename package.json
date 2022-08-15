@@ -10,17 +10,17 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
-		"@rainbow-me/rainbowkit": "^0.4.5",
+		"@rainbow-me/rainbowkit": "^0.4.6",
 		"@tanstack/react-query": "^4.0.10",
-		"ariakit": "2.0.0-next.37",
+		"ariakit": "2.0.0-next.39",
 		"bignumber.js": "^9.0.2",
 		"ethers": "^5.6.9",
 		"framer-motion": "^7.0.0",
-		"next": "12.2.4",
+		"next": "12.2.5",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-hot-toast": "^2.3.0",
-		"wagmi": "^0.6.1"
+		"wagmi": "^0.6.3"
 	},
 	"devDependencies": {
 		"@types/node": "18.0.5",
