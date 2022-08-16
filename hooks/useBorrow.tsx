@@ -41,7 +41,7 @@ export function useBorrow() {
 		overrides: { gasLimit: new BigNumber(0.0005).times(1e9).toFixed(0) }
 	})
 
-	const contractWrite = useContractWrite({ ...config })
+	const contractWrite = useContractWrite(config)
 
 	const waitForTransaction = useWaitForTransaction({
 		hash: contractWrite.data?.hash,

@@ -37,7 +37,7 @@ export function RepayTubby({ details }: { details: ILoan }) {
 	return (
 		<li className={styles.card}>
 			<span className={styles.imageWrapper}>
-				{<Image src={details.imgUrl || '/tubbycats.png'} alt={`token id ${details.loanId}`} layout="fill" />}
+				{<Image src={details.imgUrl || '/paw.png'} alt={`token id ${details.loanId}`} layout="fill" />}
 			</span>
 
 			<span className={styles.infoWrapper}>

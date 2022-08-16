@@ -159,7 +159,7 @@ export function CartWithItems() {
 
 									<span className={styles.priceWrapper}>
 										<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
-										<span>{quote?.price}</span>
+										<span>{quote?.price?.toFixed(2)}</span>
 									</span>
 								</li>
 							))}
