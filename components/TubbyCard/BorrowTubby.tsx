@@ -34,7 +34,7 @@ export function BorrowTubby({ tokenId, imgUrl }: IBorrowTubby) {
 						<p className={styles.flexRowSm}>
 							<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
 							<span data-animate={isFetchingQuote ? true : false} className={styles.price}>
-								{quote?.price ?? (!isFetchingQuote && '-')}
+								{quote?.price?.toFixed(2) ?? (!isFetchingQuote && '-')}
 							</span>
 						</p>
 						{cartItems?.find((item) => item.tokenId === tokenId) ? (

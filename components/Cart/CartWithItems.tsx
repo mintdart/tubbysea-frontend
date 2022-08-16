@@ -11,7 +11,6 @@ import { useBorrow } from '~/hooks/useBorrow'
 import { useGetNftsList } from '~/hooks/useNftsList'
 import { LENDING_POOL_ADDRESS } from '~/lib/contracts'
 import styles from './Cart.module.css'
-import toast from 'react-hot-toast'
 
 const formatErrorMsg = (error: any) => {
 	if (error?.code === 'UNPREDICTABLE_GAS_LIMIT') {
