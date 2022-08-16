@@ -22,8 +22,8 @@ export function useRepay(loanId: number, amount: number) {
 		functionName: 'repay',
 		args: [loanId],
 		overrides: {
-			value: new BigNumber(amount).plus(buffer).toFixed(0),
-			gasLimit: new BigNumber(0.0005).times(1e9).toFixed(0)
+			value: new BigNumber(amount).plus(buffer).toFixed(0)
+			// gasLimit: new BigNumber(0.0005).times(1e9).toFixed(0)
 		}
 	})
 
