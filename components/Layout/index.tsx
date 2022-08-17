@@ -44,9 +44,11 @@ export default function Layout({ children, className, ...props }: ILayoutProps) 
 				</span>
 			</header>
 
-			<main className={`${styles.main} ${className}`} {...props}>
-				{isConnected ? children : <HowItWorks />}
-			</main>
+			<React.Suspense fallback={null}>
+				<main className={`${styles.main} ${className}`} {...props}>
+					{isConnected ? children : <HowItWorks />}
+				</main>
+			</React.Suspense>
 		</>
 	)
 }
