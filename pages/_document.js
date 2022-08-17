@@ -12,7 +12,7 @@ export default function Document() {
 				<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
 				<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
 				<link rel="manifest" href="/favicon/site.webmanifest" />
-				<link href="https://fonts.googleapis.com/css2?family=Coiny&display=swap&text=TUBBY%20SEA" rel="stylesheet" />
+				<link rel="preload" href="/Quicksand.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
 			</Head>
 			<body>
 				<Main />

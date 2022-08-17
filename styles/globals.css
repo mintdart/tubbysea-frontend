@@ -1,7 +1,7 @@
 @font-face {
-	font-family: 'Coiny-fallback';
-	size-adjust: 115.9%;
-	src: local('Arial');
+	font-family: Quicksand;
+	font-display: swap;
+	src: url('/Quicksand.ttf') format('truetype');
 }
 
 *,
@@ -80,7 +80,7 @@ button:disabled {
 	min-height: 100%;
 	color: #fff;
 	background: #222;
-	background-image: url('/bgSmall.png');
+	/* background-image: url('/bgSmall.png'); */
 	background-position: 50%;
 	background-position-y: -80px;
 	background-repeat: no-repeat;
@@ -182,6 +182,6 @@ button:disabled {
 
 @media (min-width: 40rem) {
 	#__next {
-		background-image: url('/bgLarge.png');
+		/* background-image: url('/bgLarge.png'); */
 	}
 }
