@@ -1,7 +1,12 @@
 @font-face {
 	font-family: Quicksand;
-	font-display: swap;
 	src: url('/Quicksand.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Quicksand-fallback';
+	size-adjust: 104.38%;
+	src: local('Arial');
 }
 
 *,
