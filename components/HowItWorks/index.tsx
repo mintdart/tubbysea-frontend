@@ -10,16 +10,18 @@ export default function HowItWorks() {
 
 	return (
 		<article className={styles.wrapper}>
-			<h1 className={styles.header}>TUBBY SEA</h1>
+			<h1 className={styles.header}>tubby sea</h1>
+
 			<ul className={styles.list}>
 				<li className={styles.listItem}>Deposit tubbies as collateral and borrow ETH</li>
 				<li className={styles.listItem}>All loans last for 2 weeks max and there are no liquidations</li>
 				<li className={styles.listItem}>Only pay for the time you borrow</li>
 				<li className={styles.listItem}>Interest is based on pool utilization and capped at 80%</li>
 			</ul>
+
 			{!isConnected && (
 				<p className={styles.connectWalletText}>
-					<button onClick={openConnectModal}>Connect Wallet</button>
+					<button onClick={openConnectModal}>Connect Wallet</button>{' '}
 					<span>
 						{router.pathname === '/'
 							? 'to view your tubby cats and start borrowing!'
