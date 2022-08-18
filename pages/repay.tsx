@@ -13,8 +13,6 @@ const Repay: NextPage = () => {
 		<>
 			<Head>
 				<title>repay | tubby sea</title>
-				<meta property="og:url" content="borrow.tubbysea.com/repay" />
-				<meta property="twitter:url" content="borrow.tubbysea.com/repay" />
 			</Head>
 
 			<Layout>

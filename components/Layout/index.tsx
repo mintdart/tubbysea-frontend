@@ -36,6 +36,7 @@ export default function Layout({ children, className, ...props }: ILayoutProps) 
 					content="tubby sea is a lending protocol that allows you to deposit tubby cats in order to borrow ETH."
 				/>
 				<meta property="og:image" content="https://borrow.tubbysea.com/og.png" />
+				<meta property="og:url" content={`https://borrow.tubbysea.com${router.pathname}`} />
 
 				<meta name="twitter:card" content="summary_large_image" />
 				<meta property="twitter:domain" content="borrow.tubbysea.com" />
@@ -45,6 +46,7 @@ export default function Layout({ children, className, ...props }: ILayoutProps) 
 					content="tubby sea is a lending protocol that allows you to deposit tubby cats in order to borrow ETH."
 				/>
 				<meta name="twitter:image" content="https://borrow.tubbysea.com/og.png" />
+				<meta property="twitter:url" content={`https://borrow.tubbysea.com${router.pathname}`} />
 			</Head>
 			<header className={styles.header}>
 				<nav className={styles.nav}>

@@ -15,8 +15,6 @@ const Home: NextPage = () => {
 		<>
 			<Head>
 				<title>borrow | tubby sea</title>
-				<meta property="og:url" content="borrow.tubbysea.com" />
-				<meta property="twitter:url" content="borrow.tubbysea.com" />
 			</Head>
 
 			<Layout>
