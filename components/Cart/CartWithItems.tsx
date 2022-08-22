@@ -226,7 +226,7 @@ export function CartWithItems() {
 					{errorMsgOfEthersQueries && <p className={styles.errorMsg}>{errorMsgOfEthersQueries}</p>}
 
 					{isLoading ? (
-						<button className={styles.checkoutButton}>
+						<button className={styles.checkoutButton} disabled>
 							<BeatLoader />
 						</button>
 					) : isApproved ? (
