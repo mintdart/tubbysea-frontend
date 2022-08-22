@@ -1,9 +1,12 @@
 .wrapper {
+	position: sticky;
+	top: 12px;
 	display: flex;
 	flex-direction: column;
 	gap: 24px;
 	width: 100%;
 	max-width: 360px;
+	max-height: calc(100vh - 124px);
 	margin: 36px 0;
 	padding: 20px 16px;
 	border-radius: 12px;

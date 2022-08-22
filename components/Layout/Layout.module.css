@@ -62,7 +62,6 @@
 	max-width: 96rem;
 	margin: 0 auto;
 	padding: 12px;
-	overflow-x: hidden;
 }
 
 @media (min-width: 40rem) {
