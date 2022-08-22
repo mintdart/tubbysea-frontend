@@ -212,7 +212,7 @@ export function CartWithItems() {
 						</ul>
 					)}
 
-					<label className={styles.emailField}>
+					{/* <label className={styles.emailField}>
 						<span>
 							Email Address <span className={styles.optional}>(optional)</span>
 						</span>
@@ -220,7 +220,7 @@ export function CartWithItems() {
 						<span className={styles.optional}>
 							Provide an email address if you want to be notified when your loan is about to expire
 						</span>
-					</label>
+					</label> */}
 
 					{/* Show error message of txs/queries initiated with wallet */}
 					{errorMsgOfEthersQueries && <p className={styles.errorMsg}>{errorMsgOfEthersQueries}</p>}
