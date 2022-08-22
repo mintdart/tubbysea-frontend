@@ -172,6 +172,13 @@ export const LENDING_POOL_ABI = [
 	},
 	{
 		inputs: [],
+		name: 'maxPrice',
+		outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+		stateMutability: 'view',
+		type: 'function'
+	},
+	{
+		inputs: [],
 		name: 'name',
 		outputs: [{ internalType: 'string', name: '', type: 'string' }],
 		stateMutability: 'view',
@@ -256,6 +263,13 @@ export const LENDING_POOL_ABI = [
 	{
 		inputs: [{ internalType: 'string', name: 'newBaseURI', type: 'string' }],
 		name: 'setBaseURI',
+		outputs: [],
+		stateMutability: 'nonpayable',
+		type: 'function'
+	},
+	{
+		inputs: [{ internalType: 'uint256', name: 'newMaxPrice', type: 'uint256' }],
+		name: 'setMaxPrice',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function'

@@ -23,7 +23,7 @@ const Home: NextPage = () => {
 				) : fetchingNftsList ? (
 					<Placeholder />
 				) : tubbies.length === 0 ? (
-					<p className="fallback-text">You do not have any tubby cats in your wallet</p>
+					<p className="fallback-text">There are no tubby cats in this address.</p>
 				) : (
 					<TubbyGrid>
 						{tubbies?.map(({ tokenId, imgUrl }) => (

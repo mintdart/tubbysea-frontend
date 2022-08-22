@@ -21,7 +21,7 @@ const Repay: NextPage = () => {
 				) : isLoading ? (
 					<Placeholder />
 				) : tubbies.length === 0 ? (
-					<p className="fallback-text">You do not have any active loans</p>
+					<p className="fallback-text">There are no active loans in this address.</p>
 				) : (
 					<TubbyGrid>
 						{tubbies.map((tubby) => (
