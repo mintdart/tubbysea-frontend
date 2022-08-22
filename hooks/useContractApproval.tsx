@@ -3,12 +3,17 @@ import {
 	useAccount,
 	useContractRead,
 	useContractWrite,
+	useNetwork,
 	usePrepareContractWrite,
 	useWaitForTransaction
 } from 'wagmi'
+import toast from 'react-hot-toast'
 import { LENDING_POOL_ADDRESS, NFT_TESTNET_ADDRESS } from '~/lib/contracts'
 
 export function useSetContractApproval() {
+	const { chain } = useNetwork()
+	const blockExplorerUrl = chain?.blockExplorers?.default.url ?? 'https://etherscan.io'
+
 	const { config } = usePrepareContractWrite({
 		addressOrName: NFT_TESTNET_ADDRESS,
 		contractInterface: erc721ABI,
@@ -20,7 +25,30 @@ export function useSetContractApproval() {
 	const contractWrite = useContractWrite({ ...config })
 
 	const waitForTransaction = useWaitForTransaction({
-		hash: contractWrite.data?.hash
+		hash: contractWrite.data?.hash,
+		onSettled: (data) => {
+			if (data?.status === 0) {
+				toast.error(
+					() => {
+						return (
+							<div className="toastWithLink">
+								<span>Transaction Failed</span>
+								<a
+									href={blockExplorerUrl + '/tx/' + contractWrite.data?.hash}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									View on Etherscan
+								</a>
+							</div>
+						)
+					},
+					{
+						duration: 5000
+					}
+				)
+			}
+		}
 	})
 
 	return { ...contractWrite, waitForTransaction }
