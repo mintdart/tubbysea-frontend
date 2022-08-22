@@ -52,7 +52,7 @@ export function useBorrow() {
 			if (data?.status === 1) {
 				const tubbies = contractWrite.variables?.args?.[0].length
 				const price = contractWrite.variables?.args?.[1]
-				const total = new BigNumber(price).times(tubbies).div(1e18).toFixed(0)
+				const total = new BigNumber(price).times(tubbies).div(1e18).toFixed(3)
 
 				toast.success(
 					() => {

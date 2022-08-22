@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { CSSProperties } from 'react'
 import { useAccount } from 'wagmi'
 import { useGetCartItems } from '~/hooks/useCart'
 import styles from './CartButton.module.css'
@@ -7,7 +8,7 @@ export default function CartButton() {
 	const { isConnected } = useAccount()
 
 	if (!isConnected) {
-		return <Wrapper disabled />
+		return <Wrapper disabled style={{ opacity: '0.7' }} />
 	}
 
 	return <ConnectedCartButton />
@@ -19,7 +20,7 @@ function ConnectedCartButton() {
 	return <Wrapper noOfItems={cartItems?.length} />
 }
 
-function Wrapper({ noOfItems, ...props }: { noOfItems?: number; disabled?: boolean }) {
+function Wrapper({ noOfItems, ...props }: { noOfItems?: number; disabled?: boolean; style?: CSSProperties }) {
 	const router = useRouter()
 
 	const { cart } = router.query
