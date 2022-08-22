@@ -3,7 +3,7 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	images: {
-		domains: ['cloudflare-ipfs.com']
+		domains: ['cloudflare-ipfs.com', 'api.tubbysea.com']
 	},
 	experimental: {
 		legacyBrowsers: false,

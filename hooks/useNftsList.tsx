@@ -24,7 +24,9 @@ export async function getOwnedNfts({ userAddress, chainId, type }: IGetOwnedNfts
 		return data?.ownedNfts.map((item) => ({
 			tokenId: Number(item.id.tokenId),
 			imgUrl: item.metadata.image
-				? `https://cloudflare-ipfs.com/` + item.metadata.image.split('https://ipfs.io/')[1]
+				? item.metadata.image.startsWith('https://api.tubbysea.com')
+					? item.metadata.image
+					: `https://cloudflare-ipfs.com/` + item.metadata.image.split('https://ipfs.io/')[1]
 				: type === 'repay'
 				? '/paw.png'
 				: '/tubbycats.png'
