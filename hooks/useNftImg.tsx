@@ -1,13 +1,15 @@
 import { ethers } from 'ethers'
 import { erc721ABI, useAccount, useNetwork, useProvider, useQuery } from 'wagmi'
-import { NFT_TESTNET_ADDRESS } from '~/lib/contracts'
+import { chainConfig } from '~/lib/constants'
 import type { Provider } from './types'
 
-async function getNfts({ tokenId, provider }: { tokenId: number; provider: Provider }) {
+async function getNfts({ tokenId, provider, chainId }: { tokenId: number; provider: Provider; chainId?: number }) {
 	try {
-		if (!tokenId) throw new Error('Error: Invalid arguments')
+		if (!tokenId || !provider || !chainId) throw new Error('Error: Invalid arguments')
 
-		const tubbyContract = new ethers.Contract(NFT_TESTNET_ADDRESS, erc721ABI, provider)
+		const contracts = chainConfig[chainId]
+
+		const tubbyContract = new ethers.Contract(contracts.collateralAddress, erc721ABI, provider)
 
 		const tokenURI = await tubbyContract.tokenURI(tokenId)
 
@@ -26,5 +28,5 @@ export function useGetNftImg(tokenId: number) {
 	const provider = useProvider()
 	const { chain } = useNetwork()
 
-	return useQuery(['nft', address, chain?.id, tokenId], () => getNfts({ tokenId, provider }))
+	return useQuery(['nft', address, chain?.id, tokenId], () => getNfts({ tokenId, provider, chainId: chain?.id }))
 }

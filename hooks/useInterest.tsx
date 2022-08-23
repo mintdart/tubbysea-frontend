@@ -1,10 +1,14 @@
 import BigNumber from 'bignumber.js'
-import { useContractRead } from 'wagmi'
-import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS } from '~/lib/contracts'
+import { useContractRead, useNetwork } from 'wagmi'
+import { chainConfig } from '~/lib/constants'
 import { useGetCartItems } from './useCart'
 import { useGetQuote } from './useQuotation'
 
 export function useGetInterest() {
+	const { chain } = useNetwork()
+
+	const contracts = chainConfig[chain?.id ?? 1]
+
 	const { data: cartItems } = useGetCartItems()
 	const { data: quote } = useGetQuote()
 
@@ -12,8 +16,8 @@ export function useGetInterest() {
 
 	// get current annual interest of all items in cart
 	const query = useContractRead({
-		addressOrName: LENDING_POOL_ADDRESS,
-		contractInterface: LENDING_POOL_ABI,
+		addressOrName: contracts.lendingAddress,
+		contractInterface: contracts.lendingABI,
 		functionName: 'currentAnnualInterest',
 		args: new BigNumber(totalPrice || 0).multipliedBy(1e18).toFixed(0),
 		select: (data: any) => transformData(data)

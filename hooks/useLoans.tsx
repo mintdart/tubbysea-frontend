@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
 import { useAccount, useNetwork, useProvider } from 'wagmi'
-import { LENDING_POOL_ADDRESS, LENDING_POOL_ABI } from '~/lib/contracts'
+import { chainConfig } from '~/lib/constants'
 import type { IError, Provider } from './types'
 import { getOwnedNfts } from './useNftsList'
 
@@ -24,7 +24,9 @@ async function getLoans({ userAddress, provider, chainId }: IGetLoans) {
 	try {
 		if (!userAddress || !provider || !chainId) throw new Error('Invalid arguments')
 
-		const loanContract = new ethers.Contract(LENDING_POOL_ADDRESS, LENDING_POOL_ABI, provider)
+		const contracts = chainConfig[chainId]
+
+		const loanContract = new ethers.Contract(contracts.lendingAddress, contracts.lendingABI, provider)
 
 		const nftsList = await getOwnedNfts({ userAddress, chainId, type: 'repay' })
 

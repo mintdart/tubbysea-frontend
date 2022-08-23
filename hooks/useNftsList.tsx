@@ -17,7 +17,7 @@ export async function getOwnedNfts({ userAddress, chainId, type }: IGetOwnedNfts
 
 		const data: INftApiResponse = await fetch(
 			`${chainConfig[chainId].alchemyNftUrl}/?owner=${userAddress}&contractAddresses[]=${
-				type === 'repay' ? chainConfig[chainId].repayNftAddress : chainConfig[chainId].borrowNftAddress
+				type === 'repay' ? chainConfig[chainId].lendingAddress : chainConfig[chainId].collateralAddress
 			}`
 		).then((res) => res.json())
 

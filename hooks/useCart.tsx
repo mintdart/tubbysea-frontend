@@ -8,7 +8,7 @@ import { useGetNftsList } from './useNftsList'
 // save/remove items from local storage
 async function saveItemToCart({ chainId, tokenId }: { chainId?: number; tokenId: number }) {
 	try {
-		const contract = chainId ? chainConfig[chainId]?.borrowNftAddress : null
+		const contract = chainId ? chainConfig[chainId]?.collateralAddress : null
 
 		if (!contract) {
 			throw new Error("Error: Couldn't get contract address of nft collection")
@@ -41,7 +41,7 @@ async function saveItemToCart({ chainId, tokenId }: { chainId?: number; tokenId:
 // get cart items from local storage
 async function fetchCartItems({ chainId, tubbies }: { chainId?: number; tubbies?: Array<INftItem> }) {
 	try {
-		const contract = chainId ? chainConfig[chainId]?.borrowNftAddress : null
+		const contract = chainId ? chainConfig[chainId]?.collateralAddress : null
 
 		if (!contract) {
 			throw new Error("Error: Couldn't get contract address of nft collection")
@@ -76,12 +76,12 @@ const useSaveItemToCart = () => {
 		onMutate: () => {
 			const cart = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}')
 
-			const contractAddress: string | undefined | null = chain?.id ? chainConfig[chain.id]?.borrowNftAddress : null
+			const contractAddress: string | undefined | null = chain?.id ? chainConfig[chain.id]?.collateralAddress : null
 
 			return contractAddress ? cart[contractAddress] || [] : []
 		},
 		onSuccess: (data: ICart, _variables, prevItems) => {
-			const contractAddress: string | undefined | null = chain?.id ? chainConfig[chain.id]?.borrowNftAddress : null
+			const contractAddress: string | undefined | null = chain?.id ? chainConfig[chain.id]?.collateralAddress : null
 
 			// If its the first item added to cart, show cart section
 			if (contractAddress && data[contractAddress]?.length === 1 && data[contractAddress]?.length > prevItems.length) {

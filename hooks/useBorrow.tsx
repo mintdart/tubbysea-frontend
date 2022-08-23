@@ -3,14 +3,11 @@ import BigNumber from 'bignumber.js'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
 import { useContractWrite, useNetwork, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
-import { LOCAL_STORAGE_KEY } from '~/lib/constants'
-import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS, NFT_TESTNET_ADDRESS } from '~/lib/contracts'
+import { chainConfig, LOCAL_STORAGE_KEY } from '~/lib/constants'
 import { useGetCartItems } from './useCart'
 import { useGetLoans } from './useLoans'
 import { useGetNftsList } from './useNftsList'
 import { useGetQuote } from './useQuotation'
-
-const contract = NFT_TESTNET_ADDRESS
 
 export function useBorrow() {
 	const { data: cartItems, isLoading: fetchingCartItems, isError: failedToFetchCartItems } = useGetCartItems()
@@ -26,9 +23,11 @@ export function useBorrow() {
 
 	const cartTokenIds = cartItems?.map((item) => item.tokenId) ?? []
 
+	const contracts = chainConfig[chain?.id ?? 1]
+
 	const { config } = usePrepareContractWrite({
-		addressOrName: LENDING_POOL_ADDRESS,
-		contractInterface: LENDING_POOL_ABI,
+		addressOrName: contracts.lendingAddress,
+		contractInterface: contracts.lendingABI,
 		functionName: 'borrow',
 		args: [
 			[...cartTokenIds],
@@ -79,9 +78,9 @@ export function useBorrow() {
 
 				if (prevItems) {
 					const items = JSON.parse(prevItems)
-					localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ ...items, [contract]: [] }))
+					localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ ...items, [contracts.collateralAddress]: [] }))
 				} else {
-					localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ [contract]: [] }))
+					localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ [contracts.collateralAddress]: [] }))
 				}
 
 				router.push('/')

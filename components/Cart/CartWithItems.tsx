@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Image from 'next/image'
-import { useBalance } from 'wagmi'
+import { useBalance, useNetwork } from 'wagmi'
 import BeatLoader from '~/components/BeatLoader'
 import ItemsPlaceholder from './ItemsPlaceholder'
 import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
@@ -9,7 +9,7 @@ import { useGetInterest } from '~/hooks/useInterest'
 import { useGetContractApproval, useSetContractApproval } from '~/hooks/useContractApproval'
 import { useBorrow } from '~/hooks/useBorrow'
 import { useGetNftsList } from '~/hooks/useNftsList'
-import { LENDING_POOL_ADDRESS } from '~/lib/contracts'
+import { chainConfig } from '~/lib/constants'
 import styles from './Cart.module.css'
 
 const formatErrorMsg = (error: any) => {
@@ -19,6 +19,10 @@ const formatErrorMsg = (error: any) => {
 }
 
 export function CartWithItems() {
+	const { chain } = useNetwork()
+
+	const contracts = chainConfig[chain?.id ?? 1]
+
 	const { isLoading: fetchingNftsList } = useGetNftsList('borrow')
 
 	// query to get cart items from local storage
@@ -66,7 +70,7 @@ export function CartWithItems() {
 		error: errorFetchingContractBalance,
 		isLoading: fethcingContractBalance
 	} = useBalance({
-		addressOrName: LENDING_POOL_ADDRESS
+		addressOrName: contracts.lendingAddress
 	})
 
 	const isApproved = isApprovedForAll || approvalTxOnChain?.status === 1

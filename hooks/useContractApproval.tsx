@@ -8,17 +8,18 @@ import {
 	useWaitForTransaction
 } from 'wagmi'
 import toast from 'react-hot-toast'
-import { LENDING_POOL_ADDRESS, NFT_TESTNET_ADDRESS } from '~/lib/contracts'
+import { chainConfig } from '~/lib/constants'
 
 export function useSetContractApproval() {
 	const { chain } = useNetwork()
 	const blockExplorerUrl = chain?.blockExplorers?.default.url ?? 'https://etherscan.io'
+	const contracts = chainConfig[chain?.id ?? 1]
 
 	const { config } = usePrepareContractWrite({
-		addressOrName: NFT_TESTNET_ADDRESS,
+		addressOrName: contracts.collateralAddress,
 		contractInterface: erc721ABI,
 		functionName: 'setApprovalForAll',
-		args: [LENDING_POOL_ADDRESS, true]
+		args: [contracts.lendingAddress, true]
 		// overrides: { gasLimit: new BigNumber(0.0005).times(1e9).toFixed(0) }
 	})
 
@@ -56,11 +57,13 @@ export function useSetContractApproval() {
 
 export function useGetContractApproval() {
 	const { address } = useAccount()
+	const { chain } = useNetwork()
+	const contracts = chainConfig[chain?.id ?? 1]
 
 	return useContractRead({
-		addressOrName: NFT_TESTNET_ADDRESS,
+		addressOrName: contracts.collateralAddress,
 		contractInterface: erc721ABI,
 		functionName: 'isApprovedForAll',
-		args: [address, LENDING_POOL_ADDRESS]
+		args: [address, contracts.lendingAddress]
 	})
 }

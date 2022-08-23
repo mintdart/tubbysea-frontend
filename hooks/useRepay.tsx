@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import BigNumber from 'bignumber.js'
 import toast from 'react-hot-toast'
 import { useContractWrite, useNetwork, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
-import { LENDING_POOL_ABI, LENDING_POOL_ADDRESS } from '~/lib/contracts'
+import { chainConfig } from '~/lib/constants'
 import { useGetLoans } from './useLoans'
 
 // TODO check for bignumber decimal error
@@ -12,13 +12,15 @@ export function useRepay(loanId: number, amount: number) {
 
 	const blockExplorerUrl = chain?.blockExplorers?.default.url ?? 'https://etherscan.io'
 
+	const contracts = chainConfig[chain?.id ?? 1]
+
 	const queryClient = useQueryClient()
 
 	const buffer = new BigNumber(amount).times(0.05).toFixed(0)
 
 	const { config } = usePrepareContractWrite({
-		addressOrName: LENDING_POOL_ADDRESS,
-		contractInterface: LENDING_POOL_ABI,
+		addressOrName: contracts.lendingAddress,
+		contractInterface: contracts.lendingABI,
 		functionName: 'repay',
 		args: [loanId],
 		overrides: {

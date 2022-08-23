@@ -1,4 +1,4 @@
-export const LENDING_POOL_ABI = [
+export const LENDING_POOL_ABI: any = [
 	{
 		inputs: [{ internalType: 'address', name: '_oracle', type: 'address' }],
 		stateMutability: 'nonpayable',

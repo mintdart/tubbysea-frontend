@@ -59,7 +59,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 						<RainbowKitProvider
 							theme={walletTheme}
 							chains={chains}
-							initialChain={chain.goerli}
+							initialChain={chain.mainnet}
 							showRecentTransactions={true}
 						>
 							{isMounted && <Component {...pageProps} />}
