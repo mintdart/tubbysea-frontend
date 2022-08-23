@@ -8,6 +8,7 @@ export interface INftApiResponse {
 		metadata: {
 			image: string
 		}
+		media: { gateway: string }[]
 	}[]
 }
 

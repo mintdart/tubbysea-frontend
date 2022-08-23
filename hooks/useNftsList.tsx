@@ -23,7 +23,7 @@ export async function getOwnedNfts({ userAddress, chainId, type }: IGetOwnedNfts
 
 		return data?.ownedNfts.map((item) => ({
 			tokenId: Number(item.id.tokenId),
-			imgUrl: formatImageUrl(item.metadata.image) || (type === 'repay' ? '/paw.png' : '/tubbycats.png')
+			imgUrl: formatImageUrl(item.media[0].gateway) || (type === 'repay' ? '/paw.png' : '/tubbycats.png')
 		}))
 	} catch (error: any) {
 		throw new Error(error.message || (error?.reason ?? "Couldn't get nfts of user"))
