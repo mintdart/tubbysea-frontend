@@ -23,13 +23,7 @@ export async function getOwnedNfts({ userAddress, chainId, type }: IGetOwnedNfts
 
 		return data?.ownedNfts.map((item) => ({
 			tokenId: Number(item.id.tokenId),
-			imgUrl: item.metadata.image
-				? item.metadata.image.startsWith('https://api.tubbysea.com')
-					? item.metadata.image
-					: `https://cloudflare-ipfs.com/` + item.metadata.image.split('https://ipfs.io/')[1]
-				: type === 'repay'
-				? '/paw.png'
-				: '/tubbycats.png'
+			imgUrl: formatImageUrl(item.metadata.image) || (type === 'repay' ? '/paw.png' : '/tubbycats.png')
 		}))
 	} catch (error: any) {
 		throw new Error(error.message || (error?.reason ?? "Couldn't get nfts of user"))
@@ -47,4 +41,16 @@ export function useGetNftsList(type: 'borrow' | 'repay') {
 			refetchInterval: 60 * 100
 		}
 	)
+}
+
+function formatImageUrl(url?: string) {
+	if (url) {
+		if (url.startsWith('https://api.tubbysea.com')) return url
+
+		if (url.startsWith('https://ipfs.io/')) return `https://cloudflare-ipfs.com/` + url.split('https://ipfs.io/')[1]
+
+		if (url.startsWith('ipfs://')) return `https://cloudflare-ipfs.com/` + url.split('ipfs://')[1]
+
+		return url
+	}
 }
