@@ -6,7 +6,7 @@
 	max-width: 32rem;
 	margin: 20px auto;
 	padding: 12px 12px 18px;
-	backdrop-filter: blur(20px);
+	backdrop-filter: blur(30px);
 	border-radius: 12px;
 }
 

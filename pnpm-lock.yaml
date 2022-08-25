@@ -6,7 +6,7 @@ specifiers:
   '@types/node': 18.0.5
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
-  ariakit: 2.0.0-next.39
+  ariakit: 2.0.0-next.40
   bignumber.js: ^9.1.0
   eslint: 8.21.0
   eslint-config-next: 12.2.4
@@ -24,7 +24,7 @@ specifiers:
 dependencies:
   '@rainbow-me/rainbowkit': 0.5.0_kbdwulty2u52t3jvtqljgilcpe
   '@tanstack/react-query': 4.2.1_biqbaboplfbrettd7655fr4n2y
-  ariakit: 2.0.0-next.39_biqbaboplfbrettd7655fr4n2y
+  ariakit: 2.0.0-next.40_biqbaboplfbrettd7655fr4n2y
   bignumber.js: 9.1.0
   ethers: 5.7.0
   framer-motion: 7.2.0_biqbaboplfbrettd7655fr4n2y
@@ -1334,22 +1334,22 @@ packages:
       '@babel/runtime-corejs3': 7.18.9
     dev: true
 
-  /ariakit-utils/0.17.0-next.25_react@18.2.0:
-    resolution: {integrity: sha512-oeN1714mX0uF3hf0vYZm5a+dDEAosTXk7y5KNzx52ujKNDv2VJJVIu6ig3hLN1XWwMqqNIexyqpTjqg2ZnVDmw==}
+  /ariakit-utils/0.17.0-next.26_react@18.2.0:
+    resolution: {integrity: sha512-Su1MA0nWcMKI/lPS++jgkXek6Z+Az4SGOTIjGz2mn7kN6pSRO3Xm4gW/6gLpbu0kmVd+MYNSpmEvFnJUf/udhA==}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
     dev: false
 
-  /ariakit/2.0.0-next.39_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-yrhi28jv0FCfg89dJ90f458Jvs0zsaBYIKjjXXkftDZRhgSiRLO1nEB2Gme2b8kqPa7iwz5ZXfMFkjHuoJ9y0A==}
+  /ariakit/2.0.0-next.40_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-MGZkWrkyb1rmRJRwxhqh1eOSkJE9KFmyaszoYgGLVCxsJQ+WkJpjodB4Wt5t5A9hQlj3vnRzfW0q+reS4yWXdg==}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0
       react-dom: ^17.0.0 || ^18.0.0
     dependencies:
       '@floating-ui/dom': 1.0.1
-      ariakit-utils: 0.17.0-next.25_react@18.2.0
+      ariakit-utils: 0.17.0-next.26_react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: false

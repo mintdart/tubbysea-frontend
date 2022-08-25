@@ -86,7 +86,7 @@ export function CartWithItems() {
 		: null
 
 	// Failed queries, but user can retry
-	const errorMsgOfEthersQueries = failedToFetchIfApproved
+	const errorMsgOfEthersQueries: string | null = failedToFetchIfApproved
 		? failedToFetchIfApproved?.message
 		: errorApproving
 		? formatErrorMsg(errorApproving)
@@ -227,7 +227,12 @@ export function CartWithItems() {
 					</label> */}
 
 					{/* Show error message of txs/queries initiated with wallet */}
-					{errorMsgOfEthersQueries && <p className={styles.errorMsg}>{errorMsgOfEthersQueries}</p>}
+					{errorMsgOfEthersQueries && !errorMsgOfEthersQueries.startsWith('user rejected transaction') && (
+						<p className={styles.errorMsg}>
+							{errorMsgOfEthersQueries.slice(0, 150)}
+							{errorMsgOfEthersQueries.length > 150 ? '...' : ''}
+						</p>
+					)}
 
 					{isLoading ? (
 						<button className={styles.checkoutButton} disabled>

@@ -79,6 +79,7 @@
 @media (min-width: 40rem) {
 	.main {
 		display: flex;
+		gap: 20px;
 	}
 
 	.main > *:first-child {
