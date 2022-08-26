@@ -2,7 +2,7 @@ import * as React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { useAccount } from 'wagmi'
+import { useAccount, useNetwork } from 'wagmi'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import CartButton from '~/components/Cart/CartButton'
 import styles from './Layout.module.css'
@@ -18,6 +18,7 @@ export default function Layout({ children, className, ...props }: ILayoutProps) 
 	const router = useRouter()
 
 	const { isConnected } = useAccount()
+	const { chain } = useNetwork()
 
 	return (
 		<>
@@ -42,7 +43,7 @@ export default function Layout({ children, className, ...props }: ILayoutProps) 
 
 			<React.Suspense fallback={null}>
 				<main className={`${styles.main} ${className}`} {...props}>
-					{isConnected ? children : <HowItWorks />}
+					{isConnected && !chain?.unsupported ? children : <HowItWorks />}
 				</main>
 			</React.Suspense>
 		</>

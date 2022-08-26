@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { useChainModal, useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 import styles from './HowItWorks.module.css'
 
@@ -7,6 +7,7 @@ export default function HowItWorks() {
 	const router = useRouter()
 	const { isConnected } = useAccount()
 	const { openConnectModal } = useConnectModal()
+	const { openChainModal } = useChainModal()
 
 	return (
 		<article className={styles.wrapper}>
@@ -19,7 +20,18 @@ export default function HowItWorks() {
 				<li className={styles.listItem}>Interest is based on pool utilization and capped at 80%</li>
 			</ul>
 
-			{!isConnected && (
+			{isConnected ? (
+				<p className={styles.connectWalletText}>
+					<button onClick={openChainModal}>Switch Network</button>{' '}
+					<span>
+						{router.pathname === '/'
+							? 'to view your tubby cats and start borrowing!'
+							: router.pathname === '/repay'
+							? 'to view your active loans'
+							: 'to view your tubby cats and active loans'}
+					</span>
+				</p>
+			) : (
 				<p className={styles.connectWalletText}>
 					<button onClick={openConnectModal}>Connect Wallet</button>{' '}
 					<span>

@@ -1,13 +1,14 @@
 import { useRouter } from 'next/router'
 import { CSSProperties } from 'react'
-import { useAccount } from 'wagmi'
+import { useAccount, useNetwork } from 'wagmi'
 import { useGetCartItems } from '~/hooks/useCart'
 import styles from './CartButton.module.css'
 
 export default function CartButton() {
 	const { isConnected } = useAccount()
+	const { chain } = useNetwork()
 
-	if (!isConnected) {
+	if (!isConnected || chain?.unsupported) {
 		return <Wrapper disabled style={{ opacity: '0.7' }} />
 	}
 
