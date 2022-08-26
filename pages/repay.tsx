@@ -5,6 +5,7 @@ import { useDialogState } from 'ariakit'
 import Layout from '~/components/Layout'
 import TubbyGrid from '~/components/TubbyGrid'
 import { RepayTubby, RepayTubbyPlaceholder } from '~/components/TubbyCard'
+import TxSubmittedDialog from '~/components/TxSubmitted'
 import { useGetLoans } from '~/hooks/useLoans'
 
 const Repay: NextPage = () => {
@@ -39,6 +40,7 @@ const Repay: NextPage = () => {
 					</TubbyGrid>
 				)}
 			</Layout>
+			<TxSubmittedDialog dialog={transactionDialog} transactionHash={transactionHash} />
 		</>
 	)
 }

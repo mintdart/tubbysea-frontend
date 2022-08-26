@@ -6,8 +6,8 @@ import Layout from '~/components/Layout'
 import TubbyGrid from '~/components/TubbyGrid'
 import { BorrowTubbyPlaceholder, BorrowTubby } from '~/components/TubbyCard'
 import { MobileOnlyCart, DesktopOnlyCart } from '~/components/Cart'
-import { useGetNftsList } from '~/hooks/useNftsList'
 import TxSubmittedDialog from '~/components/TxSubmitted'
+import { useGetNftsList } from '~/hooks/useNftsList'
 
 const Home: NextPage = () => {
 	// get number of nft's owned by user of a given contract
