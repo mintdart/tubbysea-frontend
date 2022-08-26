@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Dialog, DialogHeading, useDialogState } from 'ariakit/dialog'
 import useMedia from '~/hooks/useMedia'
-import styles from './Mobile.module.css'
+import styles from '~/styles/dialog.module.css'
 
 export default function Wrapper({ children }: { children: React.ReactNode }) {
 	const isDesktop = useMedia('(min-width: 80rem)', true)

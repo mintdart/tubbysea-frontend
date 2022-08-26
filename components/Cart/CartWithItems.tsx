@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Image from 'next/image'
 import { useBalance, useNetwork } from 'wagmi'
+import { DisclosureState } from 'ariakit'
 import BeatLoader from '~/components/BeatLoader'
 import ItemsPlaceholder from './ItemsPlaceholder'
 import { useGetCartItems, useSaveItemToCart } from '~/hooks/useCart'
@@ -18,7 +19,13 @@ const formatErrorMsg = (error: any) => {
 	} else return error.reason
 }
 
-export function CartWithItems() {
+export function CartWithItems({
+	txDialog,
+	transactionHash
+}: {
+	txDialog: DisclosureState
+	transactionHash: React.MutableRefObject<string | null>
+}) {
 	const { chain } = useNetwork()
 
 	const contracts = chainConfig[chain?.id ?? 1]
@@ -63,7 +70,7 @@ export function CartWithItems() {
 		isLoading: userConfirmingBorrow,
 		error: errorConfirmingBorrow,
 		waitForTransaction: { data: borrowTxOnChain, isLoading: checkingForBorrowTxOnChain, error: txBorrowErrorOnChain }
-	} = useBorrow()
+	} = useBorrow({ txDialog, transactionHash })
 
 	const {
 		data: contractBalance,

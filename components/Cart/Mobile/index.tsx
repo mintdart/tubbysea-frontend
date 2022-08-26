@@ -1,10 +1,17 @@
 import * as React from 'react'
 import { useAccount, useNetwork } from 'wagmi'
+import { DisclosureState } from 'ariakit'
 import Wrapper from './Wrapper'
 import { CartWithItems } from '../CartWithItems'
 import styles from '../Cart.module.css'
 
-export function MobileOnlyCart() {
+export function MobileOnlyCart({
+	txDialog,
+	transactionHash
+}: {
+	txDialog: DisclosureState
+	transactionHash: React.MutableRefObject<string | null>
+}) {
 	const { isConnected } = useAccount()
 	const { chain } = useNetwork()
 
@@ -26,7 +33,7 @@ export function MobileOnlyCart() {
 
 	return (
 		<Wrapper>
-			<CartWithItems />
+			<CartWithItems txDialog={txDialog} transactionHash={transactionHash} />
 		</Wrapper>
 	)
 }

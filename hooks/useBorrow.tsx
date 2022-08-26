@@ -1,4 +1,6 @@
+import * as React from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import { DisclosureState } from 'ariakit'
 import BigNumber from 'bignumber.js'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
@@ -9,7 +11,13 @@ import { useGetLoans } from './useLoans'
 import { useGetNftsList } from './useNftsList'
 import { useGetQuote } from './useQuotation'
 
-export function useBorrow() {
+export function useBorrow({
+	txDialog,
+	transactionHash
+}: {
+	txDialog: DisclosureState
+	transactionHash: React.MutableRefObject<string | null>
+}) {
 	const { data: cartItems, isLoading: fetchingCartItems, isError: failedToFetchCartItems } = useGetCartItems()
 	const { data: quote, isLoading: isFetchingQuote, isError: failedFetchQuotation } = useGetQuote()
 	const router = useRouter()
@@ -36,10 +44,17 @@ export function useBorrow() {
 			quote?.signature?.v,
 			quote?.signature?.r,
 			quote?.signature?.s
-		]
+		],
+		overrides: { gasLimit: new BigNumber(0.0005).times(1e9).toFixed(0) }
 	})
 
-	const contractWrite = useContractWrite(config)
+	const contractWrite = useContractWrite({
+		...config,
+		onSuccess: (data) => {
+			transactionHash.current = data.hash
+			txDialog.toggle()
+		}
+	})
 
 	const waitForTransaction = useWaitForTransaction({
 		hash: contractWrite.data?.hash,
