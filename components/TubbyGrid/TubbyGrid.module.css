@@ -6,7 +6,7 @@
 	margin: 36px 0 auto;
 }
 
-@media (min-width: 80rem) {
+@media screen and (min-width: 40rem) {
 	.wrapper {
 		margin: 36px 0;
 		place-content: initial;
