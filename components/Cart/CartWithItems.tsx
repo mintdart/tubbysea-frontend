@@ -217,7 +217,7 @@ export function CartWithItems({
 									{fetchingQuote ? (
 										<span className="placeholder-container" style={{ width: '7ch', height: '16px' }}></span>
 									) : (
-										<span>{quote.deadline && new Date(quote.deadline * 1000)?.toLocaleString()}</span>
+										<span>{new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toLocaleString()}</span>
 									)}
 								</span>
 							</li>
