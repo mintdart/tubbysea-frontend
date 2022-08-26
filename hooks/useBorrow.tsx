@@ -33,7 +33,7 @@ export function useBorrow({
 
 	const contracts = chainConfig[chain?.id ?? 1]
 
-	const { config } = usePrepareContractWrite({
+	const { config, refetch } = usePrepareContractWrite({
 		addressOrName: contracts.lendingAddress,
 		contractInterface: contracts.lendingABI,
 		functionName: 'borrow',
@@ -127,6 +127,7 @@ export function useBorrow({
 	return {
 		...contractWrite,
 		waitForTransaction,
-		mutationDisabled: fetchingCartItems || isFetchingQuote || failedToFetchCartItems || failedFetchQuotation
+		mutationDisabled: fetchingCartItems || isFetchingQuote || failedToFetchCartItems || failedFetchQuotation,
+		refetchBorrow: refetch
 	}
 }

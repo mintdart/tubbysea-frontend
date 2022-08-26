@@ -10,7 +10,7 @@ import {
 import toast from 'react-hot-toast'
 import { chainConfig } from '~/lib/constants'
 
-export function useSetContractApproval() {
+export function useSetContractApproval(refetchBorrowContract: () => void) {
 	const { chain } = useNetwork()
 	const blockExplorerUrl = chain?.blockExplorers?.default.url ?? 'https://etherscan.io'
 	const contracts = chainConfig[chain?.id ?? 1]
@@ -23,7 +23,7 @@ export function useSetContractApproval() {
 		// overrides: { gasLimit: new BigNumber(0.0005).times(1e9).toFixed(0) }
 	})
 
-	const contractWrite = useContractWrite({ ...config })
+	const contractWrite = useContractWrite(config)
 
 	const waitForTransaction = useWaitForTransaction({
 		hash: contractWrite.data?.hash,
@@ -49,6 +49,8 @@ export function useSetContractApproval() {
 					}
 				)
 			}
+
+			refetchBorrowContract()
 		}
 	})
 

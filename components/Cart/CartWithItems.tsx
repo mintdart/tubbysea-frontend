@@ -44,6 +44,16 @@ export function CartWithItems({
 	// query to save/remove item to cart/localstorage
 	const { mutate: saveItemToCart } = useSaveItemToCart()
 
+	//query to borrow eth using nfts
+	const {
+		mutationDisabled,
+		write: borrowETH,
+		isLoading: userConfirmingBorrow,
+		error: errorConfirmingBorrow,
+		waitForTransaction: { data: borrowTxOnChain, isLoading: checkingForBorrowTxOnChain, error: txBorrowErrorOnChain },
+		refetchBorrow
+	} = useBorrow({ txDialog, transactionHash })
+
 	// query to set approval for all tokens
 	const {
 		write: approveContract,
@@ -54,7 +64,7 @@ export function CartWithItems({
 			isLoading: checkingForApproveTxOnChain,
 			error: txApproveErrorOnChain
 		}
-	} = useSetContractApproval()
+	} = useSetContractApproval(refetchBorrow)
 
 	// query to check approval of all tokens
 	const {
@@ -62,15 +72,6 @@ export function CartWithItems({
 		isLoading: fetchingIfApproved,
 		error: failedToFetchIfApproved
 	} = useGetContractApproval()
-
-	//query to borrow eth using nfts
-	const {
-		mutationDisabled,
-		write: borrowETH,
-		isLoading: userConfirmingBorrow,
-		error: errorConfirmingBorrow,
-		waitForTransaction: { data: borrowTxOnChain, isLoading: checkingForBorrowTxOnChain, error: txBorrowErrorOnChain }
-	} = useBorrow({ txDialog, transactionHash })
 
 	const {
 		data: contractBalance,
