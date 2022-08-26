@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Image from 'next/image'
+import { DisclosureState } from 'ariakit'
 import BeatLoader from '~/components/BeatLoader'
 import { ILoan } from '~/hooks/useLoans'
 import { useRepay } from '~/hooks/useRepay'
@@ -27,12 +28,20 @@ const formatDate = (deadline: number) => {
 	} else return `${timeLeft} ms left`
 }
 
-export function RepayTubby({ details }: { details: ILoan }) {
+export function RepayTubby({
+	details,
+	txDialog,
+	transactionHash
+}: {
+	details: ILoan
+	txDialog: DisclosureState
+	transactionHash: React.MutableRefObject<string | null>
+}) {
 	const {
 		write,
 		isLoading,
 		waitForTransaction: { isLoading: isConfirming }
-	} = useRepay(details.loanId, details.totalRepay)
+	} = useRepay({ loanId: details.loanId, amount: details.totalRepay, txDialog, transactionHash })
 
 	return (
 		<li className={styles.card}>

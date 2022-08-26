@@ -44,8 +44,8 @@ export function useBorrow({
 			quote?.signature?.v,
 			quote?.signature?.r,
 			quote?.signature?.s
-		],
-		overrides: { gasLimit: new BigNumber(0.0005).times(1e9).toFixed(0) }
+		]
+		// overrides: { gasLimit: new BigNumber(0.0005).times(1e9).toFixed(0) }
 	})
 
 	const contractWrite = useContractWrite({

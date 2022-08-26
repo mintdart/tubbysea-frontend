@@ -1,13 +1,13 @@
 import type { NextPage } from 'next'
 import * as React from 'react'
 import Head from 'next/head'
+import { useDialogState } from 'ariakit'
 import Layout from '~/components/Layout'
 import TubbyGrid from '~/components/TubbyGrid'
 import { BorrowTubbyPlaceholder, BorrowTubby } from '~/components/TubbyCard'
 import { MobileOnlyCart, DesktopOnlyCart } from '~/components/Cart'
 import { useGetNftsList } from '~/hooks/useNftsList'
 import TxSubmittedDialog from '~/components/TxSubmitted'
-import { useDialogState } from 'ariakit'
 
 const Home: NextPage = () => {
 	// get number of nft's owned by user of a given contract

@@ -1,12 +1,19 @@
+import * as React from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import { DisclosureState } from 'ariakit'
 import BigNumber from 'bignumber.js'
 import toast from 'react-hot-toast'
 import { useContractWrite, useNetwork, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import { chainConfig } from '~/lib/constants'
 import { useGetLoans } from './useLoans'
 
-// TODO check for bignumber decimal error
-export function useRepay(loanId: number, amount: number) {
+interface IUseRepayProps {
+	loanId: number
+	amount: number
+	txDialog: DisclosureState
+	transactionHash: React.MutableRefObject<string | null>
+}
+export function useRepay({ loanId, amount, txDialog, transactionHash }: IUseRepayProps) {
 	const { refetch: refetchLoans } = useGetLoans()
 	const { chain } = useNetwork()
 
@@ -29,7 +36,13 @@ export function useRepay(loanId: number, amount: number) {
 		}
 	})
 
-	const contractWrite = useContractWrite(config)
+	const contractWrite = useContractWrite({
+		...config,
+		onSuccess: (data) => {
+			transactionHash.current = data.hash
+			txDialog.toggle()
+		}
+	})
 
 	const waitForTransaction = useWaitForTransaction({
 		hash: contractWrite.data?.hash,
