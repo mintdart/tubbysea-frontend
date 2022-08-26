@@ -130,6 +130,10 @@ export function CartWithItems({
 			? Number((cartItems.length * quote.price).toFixed(2)) < Number(contractBalance.formatted)
 			: false
 
+	const maxTubbyCatsToBorrow = (
+		contractBalance && quote?.price ? Number(contractBalance.formatted) / quote.price : 0
+	).toFixed(0)
+
 	return (
 		<>
 			{errorMsgOfQueries ? (
@@ -273,6 +277,19 @@ export function CartWithItems({
 						>
 							Approve
 						</button>
+					)}
+
+					{contractBalance && quote?.price && (
+						<p className={styles.liquidityMsg}>
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width={16} height={16}>
+								<path
+									fillRule="evenodd"
+									d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 0110 5zm0 10a1 1 0 100-2 1 1 0 000 2z"
+									clipRule="evenodd"
+								/>
+							</svg>
+							<span>{`Max tubby cats to borrow against: ${maxTubbyCatsToBorrow}`}</span>
+						</p>
 					)}
 				</>
 			)}

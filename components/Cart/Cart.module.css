@@ -120,7 +120,23 @@
 	border: none;
 	border-radius: 4px;
 	padding: 3px 6px;
-	font-size: 20px;
+	font-size: 1.25rem;
+}
+
+.liquidityMsg {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1ch;
+	font-size: 0.75rem;
+	font-weight: 500;
+	margin-top: auto;
+	padding: 40px 0 0;
+	text-align: center;
+}
+
+.liquidityMsg svg {
+	flex-shrink: 0;
 }
 
 @media (min-width: 80rem) {
