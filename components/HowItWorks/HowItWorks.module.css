@@ -52,3 +52,11 @@
 	text-decoration: underline;
 	padding: 0;
 }
+
+.interestLoading {
+	width: 5ch;
+	height: 20px;
+	display: inline-block;
+	position: relative;
+	top: 4px;
+}
