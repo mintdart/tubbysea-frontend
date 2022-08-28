@@ -7,7 +7,7 @@ import { useGetQuote } from './useQuotation'
 export function useGetInterest() {
 	const { chain } = useNetwork()
 
-	const contracts = chainConfig[chain?.id ?? 1]
+	const contracts = chain?.unsupported ? chainConfig[1] : chainConfig[chain?.id ?? 1]
 
 	const { data: cartItems } = useGetCartItems()
 	const { data: quote } = useGetQuote()
