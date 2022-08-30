@@ -18,14 +18,14 @@ const formatDate = (deadline: number) => {
 	// max deadline - return expired
 	if (timeLeft <= 0) {
 		return 'Expired'
-	} else if (Math.round(timeLeft / day) > 1) {
-		return `${Math.round(timeLeft / day)} days left`
-	} else if (Math.round(timeLeft / hour) > 1) {
-		return `${Math.round(timeLeft / hour)} hours left`
-	} else if (Math.round(timeLeft / minute) > 1) {
-		return `${Math.round(timeLeft / minute)} minutes left`
-	} else if (Math.round(timeLeft / second) > 1) {
-		return `${Math.round(timeLeft / second)} seconds left`
+	} else if (timeLeft / day > 1) {
+		return `${(timeLeft / day).toFixed(2)} days left`
+	} else if (timeLeft / hour > 1) {
+		return `${(timeLeft / hour).toFixed(2)} hours left`
+	} else if (timeLeft / minute > 1) {
+		return `${(timeLeft / minute).toFixed(2)} minutes left`
+	} else if (timeLeft / second > 1) {
+		return `${(timeLeft / second).toFixed(2)} seconds left`
 	} else return null
 }
 
