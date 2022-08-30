@@ -18,7 +18,7 @@ const formatDate = (deadline: number) => {
 	if (timeLeft <= 0) {
 		return 'Expired'
 	} else if (Math.round(timeLeft / day) > 1) {
-		console.log(Math.round(timeLeft / day))
+		console.log({ deadline, timeLeft, daysLeft: Math.round(timeLeft / day) })
 		return `${Math.round(timeLeft / day)} days left`
 	} else if (Math.round(timeLeft / hour) > 1) {
 		return `${Math.round(timeLeft / hour)} hours left`
