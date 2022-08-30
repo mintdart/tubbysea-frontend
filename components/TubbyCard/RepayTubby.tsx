@@ -6,6 +6,7 @@ import { ILoan } from '~/hooks/useLoans'
 import { useRepay } from '~/hooks/useRepay'
 import styles from './TubbyCard.module.css'
 
+// in ms
 const day = 24 * 60 * 60 * 1000
 const hour = 60 * 60 * 1000
 const minute = 60 * 1000
@@ -18,7 +19,6 @@ const formatDate = (deadline: number) => {
 	if (timeLeft <= 0) {
 		return 'Expired'
 	} else if (Math.round(timeLeft / day) > 1) {
-		console.log({ deadline, timeLeft, daysLeft: Math.round(timeLeft / day) })
 		return `${Math.round(timeLeft / day)} days left`
 	} else if (Math.round(timeLeft / hour) > 1) {
 		return `${Math.round(timeLeft / hour)} hours left`
@@ -26,7 +26,7 @@ const formatDate = (deadline: number) => {
 		return `${Math.round(timeLeft / minute)} minutes left`
 	} else if (Math.round(timeLeft / second) > 1) {
 		return `${Math.round(timeLeft / second)} seconds left`
-	} else return `${timeLeft} ms left`
+	} else return null
 }
 
 export function RepayTubby({

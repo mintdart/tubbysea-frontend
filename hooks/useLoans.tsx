@@ -20,6 +20,8 @@ interface IGetLoans {
 	chainId?: number
 }
 
+const MAX_LOAN_LENGTH = 1209600
+
 async function getLoans({ userAddress, provider, chainId }: IGetLoans) {
 	try {
 		if (!userAddress || !provider || !chainId) throw new Error('Invalid arguments')
@@ -38,7 +40,7 @@ async function getLoans({ userAddress, provider, chainId }: IGetLoans) {
 			loanId: nftsList[index].tokenId,
 			imgUrl: nftsList[index].imgUrl,
 			nft: Number(loan.nft),
-			deadline: Number(infoToRepayLoans[index].deadline) * 1000,
+			deadline: (Number(loan.startTime) + MAX_LOAN_LENGTH) * 1000,
 			totalRepay: Number(infoToRepayLoans[index].totalRepay)
 		}))
 	} catch (error: any) {
