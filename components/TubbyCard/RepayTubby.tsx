@@ -17,14 +17,15 @@ const formatDate = (deadline: number) => {
 	// max deadline - return expired
 	if (timeLeft <= 0) {
 		return 'Expired'
-	} else if (Math.ceil(timeLeft / day) > 1) {
-		return `${Math.ceil(timeLeft / day)} days left`
-	} else if (Math.ceil(timeLeft / hour) > 1) {
-		return `${Math.ceil(timeLeft / hour)} hours left`
-	} else if (Math.ceil(timeLeft / minute) > 1) {
-		return `${Math.ceil(timeLeft / minute)} minutes left`
-	} else if (Math.ceil(timeLeft / second) > 1) {
-		return `${Math.ceil(timeLeft / second)} seconds left`
+	} else if (Math.round(timeLeft / day) > 1) {
+		console.log(Math.round(timeLeft / day))
+		return `${Math.round(timeLeft / day)} days left`
+	} else if (Math.round(timeLeft / hour) > 1) {
+		return `${Math.round(timeLeft / hour)} hours left`
+	} else if (Math.round(timeLeft / minute) > 1) {
+		return `${Math.round(timeLeft / minute)} minutes left`
+	} else if (Math.round(timeLeft / second) > 1) {
+		return `${Math.round(timeLeft / second)} seconds left`
 	} else return `${timeLeft} ms left`
 }
 
