@@ -1,9 +1,27 @@
 export const LENDING_POOL_ABI: any = [
 	{
-		inputs: [{ internalType: 'address', name: '_oracle', type: 'address' }],
+		inputs: [
+			{ internalType: 'address', name: '_oracle', type: 'address' },
+			{ internalType: 'uint256', name: '_maxPrice', type: 'uint256' },
+			{ internalType: 'address', name: '_nftContract', type: 'address' },
+			{ internalType: 'uint256', name: '_maxDailyBorrows', type: 'uint256' }
+		],
 		stateMutability: 'nonpayable',
 		type: 'constructor'
 	},
+	{ inputs: [], name: 'ApprovalCallerNotOwnerNorApproved', type: 'error' },
+	{ inputs: [], name: 'ApprovalQueryForNonexistentToken', type: 'error' },
+	{ inputs: [], name: 'BalanceQueryForZeroAddress', type: 'error' },
+	{ inputs: [], name: 'MintERC2309QuantityExceedsLimit', type: 'error' },
+	{ inputs: [], name: 'MintToZeroAddress', type: 'error' },
+	{ inputs: [], name: 'MintZeroQuantity', type: 'error' },
+	{ inputs: [], name: 'OwnerQueryForNonexistentToken', type: 'error' },
+	{ inputs: [], name: 'OwnershipNotInitializedForExtraData', type: 'error' },
+	{ inputs: [], name: 'TransferCallerNotOwnerNorApproved', type: 'error' },
+	{ inputs: [], name: 'TransferFromIncorrectOwner', type: 'error' },
+	{ inputs: [], name: 'TransferToNonERC721ReceiverImplementer', type: 'error' },
+	{ inputs: [], name: 'TransferToZeroAddress', type: 'error' },
+	{ inputs: [], name: 'URIQueryForNonexistentToken', type: 'error' },
 	{
 		anonymous: false,
 		inputs: [
@@ -22,6 +40,17 @@ export const LENDING_POOL_ABI: any = [
 			{ indexed: false, internalType: 'bool', name: 'approved', type: 'bool' }
 		],
 		name: 'ApprovalForAll',
+		type: 'event'
+	},
+	{
+		anonymous: false,
+		inputs: [
+			{ indexed: true, internalType: 'uint256', name: 'fromTokenId', type: 'uint256' },
+			{ indexed: false, internalType: 'uint256', name: 'toTokenId', type: 'uint256' },
+			{ indexed: true, internalType: 'address', name: 'from', type: 'address' },
+			{ indexed: true, internalType: 'address', name: 'to', type: 'address' }
+		],
+		name: 'ConsecutiveTransfer',
 		type: 'event'
 	},
 	{
@@ -51,7 +80,7 @@ export const LENDING_POOL_ABI: any = [
 		],
 		name: 'approve',
 		outputs: [],
-		stateMutability: 'nonpayable',
+		stateMutability: 'payable',
 		type: 'function'
 	},
 	{
@@ -122,7 +151,10 @@ export const LENDING_POOL_ABI: any = [
 		name: 'infoToRepayLoan',
 		outputs: [
 			{ internalType: 'uint256', name: 'deadline', type: 'uint256' },
-			{ internalType: 'uint256', name: 'totalRepay', type: 'uint256' }
+			{ internalType: 'uint256', name: 'totalRepay', type: 'uint256' },
+			{ internalType: 'uint256', name: 'principal', type: 'uint256' },
+			{ internalType: 'uint256', name: 'interest', type: 'uint256' },
+			{ internalType: 'uint256', name: 'lateFees', type: 'uint256' }
 		],
 		stateMutability: 'view',
 		type: 'function'
@@ -186,13 +218,6 @@ export const LENDING_POOL_ABI: any = [
 	},
 	{
 		inputs: [],
-		name: 'newBorrowsAllowed',
-		outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-		stateMutability: 'view',
-		type: 'function'
-	},
-	{
-		inputs: [],
 		name: 'nftContract',
 		outputs: [{ internalType: 'contract IERC721', name: '', type: 'address' }],
 		stateMutability: 'view',
@@ -221,7 +246,7 @@ export const LENDING_POOL_ABI: any = [
 	},
 	{ inputs: [], name: 'renounceOwnership', outputs: [], stateMutability: 'nonpayable', type: 'function' },
 	{
-		inputs: [{ internalType: 'uint256', name: 'loanId', type: 'uint256' }],
+		inputs: [{ internalType: 'uint256[]', name: 'loanIds', type: 'uint256[]' }],
 		name: 'repay',
 		outputs: [],
 		stateMutability: 'payable',
@@ -235,7 +260,7 @@ export const LENDING_POOL_ABI: any = [
 		],
 		name: 'safeTransferFrom',
 		outputs: [],
-		stateMutability: 'nonpayable',
+		stateMutability: 'payable',
 		type: 'function'
 	},
 	{
@@ -247,7 +272,7 @@ export const LENDING_POOL_ABI: any = [
 		],
 		name: 'safeTransferFrom',
 		outputs: [],
-		stateMutability: 'nonpayable',
+		stateMutability: 'payable',
 		type: 'function'
 	},
 	{
@@ -268,15 +293,15 @@ export const LENDING_POOL_ABI: any = [
 		type: 'function'
 	},
 	{
-		inputs: [{ internalType: 'uint256', name: 'newMaxPrice', type: 'uint256' }],
-		name: 'setMaxPrice',
+		inputs: [{ internalType: 'uint256', name: '_maxDailyBorrows', type: 'uint256' }],
+		name: 'setMaxDailyBorrows',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function'
 	},
 	{
-		inputs: [{ internalType: 'bool', name: 'newValue', type: 'bool' }],
-		name: 'setNewBorrowsAllowed',
+		inputs: [{ internalType: 'uint256', name: 'newMaxPrice', type: 'uint256' }],
+		name: 'setMaxPrice',
 		outputs: [],
 		stateMutability: 'nonpayable',
 		type: 'function'
@@ -326,7 +351,7 @@ export const LENDING_POOL_ABI: any = [
 	{
 		inputs: [],
 		name: 'totalSupply',
-		outputs: [{ internalType: 'uint256', name: 'supply', type: 'uint256' }],
+		outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
 		stateMutability: 'view',
 		type: 'function'
 	},
@@ -338,7 +363,7 @@ export const LENDING_POOL_ABI: any = [
 		],
 		name: 'transferFrom',
 		outputs: [],
-		stateMutability: 'nonpayable',
+		stateMutability: 'payable',
 		type: 'function'
 	},
 	{
