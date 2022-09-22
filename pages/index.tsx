@@ -1,20 +1,16 @@
 import type { NextPage } from 'next'
 import * as React from 'react'
 import Head from 'next/head'
-import { useDialogState } from 'ariakit'
+
 import Layout from '~/components/Layout'
 import TubbyGrid from '~/components/TubbyGrid'
 import { BorrowTubbyPlaceholder, BorrowTubby } from '~/components/TubbyCard'
-import { MobileOnlyCart, DesktopOnlyCart } from '~/components/Cart'
-import TxSubmittedDialog from '~/components/TxSubmitted'
+
 import { useGetNftsList } from '~/hooks/useNftsList'
 
 const Home: NextPage = () => {
 	// get number of nft's owned by user of a given contract
 	const { data: tubbies, isError, isLoading: fetchingNftsList } = useGetNftsList('borrow')
-
-	const transactionDialog = useDialogState()
-	const transactionHash = React.useRef<string | null>(null)
 
 	return (
 		<>
@@ -36,12 +32,7 @@ const Home: NextPage = () => {
 						))}
 					</TubbyGrid>
 				)}
-
-				<DesktopOnlyCart txDialog={transactionDialog} transactionHash={transactionHash} />
 			</Layout>
-
-			<MobileOnlyCart txDialog={transactionDialog} transactionHash={transactionHash} />
-			<TxSubmittedDialog dialog={transactionDialog} transactionHash={transactionHash} />
 		</>
 	)
 }

@@ -1,9 +1,7 @@
 import * as React from 'react'
 import Image from 'next/image'
-import { DisclosureState } from 'ariakit'
-import BeatLoader from '~/components/BeatLoader'
 import { ILoan } from '~/hooks/useLoans'
-import { useRepay } from '~/hooks/useRepay'
+import { useSaveItemToCart } from '~/hooks/useCart'
 import styles from './TubbyCard.module.css'
 
 // in ms
@@ -29,20 +27,14 @@ const formatDate = (deadline: number) => {
 	} else return null
 }
 
-export function RepayTubby({
-	details,
-	txDialog,
-	transactionHash
-}: {
-	details: ILoan
-	txDialog: DisclosureState
-	transactionHash: React.MutableRefObject<string | null>
-}) {
-	const {
-		write,
-		isLoading,
-		waitForTransaction: { isLoading: isConfirming }
-	} = useRepay({ loanId: details.loanId, amount: details.totalRepay, txDialog, transactionHash })
+export function RepayTubby({ details }: { details: ILoan }) {
+	const { mutate } = useSaveItemToCart()
+
+	const storeItem = () => {
+		if (!details.loanId) return
+
+		mutate({ tokenId: details.loanId, cartType: 'repay' })
+	}
 
 	return (
 		<li className={styles.card}>
@@ -79,14 +71,8 @@ export function RepayTubby({
 							<Image src="/ethereum.png" height="16px" width="16px" objectFit="contain" alt="ethereum" />
 							<span className={styles.price}>{(details.totalRepay / 1e18).toFixed(2)}</span>
 						</p>
-						<button className={styles.actionButton} onClick={() => write?.()} disabled={isLoading || !write}>
-							{isLoading || isConfirming ? (
-								<BeatLoader
-									style={{ '--circle-color': '#fff', '--circle-size': '5px', height: '21px', width: '8ch' }}
-								/>
-							) : (
-								'Repay ETH'
-							)}
+						<button className={styles.actionButton} onClick={storeItem}>
+							Repay ETH
 						</button>
 					</span>
 				</span>

@@ -6,7 +6,15 @@ import { ICart, IError, INftItem } from './types'
 import { useGetNftsList } from './useNftsList'
 
 // save/remove items from local storage
-async function saveItemToCart({ chainId, tokenId }: { chainId?: number; tokenId: number }) {
+async function saveItemToCart({
+	chainId,
+	tokenId,
+	cartType
+}: {
+	chainId?: number
+	tokenId: number
+	cartType: 'borrow' | 'repay'
+}) {
 	try {
 		const contract = chainId ? chainConfig[chainId]?.collateralAddress : null
 
@@ -14,32 +22,45 @@ async function saveItemToCart({ chainId, tokenId }: { chainId?: number; tokenId:
 			throw new Error("Error: Couldn't get contract address of nft collection")
 		}
 
-		const prevItems = localStorage.getItem(LOCAL_STORAGE_KEY)
+		const storage = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}')
 
-		if (prevItems) {
-			const items = JSON.parse(prevItems)
+		const items = storage?.[cartType]
 
+		if (items) {
 			const contractItems: Array<number> = items[contract] || []
 
 			if (contractItems.includes(tokenId)) {
+				// removes items from cart
 				items[contract] = contractItems.filter((item) => item !== tokenId)
 			} else {
+				// adds items to cart
 				items[contract] = [...contractItems, tokenId]
 			}
 
-			localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(items))
+			// updates local storage with items
+			localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ ...storage, [cartType]: items }))
 		} else {
-			localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ [contract]: [tokenId] }))
+			// initialise storage
+			localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({ ...storage, [cartType]: { [contract]: [tokenId] } }))
 		}
 
-		return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}')
+		// returns items of given cart type
+		return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}')[cartType]
 	} catch (error: any) {
 		throw new Error("Couldn't add item to cart")
 	}
 }
 
 // get cart items from local storage
-async function fetchCartItems({ chainId, tubbies }: { chainId?: number; tubbies?: Array<INftItem> }) {
+async function fetchCartItems({
+	chainId,
+	tubbies,
+	cartType
+}: {
+	chainId?: number
+	tubbies?: Array<INftItem>
+	cartType: 'borrow' | 'repay'
+}) {
 	try {
 		const contract = chainId ? chainConfig[chainId]?.collateralAddress : null
 
@@ -49,7 +70,7 @@ async function fetchCartItems({ chainId, tubbies }: { chainId?: number; tubbies?
 
 		const prevItems = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}')
 
-		const itemsInStorage: Array<number> = prevItems[contract] || []
+		const itemsInStorage: Array<number> = prevItems?.[cartType]?.[contract] ?? []
 
 		return itemsInStorage
 			.map((item) => {
@@ -72,36 +93,49 @@ const useSaveItemToCart = () => {
 
 	const router = useRouter()
 
-	return useMutation(({ tokenId }: { tokenId: number }) => saveItemToCart({ chainId: chain?.id, tokenId }), {
-		onMutate: () => {
-			const cart = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}')
+	return useMutation(
+		({ tokenId, cartType }: { tokenId: number; cartType: 'borrow' | 'repay' }) =>
+			saveItemToCart({ chainId: chain?.id, tokenId, cartType }),
+		{
+			onMutate: ({ cartType }) => {
+				const cart = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}')
 
-			const contractAddress: string | undefined | null = chain?.id ? chainConfig[chain.id]?.collateralAddress : null
+				const contractAddress: string | undefined | null = chain?.id ? chainConfig[chain.id]?.collateralAddress : null
 
-			return contractAddress ? cart[contractAddress] || [] : []
-		},
-		onSuccess: (data: ICart, _variables, prevItems) => {
-			const contractAddress: string | undefined | null = chain?.id ? chainConfig[chain.id]?.collateralAddress : null
+				return contractAddress ? cart?.[cartType]?.[contractAddress] ?? [] : []
+			},
+			onSuccess: (data: ICart, _variables, prevItems) => {
+				const contractAddress: string | undefined | null = chain?.id ? chainConfig[chain.id]?.collateralAddress : null
 
-			// If its the first item added to cart, show cart section
-			if (contractAddress && data[contractAddress]?.length === 1 && data[contractAddress]?.length > prevItems.length) {
-				router.push('/?cart=true')
+				// If its the first item added to cart, show cart section
+				if (
+					contractAddress &&
+					data[contractAddress]?.length === 1 &&
+					data[contractAddress]?.length > prevItems.length
+				) {
+					router.push({
+						pathname: router.pathname,
+						query: {
+							cart: true
+						}
+					})
+				}
+			},
+			onSettled: () => {
+				queryClient.invalidateQueries()
 			}
-		},
-		onSettled: () => {
-			queryClient.invalidateQueries()
 		}
-	})
+	)
 }
 
-const useGetCartItems = () => {
+const useGetCartItems = (cartType: 'borrow' | 'repay') => {
 	const { address } = useAccount()
 	const { chain } = useNetwork()
 	const { data: tubbies } = useGetNftsList('borrow')
 
 	// fetch and filter cart items which are owned by user
-	return useQuery<Array<INftItem>, IError>(['cartItems', address, chain?.id, tubbies?.length], () =>
-		fetchCartItems({ chainId: chain?.id, tubbies })
+	return useQuery<Array<INftItem>, IError>(['cartItems', cartType, address, chain?.id, tubbies?.length], () =>
+		fetchCartItems({ chainId: chain?.id, tubbies, cartType })
 	)
 }
 

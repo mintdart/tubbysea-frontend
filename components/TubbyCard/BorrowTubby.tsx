@@ -12,13 +12,13 @@ interface IBorrowTubby {
 // TODO: handle queries error
 export function BorrowTubby({ tokenId, imgUrl }: IBorrowTubby) {
 	const { data: quote, isLoading: isFetchingQuote } = useGetQuote()
-	const { data: cartItems } = useGetCartItems()
+	const { data: cartItems } = useGetCartItems('borrow')
 	const { mutate } = useSaveItemToCart()
 
 	const storeItem = () => {
 		if (!tokenId) return
 
-		mutate({ tokenId })
+		mutate({ tokenId, cartType: 'borrow' })
 	}
 
 	return (

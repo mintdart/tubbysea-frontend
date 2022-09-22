@@ -27,7 +27,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
 		<m.div className={styles.wrapper} animate={isOpen ? 'open' : 'closed'} variants={variants}>
 			<span className={styles.header}>
 				<h1 className={styles.title}>Checkout</h1>
-				<Link href="/">
+				<Link href={router.pathname}>
 					<a className="buttonDismiss">
 						<span className="visually-hidden">Close checkout tab</span>
 						<svg

@@ -33,7 +33,7 @@ export function CartWithItems({
 	const { isLoading: fetchingNftsList } = useGetNftsList('borrow')
 
 	// query to get cart items from local storage
-	const { data: cartItems, isLoading: fetchingCartItems, isError: errorLoadingCartItems } = useGetCartItems()
+	const { data: cartItems, isLoading: fetchingCartItems, isError: errorLoadingCartItems } = useGetCartItems('borrow')
 
 	// query to get quotation from server
 	const { data: quote, isLoading: fetchingQuote, isError: errorFetchingQuote } = useGetQuote()
@@ -149,7 +149,10 @@ export function CartWithItems({
 						<ul className={styles.list}>
 							{cartItems?.map(({ tokenId, imgUrl }) => (
 								<li key={tokenId} className={styles.listItem}>
-									<button className={styles.removeButton} onClick={() => saveItemToCart({ tokenId })}>
+									<button
+										className={styles.removeButton}
+										onClick={() => saveItemToCart({ tokenId, cartType: 'borrow' })}
+									>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											fill="none"

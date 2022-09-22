@@ -16,7 +16,9 @@ export default function CartButton() {
 }
 
 function ConnectedCartButton() {
-	const { data: cartItems } = useGetCartItems()
+	const router = useRouter()
+
+	const { data: cartItems } = useGetCartItems(router.pathname === '/' ? 'borrow' : 'repay')
 
 	return <Wrapper noOfItems={cartItems?.length} />
 }
@@ -32,7 +34,7 @@ function Wrapper({ noOfItems, ...props }: { noOfItems?: number; disabled?: boole
 		<button
 			onClick={() =>
 				router.push({
-					pathname: '/',
+					pathname: router.pathname,
 					query: { cart: isCartToggled ? false : true }
 				})
 			}

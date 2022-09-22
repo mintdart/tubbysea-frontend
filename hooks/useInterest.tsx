@@ -9,7 +9,7 @@ export function useGetInterest() {
 
 	const contracts = chain?.unsupported ? chainConfig[1] : chainConfig[chain?.id ?? 1]
 
-	const { data: cartItems } = useGetCartItems()
+	const { data: cartItems } = useGetCartItems('borrow')
 	const { data: quote } = useGetQuote()
 
 	const totalPrice = cartItems && quote?.price && cartItems?.length * quote?.price

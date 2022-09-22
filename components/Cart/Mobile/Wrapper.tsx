@@ -27,7 +27,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
 		<Dialog state={dialog} portal={typeof window !== 'undefined'} className={styles.dialog}>
 			<header className={styles.dialogHeader}>
 				<DialogHeading className={styles.dialogHeading}>Checkout</DialogHeading>
-				<Link href="/">
+				<Link href={router.pathname}>
 					<a className="buttonDismiss">
 						<span className="visually-hidden">Close checkout dialog</span>
 						<svg

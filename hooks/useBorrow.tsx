@@ -18,7 +18,7 @@ export function useBorrow({
 	txDialog: DisclosureState
 	transactionHash: React.MutableRefObject<string | null>
 }) {
-	const { data: cartItems, isLoading: fetchingCartItems, isError: failedToFetchCartItems } = useGetCartItems()
+	const { data: cartItems, isLoading: fetchingCartItems, isError: failedToFetchCartItems } = useGetCartItems('borrow')
 	const { data: quote, isLoading: isFetchingQuote, isError: failedFetchQuotation } = useGetQuote()
 	const router = useRouter()
 
