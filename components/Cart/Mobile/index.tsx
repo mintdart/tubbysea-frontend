@@ -2,7 +2,7 @@ import * as React from 'react'
 import { useAccount, useNetwork } from 'wagmi'
 import { DisclosureState } from 'ariakit'
 import Wrapper from './Wrapper'
-import { CartWithItems } from '../CartWithItems'
+import CartWithItems from '../CartWithItems'
 import styles from '../Cart.module.css'
 
 export function MobileOnlyCart({

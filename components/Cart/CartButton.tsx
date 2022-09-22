@@ -18,7 +18,7 @@ export default function CartButton() {
 function ConnectedCartButton() {
 	const router = useRouter()
 
-	const { data: cartItems } = useGetCartItems(router.pathname === '/' ? 'borrow' : 'repay')
+	const { data: cartItems } = useGetCartItems(router.pathname === '/repay' ? 'repay' : 'borrow')
 
 	return <Wrapper noOfItems={cartItems?.length} />
 }

@@ -11,7 +11,7 @@ import { useGetContractApproval, useSetContractApproval } from '~/hooks/useContr
 import { useBorrow } from '~/hooks/useBorrow'
 import { useGetNftsList } from '~/hooks/useNftsList'
 import { chainConfig } from '~/lib/constants'
-import styles from './Cart.module.css'
+import styles from '../Cart.module.css'
 
 const formatErrorMsg = (error: any) => {
 	if (error?.code === 'UNPREDICTABLE_GAS_LIMIT') {
@@ -19,7 +19,7 @@ const formatErrorMsg = (error: any) => {
 	} else return error.reason
 }
 
-export function CartWithItems({
+export function BorrowCartWithItems({
 	txDialog,
 	transactionHash
 }: {

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import styles from './Cart.module.css'
+import styles from '../Cart.module.css'
 
 export default function ItemsPlaceholder() {
 	return (
