@@ -54,7 +54,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<LazyMotion features={domAnimation}>
 			<QueryClientProvider client={queryClient}>
-				<Hydrate state={pageProps.dehydratedState}>
+				<Hydrate>
 					<WagmiConfig client={wagmiClient}>
 						<RainbowKitProvider
 							theme={walletTheme}
